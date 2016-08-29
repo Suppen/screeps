@@ -114,9 +114,6 @@ class SpawnManager extends Manager {
 			return;
 		}
 
-		// Get the creep to spawn
-		let creepToSpawn = this.spawnQueue.peek();
-
 		// Find all spawns
 		let spawns = this.spawns;
 
@@ -129,6 +126,9 @@ class SpawnManager extends Manager {
 
 		// Remove busy spawns
 		spawns = spawns.filter(s => !s.willSpawn);
+
+		// Get the creep to spawn
+		let creepToSpawn = this.spawnQueue.peek();
 
 		// Try to spawn the creep
 		let spawned = false;

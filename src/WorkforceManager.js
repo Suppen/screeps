@@ -32,6 +32,11 @@ class WorkforceManager extends Manager {
 		 * The spawn manager which spawns this workforce
 		 */
 		this.spawnManager = spawnManager
+
+		/**
+		 * List of all creep managers in this workforce
+	 	 */
+		this.creepManagers = [];
 	}
 
 	/**
@@ -62,10 +67,14 @@ class WorkforceManager extends Manager {
 	 * All creep managers managed by this workforce manager
 	 */
 	get workforce() {
+		// Check if the memory location exists
 		if (this.memory.workforce === undefined) {
 			this.memory.workforce = [];
 		}
+
+		// Check if the workforce is cached
 		if (this._workforce === undefined) {
+			// Nope... Make it and cache it
 			this._workforce = this.memory.workforce.map(name => {
 				// Get the creep
 				let creep = Game.creeps[name];
@@ -78,6 +87,7 @@ class WorkforceManager extends Manager {
 				return creep;
 			}).filter(creep => creep !== undefined);
 		}
+
 		return this._workforce;
 	}
 
@@ -89,8 +99,12 @@ class WorkforceManager extends Manager {
 	 * @private
 	 */
 	_determineCreepManager(creep) {
+		// Look up the manager in the map
 		let manager = roleManagerMap[creep.memory.role];
+
+		// Does the manager exist?
 		if (manager === undefined) {
+			// Nope. Make a dummy manager
 			manager = function() {
 				this.run = function() {
 					console.log("Could not find manager for role " + creep.memory.role);
@@ -116,9 +130,6 @@ class WorkforceManager extends Manager {
 	 * Gives managers to unmanaged creeps
 	 */
 	_makeCreepManagers() {
-		// Make the creep manager array
-		this.creepManagers = [];
-
 		// Iterate over the workforce
 		this.workforce.forEach(creep => {
 			// Find out which manager this creep should have
@@ -144,32 +155,47 @@ class WorkforceManager extends Manager {
 	}
 
 	/**
+	 * Map between role name and how many creeps of that type there are
+	 */
+	getCreepsPerRole({live, inSpawnQueue}) {
+		let creepsPerRole = {};
+
+		// Count live creeps, if wanted
+		if (live) {
+			for (let c of this.workforce) {
+				if (creepsPerRole[c.memory.role] === undefined) {
+					creepsPerRole[c.memory.role] = 0;
+				}
+				creepsPerRole[c.memory.role]++;
+			}
+		}
+
+		// Count creeps in the spawn queue, if wanted
+		if (inSpawnQueue) {
+			this.spawnManager.spawnQueue.queue.forEach(c => {
+				let role = c.initialMemory.role;
+
+				if (creepsPerRole[role] === undefined) {
+					creepsPerRole[role] = 0;
+				}
+				creepsPerRole[role]++;
+			});
+		}
+		
+		return creepsPerRole;
+	}
+
+	/**
 	 * Spawns new creeps if any are missing
 	 */
 	doSpawning() {
-		// Sort the creeps
-		let creepRoles = {};
-		for (let c of this.workforce) {
-			if (creepRoles[c.memory.role] === undefined) {
-				creepRoles[c.memory.role] = 0;
-			}
-			creepRoles[c.memory.role]++;
-		}
-
-		// Add the ones in the spawn queue
-		this.spawnManager.spawnQueue.queue.forEach(c => {
-			let role = c.initialMemory.role;
-
-			if (creepRoles[role] === undefined) {
-				creepRoles[role] = 0;
-			}
-			creepRoles[role]++;
-		});
+		// Find out which creep types exist
+		let creepsPerRole = this.getCreepsPerRole({live: true, inSpawnQueue: true});
 
 		// Iterate over the creep list and see if they are all there
 		for (let role in this.wantedCreeps) {
 			// Get the existing amount
-			let amount = creepRoles[role];
+			let amount = creepsPerRole[role];
 			if (amount === undefined) {
 				amount = 0;
 			}
