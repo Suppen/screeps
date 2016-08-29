@@ -196,7 +196,6 @@ class WorkforceManager extends Manager {
 					body = body.call(this);
 				}
 
-				console.log("Spawning a " + role + " for " + this.workforceName);
 				this.spawnManager.addToSpawnQueue({
 					body: body,
 					initialMemory: {
