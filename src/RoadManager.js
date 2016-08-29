@@ -64,15 +64,16 @@ class RoadManager extends Manager {
 	 */
 	_manageRoad(roomName, x, y, usage) {
 		// Check if there is visibility in the room
-		if (Game.rooms[roomName] !== undefined)  {
+		let room = Game.rooms[roomName];
+		if (room !== undefined)  {
 			// Check if the tile deserves a road
-			let structure = Game.rooms[roomName].lookAt(x, y).find(s => s.type == "structure" || s.type == "constructionSite");
+			let structure = room.lookAt(x, y).find(s => s.type == "structure" || s.type == "constructionSite");
 
 			if (usage >= RoadManager.usageForRoad) {
 				// Build a road if there is no structure on it
 				if (!structure) {
 					// Does not have a building on it. Build a road
-					this.roomManager.room.createConstructionSite(x, y, STRUCTURE_ROAD);
+					room.createConstructionSite(x, y, STRUCTURE_ROAD);
 				}
 
 				// Maintain the road if there is already a road on the tile in need of repairs
