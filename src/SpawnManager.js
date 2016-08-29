@@ -91,21 +91,14 @@ class SpawnManager extends Manager {
 	 * @param {Bodypart[]} options.body	Array of bodyparts for the creep
 	 * @param {String} [options.name]	Name of the creep. If not set, a random name will be given
 	 * @param {Object} [options.initialMemory]	Initial memory for the creep. Should be JSON-serializable. Undefined if not set
-	 * @param {Spawn} [options.preferredSpawn]	Which spawn this creep should be spawned from. If not set, a random one will be chosen
 	 * @param {Integer} [priority]	Spawn priority of this creep. Lower number = higher priority. Defaults to 1000
 	 */
 	addToSpawnQueue(options, priority = 1000) {
 		// Set defaults
 		options = _.defaults(options, {
 			name: null,
-			initialMemory: {},
-			preferredSpawn: null
+			initialMemory: {}
 		});
-
-		// Get the name of the preferred spawn
-		if (options.preferredSpawn !== null) {
-			options.preferredSpawn = options.preferredSpawn.name;
-		}
 
 		// Put the creep in the spawn queue
 		this.spawnQueue.add(options, priority);
@@ -124,34 +117,13 @@ class SpawnManager extends Manager {
 		// Get the creep to spawn
 		let creepToSpawn = this.spawnQueue.peek();
 
-		// Storage for the spawn array
-		let spawns = [];
-
-		// Check if it has a preferred spawn
-		if (creepToSpawn.preferredSpawn !== null) {
-			// Check if the spawn actually exists
-			let spawn = Game.getObjectById(creepToSpawn.preferredSpawn);
-
-			if (spawn === null) {
-				// Spawn doesn't exist
-				console.log("Spawn " + creepToSpawn.preferredSpawn + " does not exist. Picking random spawn");
-				spawns = [];
-			} else if (this.roomManager.room.find(FIND_MY_SPAWNS, {filter(s) {return s.name === creepToSpawn.preferredSpawn;}}) !== null) {
-				// Spawn is not in this manager's room
-				console.log("Spawn " + creepToSpawn.preferredSpawn + " is not in room " + this.roomManager.roomName + ". Picking random spawn");
-				spawns = [];
-			}
-		}
-
-		// Find all spawns if the preferred spawn could not be used
-		if (spawns.length === 0) {
-			spawns = this.spawns;
-		}
+		// Find all spawns
+		let spawns = this.spawns;
 
 		// Give the spawns a "willSpawn" property if they don't have it
 		for (let s of spawns) {
 			if (s.willSpawn === undefined) {
-				s.willSpawn = s.spawning !== null && s.spawning !== undefined;
+				s.willSpawn = (s.spawning !== null && s.spawning !== undefined);
 			}
 		}
 
@@ -160,6 +132,7 @@ class SpawnManager extends Manager {
 
 		// Try to spawn the creep
 		let spawned = false;
+		let spawnMore = false;
 		while (!spawned && spawns.length > 0) {
 			// Pick the first available spawn
 			let spawn = spawns.shift();
@@ -177,14 +150,14 @@ class SpawnManager extends Manager {
 					// Mark the spawn as busy
 					spawn.willSpawn = true;
 
-					// Tell the loop it can quit
-					spawned = true;
-
 					// Remove the creep from the spawn queue
-					let creep = this.spawnQueue.shift();
+					this.spawnQueue.shift();
 
 					// Try to spawn more creeps
-					this.spawnCreeps();
+					spawnMore = true;
+
+					// Tell the loop it can quit
+					spawned = true;
 					break;
 				case ERR_NOT_ENOUGH_ENERGY:
 					// Check if there is enough energy capacity in the room
@@ -196,12 +169,15 @@ class SpawnManager extends Manager {
 						this.spawnQueue.shift();
 
 						// Try to spawn more creeps
-						this.spawnCreeps();
+						spawnMore = true;
 					}
 					break;
 				default:
 					break;
 			}
+		}
+		if (spawnMore) {
+			this.spawnCreeps();
 		}
 	}
 

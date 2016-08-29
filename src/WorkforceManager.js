@@ -166,9 +166,6 @@ class WorkforceManager extends Manager {
 			creepRoles[role]++;
 		});
 
-		// Storage for names of spawned creeps
-		let spawnedCreeps = [];
-
 		// Iterate over the creep list and see if they are all there
 		for (let role in this.wantedCreeps) {
 			// Get the existing amount
@@ -183,14 +180,16 @@ class WorkforceManager extends Manager {
 				desiredAmount = desiredAmount.call(this);
 			}
 
-			// Get priority
+			// Get or calculate priority
 			let priority = this.wantedCreeps[role].priority;
 			if (priority === undefined) {
 				priority = 1000;
+			} else if (this.priority instanceof Function) {
+				priority = priority(this);
 			}
 
 			// Check if more are needed
-			if (amount < desiredAmount) {
+			while (amount < desiredAmount) {
 				// Get or calculate the body
 				let body = this.wantedCreeps[role].body;
 				if (body instanceof Function) {
@@ -205,6 +204,7 @@ class WorkforceManager extends Manager {
 						workforce: this.workforceName
 					}
 				}, priority);
+				amount++;
 			}
 		}
 	}
