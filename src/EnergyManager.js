@@ -92,7 +92,9 @@ class EnergyManager extends WorkforceManager {
 	 */
 	get sources() {
 		if (this._sources === undefined) {
-			this._sources = this.roomManager.find(FIND_SOURCES, {roomStatuses: []});
+			this._sources = this.roomManager.find(FIND_SOURCES, {
+				roomStatuses: [ScoutManager.CLAIMABLE]
+			});
 		}
 		return this._sources;
 	}

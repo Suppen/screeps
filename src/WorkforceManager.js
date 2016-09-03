@@ -5,6 +5,7 @@ const Manager = require("Manager");
 // Make a map between creep managers and roles
 const roleManagerMap = {
 	energyHarvester: require("EnergyHarvesterCreepManager"),
+	remoteEnergyHarvester: require("EnergyHarvesterCreepManager"),
 	energyCollector: require("EnergyCollectorCreepManager"),
 	builder: require("BuilderCreepManager"),
 	repairer: require("RepairerCreepManager"),
