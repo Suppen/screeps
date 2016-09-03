@@ -5,6 +5,8 @@ const Manager = require("Manager");
 const RoomManager = require("RoomManager");
 const TerminalManager = require("TerminalManager");
 
+const config = require("config");
+
 // The singleton instance of the empire manager
 let manager = null;
 
@@ -34,6 +36,13 @@ class EmpireManager extends Manager {
 	 */
 	get memory() {
 		return Memory;
+	}
+
+	/**
+	 * The global config
+	 */
+	get config() {
+		return config;
 	}
 
 	/**
@@ -117,10 +126,18 @@ class EmpireManager extends Manager {
 		this.roomManagers = {};
 
 		// Loop through all known rooms
-		for (let name in Game.rooms) {
+		for (let roomName in Game.rooms) {
 			// Only make managers for owned rooms
-			if (Game.rooms[name].controller !== undefined && Game.rooms[name].controller.my) {
-				this.roomManagers[name] = new RoomManager(name);
+			if (Game.rooms[roomName].controller !== undefined && Game.rooms[roomName].controller.my) {
+				// Get the room config
+				let roomConfig = this.config.roomConfigs[roomName];
+				if (roomConfig === undefined) {
+					console.log("No config for " + roomName);
+					roomConfig = {};
+				}
+
+				// Make the manager
+				this.roomManagers[roomName] = new RoomManager(roomName, roomConfig);
 			}
 		}
 	}

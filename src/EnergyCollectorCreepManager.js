@@ -48,8 +48,8 @@ class EnergyCollectorCreepManager extends ResourceHandlingCreepManager {
 		// The selected pickup
 		let pickup = null;
 
-		// If the room is at war, prioritize taking from the storage to fill up the extensions
-		if (this.energyManager.roomManager.armyManager.useStoredEnergy && pickups.storage !== null) {
+		// If permitted, take from the storage first
+		if (this.useStoredEnergy && pickups.storage !== null) {
 			pickup = pickups.storage;
 		}
 

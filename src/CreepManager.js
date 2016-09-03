@@ -42,6 +42,20 @@ class CreepManager extends Manager {
 	get creep() {
 		return Game.creeps[this.creepName];
 	}
+
+	/**
+	 * True if the creep is in its parent room, false otherwise
+	 */
+	get isInParentRoom() {
+		return this.creep.roomName === this.parentRoomName;
+	}
+
+	/**
+	 * Name of the parent room
+	 */
+	get parentRoomName() {
+		return this.workforceManager.roomManager.roomName;
+	}
 }
 
 module.exports = CreepManager;

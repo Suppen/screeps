@@ -61,8 +61,10 @@ class AttackerCreepManager extends CreepManager {
 
 			// Do the attack
 			if (targets.length > 0) {
-				if (this.creep.attack(targets[0]) === ERR_NOT_IN_RANGE) {
-					this.creep.moveTo(targets[0]);
+				// Go for the closest one
+				let target = this.creep.pos.findClosestByRange(targets);
+				if (this.creep.attack(target) === ERR_NOT_IN_RANGE) {
+					this.creep.moveTo(target);
 				}
 			} else {
 				// Go defent some point

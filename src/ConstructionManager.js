@@ -3,14 +3,32 @@
 const WorkforceManager = require("WorkforceManager");
 const PriorityQueue = require("PriorityQueue");
 
+const defaultConfig = {
+	wantedCreeps: {}
+};
+
+/**
+ * Handles all construction for a room manager
+ */
 class ConstructionManager extends WorkforceManager {
-	constructor(roomManager) {
+	/**
+	 * Creates a new construction manager
+	 *
+	 * @param {RoomManager} roomManager	The room manager which owns this construction manager. Must have a spawn manager on it!
+	 * @param {Object} config	Configuration for the construction manager
+	 */
+	constructor(roomManager, config) {
 		super(roomManager.spawnManager);
 
 		/**
 		 * The room manager for this construction manager
 	 	 */
 		this.roomManager = roomManager;
+
+		/**
+		 * The config for this construction manager
+		 */
+		this.config = _.defaults(config, defaultConfig);
 	}
 
 	/**
@@ -34,7 +52,7 @@ class ConstructionManager extends WorkforceManager {
 	 * Map of creeps wanted for this manager, with role names as the key
 	 */
 	get wantedCreeps() {
-		return require("wantedCreepsFor" + this.roomManager.roomName).constructionManager;
+		return this.config.wantedCreeps;
 	}
 
 	/**
@@ -57,6 +75,7 @@ class ConstructionManager extends WorkforceManager {
 	 */
 	_manageUnmanagedConstructionSites() {
 		return this.roomManager.find(FIND_CONSTRUCTION_SITES, {
+			roomStatuses: [],
 			filter: site => {
 				return site.my && this.constructionQueue.queue.indexOf(site.id) < 0;
 			}

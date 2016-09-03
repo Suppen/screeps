@@ -13,6 +13,14 @@ const MiscWorkforceManager = require("MiscWorkforceManager");
 const ScoutManager = require("ScoutManager");
 const ArmyManager = require("ArmyManager");
 
+const defaultConfig = {
+	energyManager: {},
+	repairManager: {},
+	constructionManager: {},
+	miscWorkforceManager: {},
+	armyManager: {}
+};
+
 /**
  * Handles everything happening in a room and adjacent rooms not controlled by me
  */
@@ -21,14 +29,20 @@ class RoomManager extends Manager {
 	 * Creates a new room manager for a room
 	 *
 	 * @param {String} roomName	Name of the room to manage
+	 * @param {Object} roomConfig	Configuration for the room
 	 */
-	constructor(roomName) {
+	constructor(roomName, roomConfig) {
 		super();
 
 		/**
 		 * The room's name
 		 */
 		this.roomName = roomName;
+
+		/**
+		 * The room's config
+		 */
+		this.config = _.defaults(roomConfig, defaultConfig);
 
 		// Create submanagers
 		this._createSubmanagers();
@@ -57,28 +71,26 @@ class RoomManager extends Manager {
 	 * @param {String} type	One of the FIND_* constants
 	 * @param {Object} [opts]	An object with additional parameters
 	 * @param {Function} [opts.filter]	Function to filter the results
-	 * @param {String[]} [opts.roomStatuses]	List of statuses of rooms to search
+	 * @param {String[]} [opts.roomStatuses]	List of statuses of rooms to search. If not given, all statuses will be searched
 	 */
 	find(type, opts = {}) {
 		let result = this.room.find(type, opts);
 
-/*
 		// Don't filter on room status by default
 		if (opts.roomStatuses === undefined) {
-			opts.roomStatuses = [];
+			opts.roomStatuses = ScoutManager.ALL_STATUSES;
 		}
 
 		// Iterate over neighbour rooms
 		for (let roomName in this.scoutManager.roomStatuses) {
 			let status = this.scoutManager.roomStatuses[roomName];
-			if (opts.roomStatuses.length === 0 || opts.roomStatuses.indexOf(status.status) >= 0) {
+			if (opts.roomStatuses.indexOf(status.status) >= 0) {
 				let room = Game.rooms[roomName];
 				if (room !== undefined) {
 					result = result.concat(room.find(type, opts));
 				}
 			}
 		}
-*/
 
 		return result;
 	}
@@ -101,13 +113,13 @@ class RoomManager extends Manager {
 	_createSubmanagers() {
 		this.roadManager = new RoadManager(this);
 		this.spawnManager = new SpawnManager(this);
-		this.energyManager = new EnergyManager(this);
-		this.constructionManager = new ConstructionManager(this);
+		this.energyManager = new EnergyManager(this, this.config.energyManager);
+		this.miscWorkforceManager = new MiscWorkforceManager(this, this.config.miscWorkforceManager);
+		this.repairManager = new RepairManager(this, this.config.repairManager);
+		this.constructionManager = new ConstructionManager(this, this.config.constructionManager);
 		this.towerManager = new TowerManager(this);
-		this.repairManager = new RepairManager(this);
-		this.miscWorkforceManager = new MiscWorkforceManager(this);
 		this.scoutManager = new ScoutManager(this);
-		this.armyManager = new ArmyManager(this);
+		this.armyManager = new ArmyManager(this, this.config.armyManager);
 	}
 
 	/**

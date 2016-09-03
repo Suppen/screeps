@@ -2,21 +2,36 @@
 
 const WorkforceManager = require("WorkforceManager");
 
-const ArmyConfig = require("ArmyConfig");
+const defaultConfig = {
+	isWar: false,
+	targetRoom: null,
+	breachpoints: [],
+	allies: [],
+	wantedCreeps: {}
+};
 
+/**
+ * Handles war
+ */
 class ArmyManager extends WorkforceManager {
 	/**
 	 * Creates a new army manager
 	 *
 	 * @param {RoomManager} roomManager	The room manager which owns this army. Must have a spawn manager on it!
+	 * @param {Object} config	Configuration for the army manager
 	 */
-	constructor(roomManager) {
+	constructor(roomManager, config) {
 		super(roomManager.spawnManager);
 
 		/**
 		 * The room manager for this energy manager
 		 */
 		this.roomManager = roomManager;
+
+		/**
+		 * The config for this construction manager
+		 */
+		this.config = _.defaults(config, defaultConfig);
 	}
 
 	/**
@@ -34,34 +49,6 @@ class ArmyManager extends WorkforceManager {
 	 */
 	get workforceName() {
 		return this.roomManager.roomName + ".army";
-	}
-
-	/**
-	 * Config for this army
-	 */
-	get config() {
-		let defaults = {
-			isWar: false,
-			useStoredEnergy: false,
-			targetRoom: null,
-			breachpoints: [],
-			allies: [],
-			wantedCreeps: {}
-		};
-		let config = null;
-		if (ArmyConfig[this.roomManager.roomName] === undefined) {
-			config = _.clone(defaults);
-		} else {
-			config = _.defaults(ArmyConfig[this.roomManager.roomName], defaults);
-		}
-		return config;
-	}
-
-	/**
-	 * Wether or not energy collectors should use energy from the storage
-	 */
-	get useStoredEnergy() {
-		return this.isWar && this.config.useStoredEnergy;
 	}
 
 	/**

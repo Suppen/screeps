@@ -4,6 +4,10 @@ const WorkforceManager = require("WorkforceManager");
 
 const PriorityQueue = require("PriorityQueue");
 
+const defaultConfig = {
+	wantedCreeps: {}
+};
+
 /**
  * Handles all repairing for a room manager
  */
@@ -12,14 +16,20 @@ class RepairManager extends WorkforceManager {
 	 * Create a new repair manager
 	 *
 	 * @param {RoomManager} roomManager	The room manager this repair manager manages repairs for
+	 * @param {Object} config	Configuration for the repair manager
 	 */
-	constructor(roomManager) {
+	constructor(roomManager, config) {
 		super(roomManager.spawnManager);
 
 		/**
 		 * The room manager this repair manager manages repairs for
 		 */
 		this.roomManager = roomManager;
+
+		/**
+		 * The config for this construction manager
+		 */
+		this.config = _.defaults(config, defaultConfig);
 	}
 
 	/**
@@ -33,7 +43,7 @@ class RepairManager extends WorkforceManager {
 	 * Map of creeps wanted for this manager, with role names as the key
 	 */
 	get wantedCreeps() {
-		return require("wantedCreepsFor" + this.roomManager.roomName).repairManager;
+		return this.config.wantedCreeps;
 	}
 
 	/**

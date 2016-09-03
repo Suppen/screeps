@@ -142,7 +142,9 @@ class RoadManager extends Manager {
 
 	run() {
 		// Use all tiles with creeps on them
-		this.roomManager.find(FIND_MY_CREEPS).forEach(c => {
+		this.roomManager.find(FIND_MY_CREEPS, {
+			roomStatuses: []
+		}).forEach(c => {
 			if (c.memory.role !== "builder") {
 				this._useTile(c.room.name, c.pos.x, c.pos.y);
 			}

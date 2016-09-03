@@ -77,6 +77,20 @@ class ScoutManager extends WorkforceManager {
 	/** Owned by me */
 	static get OWNED_BY_ME() {return "owned by me";}
 
+	/** Array of all statuses */
+	static get ALL_STATUSES() {
+		return [
+			ScoutManager.UNKNOWN,
+			ScoutManager.SOURCE_KEEPERS,
+			ScoutManager.OWNED_BY_HOSTILE,
+			ScoutManager.RESERVED_BY_HOSTILE,
+			ScoutManager.CLAIMABLE,
+			ScoutManager.UNINTERESTING,
+			ScoutManager.RESERVED_BY_ME,
+			ScoutManager.OWNED_BY_ME
+		];
+	}
+
 	/**
 	 * Which sides of the room has exits
 	 */

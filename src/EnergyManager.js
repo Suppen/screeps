@@ -5,6 +5,11 @@ const EnergyHarvesterCreepManager = require("EnergyHarvesterCreepManager");
 const LinkManager = require("LinkManager");
 const ScoutManager = require("ScoutManager");
 
+const defaultConfig = {
+	useStoredEnergy: false,
+	wantedCreeps: {}
+};
+
 /**
  * Manages sources and containers and makes sure spawns, extensions and the like are filled
  */
@@ -13,14 +18,20 @@ class EnergyManager extends WorkforceManager {
 	 * Creates a new energy manager
 	 *
 	 * @param {RoomManager} roomManager	The room manager which owns this energy manager. Must have a spawn manager on it!
+	 * @param {Object} config	Configuration for the energy manager
 	 */
-	constructor(roomManager) {
+	constructor(roomManager, config) {
 		super(roomManager.spawnManager);
 
 		/**
 		 * The room manager for this energy manager
 		 */
 		this.roomManager = roomManager;
+
+		/**
+		 * The config for this energy manager
+		 */
+		this.config = _.defaults(config, defaultConfig);
 
 		// Create a link manager
 		this.linkManager = new LinkManager(this);
@@ -47,7 +58,14 @@ class EnergyManager extends WorkforceManager {
 	 * Map of creeps wanted for this manager, with role names as the key
 	 */
 	get wantedCreeps() {
-		return require("wantedCreepsFor" + this.roomManager.roomName).energyManager;
+		return this.config.wantedCreeps;
+	}
+
+	/**
+	 * Whether or not energy in the storage can be used
+	 */
+	get useStoredEnergy() {
+		return this.config.useStoredEnergy;
 	}
 
 	/**
@@ -65,9 +83,7 @@ class EnergyManager extends WorkforceManager {
 	 */
 	get sources() {
 		if (this._sources === undefined) {
-			this._sources = this.roomManager.find(FIND_SOURCES, {roomStatuses: [
-				ScoutManager.CLAIMABLE
-			]});
+			this._sources = this.roomManager.find(FIND_SOURCES, {roomStatuses: []});
 		}
 		return this._sources;
 	}
@@ -80,9 +96,7 @@ class EnergyManager extends WorkforceManager {
 	get containers() {
 		if (this._containers === undefined) {
 			this._containers = this.roomManager.find(FIND_STRUCTURES, {
-				roomStatuses: [
-					ScoutManager.CLAIMABLE
-				],
+				roomStatuses: [],
 				filter: (s) => {
 					return (
 						s instanceof StructureContainer &&
@@ -106,7 +120,9 @@ class EnergyManager extends WorkforceManager {
 	 */
 	get looseEnergy() {
 		if (this._looseEnergy === undefined) {
-			this._looseEnergy = this.roomManager.find(FIND_DROPPED_ENERGY);
+			this._looseEnergy = this.roomManager.find(FIND_DROPPED_ENERGY, {
+				roomStatuses: []
+			});
 		}
 		return this._looseEnergy;
 	}
