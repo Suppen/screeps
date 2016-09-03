@@ -14,7 +14,7 @@
 		wantedCreeps: {
 			energyHarvester: {
 				amount() {
-					return this.sources.filter(s => s.room === this.roomManager.room).length;
+					return this.localSources.length;
 				},
 				body: [WORK, WORK, WORK, WORK, WORK, WORK, MOVE, MOVE, CARRY, CARRY],
 				priority: 1

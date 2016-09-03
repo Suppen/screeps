@@ -100,6 +100,26 @@ class EnergyManager extends WorkforceManager {
 	}
 
 	/**
+	 * Sources in the room owning this manager
+	 */
+	get localSources() {
+		if (this._localSources === undefined) {
+			this._localSources = this.sources.filter(s => s.room === this.roomManager.room);
+		}
+		return this._localSources;
+	}
+
+	/**
+	 * Sources in neighbour rooms
+	 */
+	get remoteSources() {
+		if (this._remoteSources === undefined) {
+			this._remoteSources = this.sources.filter(s => s.room !== this.roomManager.room);
+		}
+		return this._remoteSources;
+	}
+
+	/**
 	 * List of all containers within two tiles of a source
 	 *
 	 * @return {StructureContainer[]}	An array of all containers within two tiles of a source
@@ -114,6 +134,26 @@ class EnergyManager extends WorkforceManager {
 			});
 		}
 		return this._containers;
+	}
+
+	/**
+	 * Containers in the room owning this manager
+	 */
+	get localContainers() {
+		if (this._localContainers === undefined) {
+			this._localContainers = this.containers.filter(s => s.room === this.roomManager.room);
+		}
+		return this._localContainers;
+	}
+
+	/**
+	 * Containers in neighbour rooms
+	 */
+	get remoteContainers() {
+		if (this._remoteContainers === undefined) {
+			this._remoteContainers = this.containers.filter(s => s.room !== this.roomManager.room);
+		}
+		return this._remoteContainers;
 	}
 
 	/**
@@ -339,7 +379,7 @@ class EnergyManager extends WorkforceManager {
 		let unassignedHarvesters = this.creepManagers.filter(cm => cm instanceof EnergyHarvesterCreepManager && cm.resourcePickup === null);
 
 		// Find all sources without assigned harvesters
-		let sourcesWithoutHarvesters = this.sources.filter(s => this._sourceHarvesterMap[s.id] === undefined);
+		let sourcesWithoutHarvesters = this.localSources.filter(s => this._sourceHarvesterMap[s.id] === undefined);
 
 		// Assign harvesters to sources
 		while (unassignedHarvesters.length > 0 && sourcesWithoutHarvesters.length > 0) {
