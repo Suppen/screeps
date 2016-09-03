@@ -1,6 +1,7 @@
 "use strict";
 
 const Manager = require("Manager");
+const ScoutManager = require("ScoutManager");
 
 class RoadManager extends Manager {
 	constructor(roomManager) {
@@ -65,11 +66,12 @@ class RoadManager extends Manager {
 	_manageRoad(roomName, x, y, usage) {
 		// Check if there is visibility in the room
 		let room = Game.rooms[roomName];
-		if (room !== undefined)  {
-			// Check if the tile deserves a road
-			let structure = room.lookAt(x, y).find(s => s.type == "structure" || s.type == "constructionSite");
 
+		if (room !== undefined)  {
 			if (usage >= RoadManager.usageForRoad) {
+				// Check if the tile deserves a road
+				let structure = room.lookAt(x, y).find(s => s instanceof Structure || s instanceof ConstructionSite);
+
 				// Build a road if there is no structure on it
 				if (!structure) {
 					// Does not have a building on it. Build a road
@@ -77,7 +79,7 @@ class RoadManager extends Manager {
 				}
 
 				// Maintain the road if there is already a road on the tile in need of repairs
-				if (structure && structure.type == "structure" && structure.structure.structureType == STRUCTURE_ROAD) {
+				if (structure && structure.type == "structure" && structure.structure.structureType === STRUCTURE_ROAD) {
 					if (structure.structure.hits / structure.structure.hitsMax < RoadManager.minRoadHealth) {
 						this.roomManager.repairManager.addToRepairQueue(structure.structure);
 					}
@@ -143,7 +145,9 @@ class RoadManager extends Manager {
 	run() {
 		// Use all tiles with creeps on them
 		this.roomManager.find(FIND_MY_CREEPS, {
-			roomStatuses: []
+			roomStatuses: [
+				ScoutManager.CLAIMABLE
+			]
 		}).forEach(c => {
 			if (c.memory.role !== "builder") {
 				this._useTile(c.room.name, c.pos.x, c.pos.y);

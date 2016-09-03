@@ -12,7 +12,7 @@ module.exports = {
 						amount() {
 							return this.sources.length;
 						},
-						body: [WORK, WORK, WORK, WORK, WORK, WORK, WORK, MOVE, MOVE, CARRY],
+						body: [WORK, WORK, WORK, WORK, WORK, WORK, WORK, MOVE, MOVE, CARRY, CARRY],
 						priority: 1
 					},
 					energyCollector: {
@@ -33,7 +33,7 @@ module.exports = {
 				wantedCreeps: {
 					repairer: {
 						amount() {
-							return this.getRepairTargetId() !== null ? 1 : 0; 
+							return this.getRepairTargetId() !== null ? 3 : 0; 
 						},
 						body: [WORK, WORK, WORK, WORK, MOVE, CARRY, MOVE, CARRY, MOVE, CARRY, MOVE, CARRY]
 					}
@@ -43,9 +43,9 @@ module.exports = {
 				wantedCreeps: {
 					builder: {
 						amount() {
-							return this.constructionQueue.size ? 1 : 0;
+							return this.constructionQueue.size ? 3 : 0;
 						},
-						body: [WORK, WORK, WORK, WORK, MOVE, CARRY, MOVE, CARRY, CARRY, MOVE, MOVE, CARRY]
+						body: [WORK, WORK, WORK, WORK, WORK, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY]
 					}
 				}
 			},
@@ -213,7 +213,7 @@ module.exports = {
 				wantedCreeps: {
 					repairer: {
 						amount() {
-							return this.getRepairTargetId() !== null ? 2 : 0; 
+							return this.getRepairTargetId() !== null ? 1 : 0; 
 						},
 						body: [WORK, WORK, WORK, MOVE, MOVE, MOVE, CARRY, CARRY, CARRY]
 					}
@@ -226,7 +226,7 @@ module.exports = {
 						amount() {
 							return this.sources.length;
 						},
-						body: [WORK, WORK, WORK, MOVE, MOVE, CARRY, CARRY, CARRY],
+						body: [WORK, WORK, WORK, WORK, MOVE, MOVE, MOVE, CARRY, CARRY, CARRY],
 						priority: 1
 					},
 					energyCollector: {
@@ -239,7 +239,7 @@ module.exports = {
 				wantedCreeps: {
 					builder: {
 						amount() {
-							return this.constructionQueue.size > 0 ? 3 : 0;
+							return this.constructionQueue.size > 0 ? 2 : 0;
 						},
 						body: [WORK, WORK, WORK, MOVE, MOVE, CARRY, CARRY, CARRY]
 					}
@@ -248,7 +248,7 @@ module.exports = {
 			miscWorkforceManager: {
 				wantedCreeps: {
 					upgrader: {
-						amount: 0,
+						amount: 3,
 						body: [WORK, WORK, WORK, MOVE, MOVE, CARRY, CARRY, CARRY]
 					}
 				}

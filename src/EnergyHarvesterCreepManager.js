@@ -43,12 +43,6 @@ class EnergyHarvesterCreepManager extends ResourceHandlingCreepManager {
 	 * @return {Structure}	The found dropoff, or null if there are no valid dropoffs
 	 */
 	findDropoff() {
-		// Go to parent room if not there
-		if (this.creep.room.name !== this.energyManager.roomManager.roomName) {
-			this.creep.moveTo(new RoomPosition(25, 25, this.energyManager.roomManager.roomName));
-			return null;
-		}
-
 		// Find all possible dropoffs
 		let dropoffs = this.energyManager.allDropoffs;
 

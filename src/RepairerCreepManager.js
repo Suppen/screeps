@@ -85,14 +85,27 @@ class RepairerCreepManager extends ResourceHandlingCreepManager {
 		// The selected pickup
 		let pickup = null;
 
-		// Check if there are any containers or links
+		// Check if there are any containers or links or storage
 		if ((pickups.containers.length > 0 || pickups.links.length > 0) && pickup === null) {
-			pickup = utils.findClosest(this.creep.pos, pickups.containers.concat(pickups.links));
-		}
+			// Combine links and containers, and the storage
+			let linksContainers = pickups.containers.concat(pickups.links);
+			if (pickups.storage !== null) {
+				linksContainers.push(pickups.storage);
+			}
 
-		// Check the storage
-		if (pickups.storage !== null && pickup === null) {
-			pickup = pickups.storage;
+			// Ignore containers with less than 50 energy
+			linksContainers = linksContainers.filter(s => {
+				let keep = false;
+				if (s instanceof StructureLink) {
+					keep = s.energy > 50
+				} else {
+					keep = s.store.energy > 50;
+				}
+				return keep;
+			});
+
+			// Choose the closest one
+			pickup = this.creep.pos.findClosestByRange(linksContainers);
 		}
 
 		// Last resort: Harvest a source
@@ -115,14 +128,20 @@ class RepairerCreepManager extends ResourceHandlingCreepManager {
 		}
 
 		if (!this.isRepairing) {
-			// Check if the source is ok
-			if (this.energyManager.pickupIsBad(this.resourcePickup)) {
-				this.resourcePickup = this.findPickup();
-			}
+			// Is the creep in the parent room?
+			if (this.isInParentRoom) {
+				// Check if the source is ok
+				if (this.energyManager.pickupIsBad(this.resourcePickup)) {
+					this.resourcePickup = this.findPickup();
+				}
 
-			// Go get energy
-			if (this.aquireResource() === ERR_NOT_IN_RANGE) {
-				this.creep.moveTo(this.resourcePickup);
+				// Go get energy
+				if (this.aquireResource() === ERR_NOT_IN_RANGE) {
+					this.creep.moveTo(this.resourcePickup);
+				}
+			} else {
+				// Nope. Go there
+				this.creep.moveTo(new RoomPosition(25, 25, this.parentRoomName));
 			}
 		} else {
 			// Check if the creep has been assigned a repair site

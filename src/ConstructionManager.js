@@ -2,6 +2,7 @@
 
 const WorkforceManager = require("WorkforceManager");
 const PriorityQueue = require("PriorityQueue");
+const ScoutManager = require("ScoutManager");
 
 const defaultConfig = {
 	wantedCreeps: {}
@@ -75,7 +76,10 @@ class ConstructionManager extends WorkforceManager {
 	 */
 	_manageUnmanagedConstructionSites() {
 		return this.roomManager.find(FIND_CONSTRUCTION_SITES, {
-			roomStatuses: [],
+			roomStatuses: [
+				ScoutManager.CLAIMABLE,
+				ScoutManager.UNINTERESTING
+			],
 			filter: site => {
 				return site.my && this.constructionQueue.queue.indexOf(site.id) < 0;
 			}

@@ -144,7 +144,7 @@ class EnergyCollectorCreepManager extends ResourceHandlingCreepManager {
 		}
 */
 
-		// Last chance! The storage!
+		// Last chance: The storage!
 		if (dropoff === null && dropoffs.storage !== null) {
 			dropoff = dropoffs.storage;
 		}
@@ -195,15 +195,17 @@ class EnergyCollectorCreepManager extends ResourceHandlingCreepManager {
 	 * Calculates a body for the creep based on an amount of energy
 	 */
 	static calculateBody(energy) {
-		let baseBody = [MOVE, CARRY, CARRY];
-		let baseBodyCost = 150;
-
-		let baseBodyCopies = Math.floor(energy / baseBodyCost);
-		baseBodyCopies = Math.min(5, baseBodyCopies);
-
-		let body = [];
-		for (let i = 0; i < baseBodyCopies; i++) {
-			body = body.concat(baseBody);
+		let body;
+		if (energy >= 1200) {
+			body = [MOVE, CARRY, CARRY, MOVE, CARRY, CARRY, MOVE, CARRY, CARRY, MOVE, CARRY, CARRY, MOVE, CARRY, CARRY];
+		} else if (energy >= 900) {
+			body = [MOVE, CARRY, CARRY, MOVE, CARRY, CARRY, MOVE, CARRY, CARRY, MOVE, CARRY, CARRY];
+		} else if (energy >= 600) {
+			body = [MOVE, CARRY, CARRY, MOVE, CARRY, CARRY, MOVE, CARRY, CARRY];
+		} else if (energy >= 400) {
+			body = [MOVE, CARRY, CARRY, MOVE, CARRY, CARRY];
+		} else if (energy >= 300) {
+			body = [MOVE, CARRY, CARRY];
 		}
 		return body;
 	}

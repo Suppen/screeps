@@ -105,12 +105,9 @@ class EnergyManager extends WorkforceManager {
 	get containers() {
 		if (this._containers === undefined) {
 			this._containers = this.roomManager.find(FIND_STRUCTURES, {
-				roomStatuses: [],
+				roomStatuses: [ScoutManager.CLAIMABLE],
 				filter: (s) => {
-					return (
-						s instanceof StructureContainer &&
-						this.sources.reduce((withinTwoTiles, source) => withinTwoTiles || source.pos.getRangeTo(s) <= 2, false)
-					);
+					return s instanceof StructureContainer;
 				}
 			});
 		}

@@ -47,7 +47,7 @@ class CreepManager extends Manager {
 	 * True if the creep is in its parent room, false otherwise
 	 */
 	get isInParentRoom() {
-		return this.creep.roomName === this.parentRoomName;
+		return this.creep.room.name === this.parentRoomName;
 	}
 
 	/**

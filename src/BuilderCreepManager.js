@@ -72,10 +72,13 @@ class BuilderCreepManager extends ResourceHandlingCreepManager {
 		// The selected pickup
 		let pickup = null;
 
-		// Check if there are any containers or links
+		// Check if there are any containers or links or storage
 		if ((pickups.containers.length > 0 || pickups.links.length > 0) && pickup === null) {
-			// Combine links and containers
+			// Combine links and containers, and the storage
 			let linksContainers = pickups.containers.concat(pickups.links);
+			if (pickups.storage !== null) {
+				linksContainers.push(pickups.storage);
+			}
 
 			// Ignore containers with less than 50 energy
 			linksContainers = linksContainers.filter(s => {
@@ -89,12 +92,7 @@ class BuilderCreepManager extends ResourceHandlingCreepManager {
 			});
 
 			// Choose the closest one
-			pickup = utils.findClosest(this.creep.pos, linksContainers);
-		}
-
-		// Check the storage
-		if (pickups.storage !== null && pickup === null) {
-			pickup = pickups.storage;
+			pickup = this.creep.pos.findClosestByRange(linksContainers);
 		}
 
 		// Last resort: Harvest a source
@@ -117,13 +115,19 @@ class BuilderCreepManager extends ResourceHandlingCreepManager {
 		}
 
 		if (!this.isConstructing) {
-			// Check if the creep has some place to get energy
-			if (this.energyManager.pickupIsBad(this.resourcePickup)) {
-				// Nope. Find one
-				this.resourcePickup = this.findPickup();
-			}
-			if (this.aquireResource() === ERR_NOT_IN_RANGE) {
-				this.creep.moveTo(this.resourcePickup);
+			// Is the creep in the parent room?
+			if (this.isInParentRoom) {
+				// Yes. Check if the creep has some place to get energy
+				if (this.energyManager.pickupIsBad(this.resourcePickup)) {
+					// Nope. Find one
+					this.resourcePickup = this.findPickup();
+				}
+				if (this.aquireResource() === ERR_NOT_IN_RANGE) {
+					this.creep.moveTo(this.resourcePickup);
+				}
+			} else {
+				// Nope. Go there
+				this.creep.moveTo(new RoomPosition(25, 25, this.parentRoomName));
 			}
 		} else {
 			// Check if the creep has been assigned a construction site

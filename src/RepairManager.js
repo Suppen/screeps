@@ -1,6 +1,7 @@
 "use strict";
 
 const WorkforceManager = require("WorkforceManager");
+const ScoutManager = require("ScoutManager");
 
 const PriorityQueue = require("PriorityQueue");
 
@@ -78,7 +79,8 @@ class RepairManager extends WorkforceManager {
 		}
 		if (this.memory.unscheduledRepairQueue.length === 0) {
 			// Add damaged, unscheduled stuff
-			this.memory.unscheduledRepairQueue = this.roomManager.room.find(FIND_STRUCTURES, {
+			this.memory.unscheduledRepairQueue = this.roomManager.find(FIND_STRUCTURES, {
+				roomStatuses: [ScoutManager.CLAIMABLE],
 				filter(s) {
 					return s.hits < s.hitsMax;
 				}

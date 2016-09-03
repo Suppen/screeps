@@ -114,9 +114,9 @@ class RoomManager extends Manager {
 		this.roadManager = new RoadManager(this);
 		this.spawnManager = new SpawnManager(this);
 		this.energyManager = new EnergyManager(this, this.config.energyManager);
-		this.miscWorkforceManager = new MiscWorkforceManager(this, this.config.miscWorkforceManager);
 		this.repairManager = new RepairManager(this, this.config.repairManager);
 		this.constructionManager = new ConstructionManager(this, this.config.constructionManager);
+		this.miscWorkforceManager = new MiscWorkforceManager(this, this.config.miscWorkforceManager);
 		this.towerManager = new TowerManager(this);
 		this.scoutManager = new ScoutManager(this);
 		this.armyManager = new ArmyManager(this, this.config.armyManager);
@@ -129,7 +129,6 @@ class RoomManager extends Manager {
 	 */
 	_runSubmanagers() {
 		this.roadManager.run();
-		this.spawnManager.run();
 		this.energyManager.run();
 		this.constructionManager.run();
 		this.towerManager.run();
@@ -137,6 +136,7 @@ class RoomManager extends Manager {
 		this.miscWorkforceManager.run();
 		this.scoutManager.run();
 		this.armyManager.run();
+		this.spawnManager.run();
 	}
 
 	run() {
