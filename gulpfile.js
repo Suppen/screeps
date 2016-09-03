@@ -48,7 +48,7 @@ gulp.task("sim", ["config"], () => {
 // Builds the config. Very very hacky, but works
 gulp.task("config", cb => {
 	// The config string
-	let config = "\"use strict\";\n\nmodule.exports = {";
+	let config = "\"use strict\";\n\n// Automatically generated file. Do not manually modify\n\nmodule.exports = {";
 
 	// Find all room configs
 	{

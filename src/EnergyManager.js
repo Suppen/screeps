@@ -1,9 +1,11 @@
 "use strict";
 
 const WorkforceManager = require("WorkforceManager");
-const EnergyHarvesterCreepManager = require("EnergyHarvesterCreepManager");
 const LinkManager = require("LinkManager");
 const ScoutManager = require("ScoutManager");
+
+const EnergyCollectorCreepManager = require("EnergyCollectorCreepManager");
+const EnergyHarvesterCreepManager = require("EnergyHarvesterCreepManager");
 
 const defaultConfig = {
 	useStoredEnergy: false,
@@ -58,7 +60,14 @@ class EnergyManager extends WorkforceManager {
 	 * Map of creeps wanted for this manager, with role names as the key
 	 */
 	get wantedCreeps() {
-		return this.config.wantedCreeps;
+		let wantedCreeps = this.config.wantedCreeps;
+
+		// Calculate bodies of energy collectors, if not specified
+		if (wantedCreeps.energyCollector !== undefined && wantedCreeps.energyCollector.body === undefined) {
+			wantedCreeps.energyCollector.body = EnergyCollectorCreepManager.calculateBody(this.roomManager.room.energyCapacityAvailable);
+		}
+
+		return wantedCreeps;
 	}
 
 	/**

@@ -3,7 +3,6 @@
 const Manager = require("Manager");
 
 const RoomManager = require("RoomManager");
-const TerminalManager = require("TerminalManager");
 
 const config = require("config");
 
@@ -25,10 +24,6 @@ class EmpireManager extends Manager {
 
 		// Create room managers
 		this._createRoomManagers();
-
-		// Create a terminal manager
-		/** The empire's terminal manager */
-		this.terminalManager = new TerminalManager();
 	}
 
 	/**
@@ -152,9 +147,6 @@ class EmpireManager extends Manager {
 		for (let r in this.roomManagers) {
 			this.roomManagers[r].run();
 		}
-
-		// Run the terminal manager
-		this.terminalManager.run();
 	}
 
 	/**

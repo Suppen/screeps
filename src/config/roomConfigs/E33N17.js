@@ -21,7 +21,6 @@
 			},
 			energyCollector: {
 				amount: 2,
-				body: [MOVE, CARRY, CARRY, MOVE, CARRY, CARRY, MOVE, CARRY, CARRY, MOVE, CARRY, CARRY],
 				priority: 2
 			}
 		}

@@ -3,10 +3,9 @@
 		wantedCreeps: {
 			repairer: {
 				amount() {
-					return 0;
-					return this.getRepairTargetId() !== null ? 1 : 0; 
+					return this.getRepairTargetId() !== null ? 2 : 0; 
 				},
-				body: [WORK, MOVE, CARRY, CARRY]
+				body: [WORK, WORK, WORK, MOVE, MOVE, MOVE, CARRY, CARRY, CARRY]
 			}
 		}
 	},
@@ -15,15 +14,13 @@
 		wantedCreeps: {
 			energyHarvester: {
 				amount() {
-					return 0;
 					return this.sources.length;
 				},
-				body: [WORK, MOVE, CARRY, CARRY],
+				body: [WORK, WORK, WORK, MOVE, MOVE, CARRY, CARRY, CARRY],
 				priority: 1
 			},
 			energyCollector: {
 				amount: 1,
-				body: [MOVE, CARRY, CARRY],
 				priority: 2
 			}
 		}
@@ -32,10 +29,9 @@
 		wantedCreeps: {
 			builder: {
 				amount() {
-					return 0;
-					return this.constructionQueue.size > 0 ? 1 : 0;
+					return this.constructionQueue.size > 0 ? 3 : 0;
 				},
-				body: [WORK, MOVE, CARRY, CARRY],
+				body: [WORK, WORK, WORK, MOVE, MOVE, CARRY, CARRY, CARRY]
 			}
 		}
 	},
@@ -43,7 +39,7 @@
 		wantedCreeps: {
 			upgrader: {
 				amount: 0,
-				body: [WORK, MOVE, CARRY, CARRY],
+				body: [WORK, WORK, WORK, MOVE, MOVE, CARRY, CARRY, CARRY]
 			}
 		}
 	},

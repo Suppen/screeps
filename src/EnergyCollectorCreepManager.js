@@ -1,7 +1,6 @@
 "use strict";
 
 const ResourceHandlingCreepManager = require("ResourceHandlingCreepManager");
-const TerminalManager = require("TerminalManager");
 
 const utils = require("utils");
 
@@ -139,9 +138,11 @@ class EnergyCollectorCreepManager extends ResourceHandlingCreepManager {
 		}
 
 		// Does the terminal have capacity for more energy?
+/*
 		if (dropoff === null && dropoffs.terminal !== null && dropoffs.terminal.store.energy < TerminalManager.energyBuffer) {
 			dropoff = dropoffs.terminal;
-		}		
+		}
+*/
 
 		// Last chance! The storage!
 		if (dropoff === null && dropoffs.storage !== null) {
@@ -188,6 +189,23 @@ class EnergyCollectorCreepManager extends ResourceHandlingCreepManager {
 					break;
 			}
 		}
+	}
+
+	/**
+	 * Calculates a body for the creep based on an amount of energy
+	 */
+	static calculateBody(energy) {
+		let baseBody = [MOVE, CARRY, CARRY];
+		let baseBodyCost = 150;
+
+		let baseBodyCopies = Math.floor(energy / baseBodyCost);
+		baseBodyCopies = Math.min(5, baseBodyCopies);
+
+		let body = [];
+		for (let i = 0; i < baseBodyCopies; i++) {
+			body = body.concat(baseBody);
+		}
+		return body;
 	}
 }
 
