@@ -7,7 +7,7 @@ const utils = require("utils");
 /**
  * Manager for a creep type which goes around and collects dropped energy and moves energy from containers to other things
  */
-class EnergyCollectorCreepManager extends ResourceHandlingCreepManager {
+class RemoteEnergyCollectorCreepManager extends ResourceHandlingCreepManager {
 	/**
 	 * Creates a new Energy collector manager
 	 *
@@ -38,56 +38,6 @@ class EnergyCollectorCreepManager extends ResourceHandlingCreepManager {
 	}
 
 	/**
-	 * Finds a pickup to get energy from
-	 */
-	findPickup() {
-		// Find all possible pickups
-		let pickups = this.energyManager.allPickups;
-
-		// The selected pickup
-		let pickup = null;
-
-		// If permitted, take from the storage first
-		if (this.energyManager.useStoredEnergy && pickups.storage !== null) {
-			pickup = pickups.storage;
-		}
-
-		// Check for loose energy
-		if (pickup === null) {
-			let looseEnergy = pickups.looseEnergy.filter(e => e.energy > 25);
-			if (looseEnergy.length > 0) {
-				// TODO Filter out puddles by size and range
-				pickup = this.creep.pos.findClosestByRange(looseEnergy);
-			}
-		}
-
-		// Then, Go for containers and links
-		if ((pickups.containers.length > 0 || pickups.links.length > 0) && pickup === null) {
-			let linksContainers = pickups.containers.concat(pickups.links);
-
-			// Ignore containers with less than 50 energy
-			linksContainers = linksContainers.filter(s => {
-				let keep = false;
-				if (s instanceof StructureLink) {
-					keep = s.energy > 50
-				} else {
-					keep = s.store.energy > 50;
-				}
-				return keep;
-			});
-
-			pickup = this.creep.pos.findClosestByRange(linksContainers);
-		}
-
-		// Last chance! The storage!
-		if (pickup === null && pickups.storage !== null) {
-			pickup = pickups.storage;
-		}
-
-		return pickup;
-	}
-
-	/**
 	 * Finds a dropoff to dump energy on
 	 *
 	 * @return {Structure}	The found dropoff, or null if there are no valid dropoffs
@@ -99,21 +49,18 @@ class EnergyCollectorCreepManager extends ResourceHandlingCreepManager {
 	run() {
 		if (this.loadLevel === 0 && !this.isSwooping) {
 			this.isSwooping = true;
-			this.resourcePickup = null;
 		} else if (this.loadLevel === 1 && this.isSwooping) {
 			this.isSwooping = false;
 			this.resourceDropoff = null;
 		}
 
 		if (this.isSwooping) {
-			// Check if the creep has some place to get energy
-			if (this.energyManager.pickupIsBad(this.resourcePickup)) {
-				// Nope. Find one
-				this.resourcePickup = this.findPickup();
-			}
-			if (this.aquireResource() === ERR_NOT_IN_RANGE) {
+			// Go to the container
+			if (this.aquireResource() !== OK) {
 				this.creep.moveTo(this.resourcePickup);
 			}
+		} else if (!this.isInParentRoom) {
+			this.creep.moveTo(new RoomPosition(25, 25, this.parentRoomName));
 		} else {
 			// Check if a new dropoff is needed
 			if (this.energyManager.dropoffIsBad(this.resourceDropoff)) {
@@ -155,4 +102,4 @@ class EnergyCollectorCreepManager extends ResourceHandlingCreepManager {
 	}
 }
 
-module.exports = EnergyCollectorCreepManager;
+module.exports = RemoteEnergyCollectorCreepManager;

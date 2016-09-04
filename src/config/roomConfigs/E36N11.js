@@ -16,7 +16,7 @@
 				amount() {
 					return this.localSources.length;
 				},
-				body: [WORK, WORK, WORK, WORK, MOVE, MOVE, MOVE, CARRY, CARRY, CARRY],
+				body: [WORK, WORK, WORK, WORK, WORK, WORK, MOVE, MOVE, MOVE, CARRY, CARRY, CARRY],
 				priority: 1
 			},
 			energyCollector: {
@@ -38,7 +38,7 @@
 	miscWorkforceManager: {
 		wantedCreeps: {
 			upgrader: {
-				amount: 4,
+				amount: 2,
 				body: [WORK, WORK, WORK, MOVE, MOVE, CARRY, CARRY, CARRY]
 			}
 		}

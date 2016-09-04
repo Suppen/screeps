@@ -3,14 +3,14 @@
 		wantedCreeps: {
 			repairer: {
 				amount() {
-					return this.getRepairTargetId() !== null ? 1 : 0; 
+					return this.getRepairTargetId() !== null ? 3 : 0; 
 				},
 				body: [WORK, WORK, WORK, WORK, MOVE, MOVE, MOVE, MOVE, MOVE, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY]
 			}
 		}
 	},
 	energyManager: {
-		useStoredEnergy: true,
+		useStoredEnergy: false,
 		wantedCreeps: {
 			energyHarvester: {
 				amount() {
@@ -22,6 +22,18 @@
 			energyCollector: {
 				amount: 2,
 				priority: 2
+			},
+			remoteEnergyCollector: {
+				amount() {
+					return this.remoteContainers.length;
+				},
+				body: [MOVE, CARRY, CARRY, MOVE, CARRY, CARRY, MOVE, CARRY, CARRY, MOVE, CARRY, CARRY, MOVE, CARRY, CARRY, MOVE, CARRY, CARRY]
+			},
+			remoteEnergyHarvester: {
+				amount() {
+					return this.remoteSources.length;
+				},
+				body: [WORK, WORK, WORK, WORK, WORK, MOVE, MOVE, MOVE]
 			}
 		}
 	},
@@ -29,7 +41,7 @@
 		wantedCreeps: {
 			builder: {
 				amount() {
-					return this.constructionQueue.size > 0 ? 1 : 0;
+					return this.constructionQueue.size > 0 ? 2 : 0;
 				},
 				body: [WORK, WORK, WORK, WORK, WORK, WORK, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY]
 			}

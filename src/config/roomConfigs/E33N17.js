@@ -22,6 +22,18 @@
 			energyCollector: {
 				amount: 2,
 				priority: 2
+			},
+			remoteEnergyCollector: {
+				amount() {
+					return this.remoteContainers.length;
+				},
+				body: [MOVE, CARRY, CARRY, MOVE, CARRY, CARRY, MOVE, CARRY, CARRY, MOVE, CARRY, CARRY, MOVE, CARRY, CARRY, MOVE, CARRY, CARRY]
+			},
+			remoteEnergyHarvester: {
+				amount() {
+					return this.remoteSources.length;
+				},
+				body: [WORK, WORK, WORK, WORK, WORK, MOVE, MOVE, MOVE]
 			}
 		}
 	},
@@ -46,22 +58,18 @@
 	armyManager: {
 		isWar: false,
 		targetRoom: {
-			name: "E38N14",
-			entryX: 1,
-			entryY: 23,
+			name: "E33N16",
+			entryX: 30,
+			entryY: 1,
 			protectX: 15,
-			protectY: 27
+			protectY: 31
 		},
 		breachpoints: [],
 		allies: [],
 		wantedCreeps: {
-			attacker: {
-				amount: 3,
-				body: [MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, ATTACK, ATTACK, ATTACK, ATTACK, ATTACK, ATTACK, ATTACK, ATTACK]
-			},
-			healer: {
-				amount: 2,
-				body: [MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, ATTACK, HEAL, HEAL, HEAL, HEAL, HEAL, HEAL, HEAL, HEAL]
+			constructionSiteDestroyer: {
+				amount: 1,
+				body: [MOVE, MOVE, MOVE, MOVE, MOVE]
 			}
 		}
 	}

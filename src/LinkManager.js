@@ -63,21 +63,6 @@ class LinkManager extends Manager {
 	}
 
 	/**
-	 * Links which can both be picked up from and dropped off to
-	 */
-	get pickupDropoffLinks() {
-		if (this._pickupDropoffLinks === undefined) {
-			this._pickupDropoffLinks = this.links.filter(l => {
-				let flags = this.energyManager.roomManager.room.lookForAt(LOOK_FLAGS, l);
-				return flags.reduce((isDropoff, flag) => {
-					return flag.color === COLOR_GREEN && flag.secondaryColor === COLOR_GREEN;
-				}, false);
-			});
-		}
-		return this._pickupDropoffLinks;
-	}
-
-	/**
 	 * Transfers energy between links
 	 *
 	 * @param {StructureLink[]} from	Array of links to transfer from
@@ -109,8 +94,6 @@ class LinkManager extends Manager {
 	run() {
 		// Move some energy around!
 		this._transferEnergy(this.dropoffLinks, this.pickupLinks);
-		this._transferEnergy(this.dropoffLinks, this.pickupDropoffLinks);
-		this._transferEnergy(this.pickupDropoffLinks, this.pickupLinks);
 	}
 }
 

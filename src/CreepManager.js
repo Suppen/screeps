@@ -56,6 +56,13 @@ class CreepManager extends Manager {
 	get parentRoomName() {
 		return this.workforceManager.roomManager.roomName;
 	}
+
+	/**
+	 * Calculates a default body for the creep based on an amount of energy. Will throw if not overridden
+	 */
+	static calculateBody(energy) {
+		throw new Error("Please override calculateBody in subclasses of CreepManager");
+	}
 }
 
 module.exports = CreepManager;

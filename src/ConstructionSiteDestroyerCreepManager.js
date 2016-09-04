@@ -31,7 +31,8 @@ class ConstructionSiteDestroyerCreepManager extends CreepManager {
 			});
 
 			if (targets.length > 0) {
-				this.creep.moveTo(targets[0]);
+				let target = this.creep.pos.findClosestByRange(targets);
+				this.creep.moveTo(target);
 			} else {
 				// Go defent some point
 				this.creep.moveTo(targetRoom.protectX, targetRoom.protectY);

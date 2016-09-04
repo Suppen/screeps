@@ -70,10 +70,10 @@ class RoadManager extends Manager {
 		if (room !== undefined)  {
 			if (usage >= RoadManager.usageForRoad) {
 				// Check if the tile deserves a road
-				let structure = room.lookAt(x, y).find(s => s instanceof Structure || s instanceof ConstructionSite);
+				let structure = room.lookAt(x, y).find(s => s.type == "structure" || s.type == "constructionSite");
 
 				// Build a road if there is no structure on it
-				if (!structure) {
+				if (structure !== undefined) {
 					// Does not have a building on it. Build a road
 					room.createConstructionSite(x, y, STRUCTURE_ROAD);
 				}

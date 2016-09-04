@@ -5,8 +5,9 @@ const Manager = require("Manager");
 // Make a map between creep managers and roles
 const roleManagerMap = {
 	energyHarvester: require("EnergyHarvesterCreepManager"),
-	remoteEnergyHarvester: require("EnergyHarvesterCreepManager"),
+	remoteEnergyHarvester: require("RemoteEnergyHarvesterCreepManager"),
 	energyCollector: require("EnergyCollectorCreepManager"),
+	remoteEnergyCollector: require("RemoteEnergyCollectorCreepManager"),
 	builder: require("BuilderCreepManager"),
 	repairer: require("RepairerCreepManager"),
 	upgrader: require("UpgraderCreepManager"),
@@ -213,7 +214,7 @@ class WorkforceManager extends Manager {
 			if (priority === undefined) {
 				priority = 1000;
 			} else if (this.priority instanceof Function) {
-				priority = priority(this);
+				priority = priority.call(this);
 			}
 
 			// Check if more are needed

@@ -5,7 +5,9 @@ const LinkManager = require("LinkManager");
 const ScoutManager = require("ScoutManager");
 
 const EnergyCollectorCreepManager = require("EnergyCollectorCreepManager");
+const RemoteEnergyCollectorCreepManager = require("RemoteEnergyCollectorCreepManager");
 const EnergyHarvesterCreepManager = require("EnergyHarvesterCreepManager");
+const RemoteEnergyHarvesterCreepManager = require("RemoteEnergyHarvesterCreepManager");
 
 const defaultConfig = {
 	useStoredEnergy: false,
@@ -78,13 +80,32 @@ class EnergyManager extends WorkforceManager {
 	}
 
 	/**
-	 * Map between source and harvester creep
+	 * Map between local sources and harvester creeps
 	 */
-	get _sourceHarvesterMap() {
-		if (this.memory.sourceHarvesterMap === undefined) {
-			this.memory.sourceHarvesterMap = {};
+	get _localSourceHarvesterMap() {
+		if (this.memory.localSourceHarvesterMap === undefined) {
+			this.memory.localSourceHarvesterMap = {};
 		}
-		return this.memory.sourceHarvesterMap;
+		return this.memory.localSourceHarvesterMap;
+	}
+	/**
+	 * Map between remote sources and harvester creeps
+	 */
+	get _remoteSourceHarvesterMap() {
+		if (this.memory.remoteSourceHarvesterMap === undefined) {
+			this.memory.remoteSourceHarvesterMap = {};
+		}
+		return this.memory.remoteSourceHarvesterMap;
+	}
+
+	/**
+	 * Map between remote containers and collector creeps
+	 */
+	get _remoteContainerCollectorMap() {
+		if (this.memory.remoteContainerCollectorMap === undefined) {
+			this.memory.remoteContainerCollectorMap = {};
+		}
+		return this.memory.remoteContainerCollectorMap;
 	}
 
 	/**
@@ -115,6 +136,14 @@ class EnergyManager extends WorkforceManager {
 	get remoteSources() {
 		if (this._remoteSources === undefined) {
 			this._remoteSources = this.sources.filter(s => s.room !== this.roomManager.room);
+			// Only those with a container nearby
+			this._remoteSources = this._remoteSources.filter(s => {
+				let structures = s.room.lookForAtArea(LOOK_STRUCTURES, s.pos.y-1, s.pos.x-1, s.pos.y+1, s.pos.x+1, true);
+				
+				return structures.reduce((hasContainer, tile) => {
+					return hasContainer || tile.structure.structureType === STRUCTURE_CONTAINER;
+				}, false);
+			});
 		}
 		return this._remoteSources;
 	}
@@ -219,7 +248,6 @@ class EnergyManager extends WorkforceManager {
 				return s instanceof StructureLab;
 			}
 		});
-//		return this.roomManager.labManager.labs;
 	}
 
 	/**
@@ -227,12 +255,12 @@ class EnergyManager extends WorkforceManager {
 	 */
 	get allPickups() {
 		return {
-			links: this.linkManager.pickupLinks.concat(this.linkManager.pickupDropoffLinks).filter(EnergyManager.pickupIsGood),
-			sources: this.sources.filter(EnergyManager.pickupIsGood),
+			links: this.linkManager.pickupLinks.filter(EnergyManager.pickupIsGood),
+			sources: this.localSources.filter(EnergyManager.pickupIsGood),
 			storage: EnergyManager.pickupIsGood(this.storage) ? this.storage : null,
 			terminal: EnergyManager.pickupIsGood(this.terminal) ? this.terminal : null,
 			looseEnergy: this.looseEnergy,
-			containers: this.containers.filter(EnergyManager.pickupIsGood)
+			containers: this.localContainers.filter(EnergyManager.pickupIsGood)
 		};
 	}
 
@@ -291,7 +319,7 @@ class EnergyManager extends WorkforceManager {
 	 */
 	get allDropoffs() {
 		return {
-			links: this.linkManager.dropoffLinks.concat(this.linkManager.pickupDropoffLinks).filter(EnergyManager.dropoffIsGood),
+			links: this.linkManager.dropoffLinks.filter(EnergyManager.dropoffIsGood),
 			storage: EnergyManager.dropoffIsGood(this.storage) ? this.storage : null,
 			terminal: EnergyManager.dropoffIsGood(this.terminal) ? this.terminal : null,
 			containers: this.containers.filter(EnergyManager.dropoffIsGood),
@@ -362,16 +390,16 @@ class EnergyManager extends WorkforceManager {
 	}
 
 	/**
-	 * Assigns harvesters to sources
+	 * Assigns harvesters to local sources
 	 *
 	 * @private
 	 */
-	_assignHarvestersToSources() {
+	_assignHarvestersToLocalSources() {
 		// Remove mappings where the creep is no longer part of the workforce
-		for (let sourceId in this._sourceHarvesterMap) {
-			let creep = Game.creeps[this._sourceHarvesterMap[sourceId]];
+		for (let sourceId in this._localSourceHarvesterMap) {
+			let creep = Game.creeps[this._localSourceHarvesterMap[sourceId]];
 			if (creep === undefined) {
-				delete this._sourceHarvesterMap[sourceId];
+				delete this._localSourceHarvesterMap[sourceId];
 			}
 		}
 
@@ -379,15 +407,75 @@ class EnergyManager extends WorkforceManager {
 		let unassignedHarvesters = this.creepManagers.filter(cm => cm instanceof EnergyHarvesterCreepManager && cm.resourcePickup === null);
 
 		// Find all sources without assigned harvesters
-		let sourcesWithoutHarvesters = this.localSources.filter(s => this._sourceHarvesterMap[s.id] === undefined);
+		let sourcesWithoutHarvesters = this.localSources.filter(s => this._localSourceHarvesterMap[s.id] === undefined);
 
 		// Assign harvesters to sources
 		while (unassignedHarvesters.length > 0 && sourcesWithoutHarvesters.length > 0) {
 			let source = sourcesWithoutHarvesters.pop();
 			let harvester = unassignedHarvesters.pop();
 
-			this._sourceHarvesterMap[source.id] = harvester.creepName;
+			this._localSourceHarvesterMap[source.id] = harvester.creepName;
 			harvester.resourcePickup = source;
+		}
+	}
+
+	/**
+	 * Assigns harvesters to remote sources
+	 *
+	 * @private
+	 */
+	_assignHarvestersToRemoteSources() {
+		// Remove mappings where the creep is no longer part of the workforce
+		for (let sourceId in this._remoteSourceHarvesterMap) {
+			let creep = Game.creeps[this._remoteSourceHarvesterMap[sourceId]];
+			if (creep === undefined) {
+				delete this._remoteSourceHarvesterMap[sourceId];
+			}
+		}
+
+		// Find all harvesters which do not have an assigned source
+		let unassignedHarvesters = this.creepManagers.filter(cm => cm instanceof RemoteEnergyHarvesterCreepManager && cm.resourcePickup === null);
+
+		// Find all sources without assigned harvesters
+		let sourcesWithoutHarvesters = this.remoteSources.filter(s => this._remoteSourceHarvesterMap[s.id] === undefined);
+
+		// Assign harvesters to sources
+		while (unassignedHarvesters.length > 0 && sourcesWithoutHarvesters.length > 0) {
+			let source = sourcesWithoutHarvesters.pop();
+			let harvester = unassignedHarvesters.pop();
+
+			this._remoteSourceHarvesterMap[source.id] = harvester.creepName;
+			harvester.resourcePickup = source;
+		}
+	}
+
+	/**
+	 * Assigns collectors to remote containers
+	 *
+	 * @private
+	 */
+	_assignCollectorsToRemoteContainers() {
+		// Remove mappings where the creep is no longer part of the workforce
+		for (let containerId in this._remoteContainerCollectorMap) {
+			let creep = Game.creeps[this._remoteContainerCollectorMap[containerId]];
+			if (creep === undefined) {
+				delete this._remoteContainerCollectorMap[containerId];
+			}
+		}
+
+		// Find all remote collectors which do not have an assigned container
+		let unassignedCollectors = this.creepManagers.filter(cm => cm instanceof RemoteEnergyCollectorCreepManager && cm.resourcePickup === null);
+
+		// Find all containers without assigned collectors
+		let containersWithoutCollectors = this.remoteContainers.filter(c => this._remoteContainerCollectorMap[c.id] === undefined);
+
+		// Assign collectors to containers
+		while (unassignedCollectors.length > 0 && containersWithoutCollectors.length > 0) {
+			let container = containersWithoutCollectors.pop();
+			let collector = unassignedCollectors.pop();
+
+			this._remoteContainerCollectorMap[container.id] = collector.creepName;
+			collector.resourcePickup = container;
 		}
 	}
 
@@ -399,8 +487,10 @@ class EnergyManager extends WorkforceManager {
 			this._checkContainerHealth();
 		}
 
-		// Check if all sources have an assigned harvester
-		this._assignHarvestersToSources();
+		// Assign creeps to stuff
+		this._assignHarvestersToLocalSources();
+		this._assignHarvestersToRemoteSources();
+		this._assignCollectorsToRemoteContainers();
 
 		// Run the link manager
 		this.linkManager.run();
