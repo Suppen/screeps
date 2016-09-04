@@ -47,6 +47,10 @@ class RemoteEnergyCollectorCreepManager extends ResourceHandlingCreepManager {
 	}
 
 	run() {
+		if (this.resourcePickup === null) {
+			return;
+		}
+
 		if (this.loadLevel === 0 && !this.isSwooping) {
 			this.isSwooping = true;
 		} else if (this.loadLevel === 1 && this.isSwooping) {

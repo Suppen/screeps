@@ -13,17 +13,17 @@
 				amount: 2,
 				priority: 2
 			},
-			remoteEnergyCollector: {
-				amount() {
-					return this.remoteContainers.length;
-				},
-				body: [MOVE, CARRY, CARRY, MOVE, CARRY, CARRY, MOVE, CARRY, CARRY, MOVE, CARRY, CARRY, MOVE, CARRY, CARRY, MOVE, CARRY, CARRY]
-			},
 			remoteEnergyHarvester: {
 				amount() {
 					return this.remoteSources.length;
 				},
 				body: [WORK, WORK, WORK, WORK, WORK, MOVE, MOVE, MOVE]
+			},
+			remoteEnergyCollector: {
+				amount() {
+					return this.remoteContainers.length;
+				},
+				body: [MOVE, CARRY, CARRY, MOVE, CARRY, CARRY, MOVE, CARRY, CARRY, MOVE, CARRY, CARRY, MOVE, CARRY, CARRY, MOVE, CARRY, CARRY]
 			}
 		}
 	},
@@ -39,9 +39,9 @@
 		wantedCreeps: {
 			repairer: {
 				amount() {
-					return this.getRepairTargetId() !== null ? 3 : 0; 
+					return this.getRepairTargetId() !== null ? 2 : 0; 
 				},
-				body: [WORK, WORK, WORK, WORK, MOVE, CARRY, MOVE, CARRY, MOVE, CARRY, MOVE, CARRY]
+				body: [WORK, WORK, WORK, WORK, WORK, WORK, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY]
 			}
 		}
 	},

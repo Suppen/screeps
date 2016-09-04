@@ -23,17 +23,17 @@
 				amount: 2,
 				priority: 2
 			},
-			remoteEnergyCollector: {
-				amount() {
-					return this.remoteContainers.length;
-				},
-				body: [MOVE, CARRY, CARRY, MOVE, CARRY, CARRY, MOVE, CARRY, CARRY, MOVE, CARRY, CARRY, MOVE, CARRY, CARRY, MOVE, CARRY, CARRY]
-			},
 			remoteEnergyHarvester: {
 				amount() {
 					return this.remoteSources.length;
 				},
 				body: [WORK, WORK, WORK, WORK, WORK, MOVE, MOVE, MOVE]
+			},
+			remoteEnergyCollector: {
+				amount() {
+					return this.remoteContainers.length;
+				},
+				body: [MOVE, CARRY, CARRY, MOVE, CARRY, CARRY, MOVE, CARRY, CARRY, MOVE, CARRY, CARRY, MOVE, CARRY, CARRY, MOVE, CARRY, CARRY]
 			}
 		}
 	},
@@ -41,9 +41,9 @@
 		wantedCreeps: {
 			builder: {
 				amount() {
-					return this.constructionQueue.size ? 1 : 0;
+					return this.constructionQueue.size ? 2 : 0;
 				},
-				body: [WORK, WORK, WORK, MOVE, MOVE, MOVE, CARRY, CARRY, CARRY, CARRY, CARRY, MOVE, CARRY]
+				body: [WORK, WORK, WORK, MOVE, MOVE, MOVE, MOVE, CARRY, CARRY, MOVE, CARRY, CARRY, MOVE, CARRY, CARRY]
 			}
 		}
 	},

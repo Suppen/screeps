@@ -23,9 +23,27 @@ class RemoteEnergyHarvesterCreepManager extends ResourceHandlingCreepManager {
 	}
 
 	run() {
+		if (this.resourcePickup === null) {
+			return;
+		}
+
+		let standingOnContainer = true;
+		if (this.creep.room === this.resourcePickup.room) {
+			standingOnContainer = this.creep.room.lookForAt(LOOK_STRUCTURES, this.creep.pos).find(s => s instanceof StructureContainer) !== undefined;
+		}
+
 		// Go harvest the source
-		if (this.aquireResource() !== OK) {
-			this.creep.moveTo(this.resourcePickup);
+		if (!standingOnContainer || this.aquireResource() !== OK) {
+			let whereToGo = this.resourcePickup;
+
+			if (this.creep.room === this.resourcePickup.room) {
+				// Find the container
+				let s = this.resourcePickup;
+				let containers = s.room.lookForAtArea(LOOK_STRUCTURES, s.pos.y-1, s.pos.x-1, s.pos.y+1, s.pos.x+1, true).filter(s => s.structure instanceof StructureContainer);
+				whereToGo = containers[0].structure;
+			}
+
+			this.creep.moveTo(whereToGo);
 		}
 	}
 }

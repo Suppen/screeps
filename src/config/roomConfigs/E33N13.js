@@ -23,17 +23,17 @@
 				amount: 2,
 				priority: 2
 			},
-			remoteEnergyCollector: {
-				amount() {
-					return this.remoteContainers.length;
-				},
-				body: [MOVE, CARRY, CARRY, MOVE, CARRY, CARRY, MOVE, CARRY, CARRY, MOVE, CARRY, CARRY, MOVE, CARRY, CARRY, MOVE, CARRY, CARRY]
-			},
 			remoteEnergyHarvester: {
 				amount() {
 					return this.remoteSources.length;
 				},
 				body: [WORK, WORK, WORK, WORK, WORK, MOVE, MOVE, MOVE]
+			},
+			remoteEnergyCollector: {
+				amount() {
+					return this.remoteContainers.length;
+				},
+				body: [MOVE, CARRY, CARRY, MOVE, CARRY, CARRY, MOVE, CARRY, CARRY, MOVE, CARRY, CARRY, MOVE, CARRY, CARRY, MOVE, CARRY, CARRY, MOVE, CARRY, CARRY, MOVE, CARRY, CARRY, MOVE, CARRY, CARRY]
 			}
 		}
 	},

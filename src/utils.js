@@ -36,7 +36,7 @@ const utils = {
 			let link = this.creep.pos.findClosestByRange(dropoffs.links);
 
 			// Only go for nearby links, within 2 tiles, and NOT the one which was just picked up from
-			if (link.distance <= 3) {
+			if (this.creep.pos.getRangeTo(link) <= 3) {
 				dropoff = link;
 			}
 		}
