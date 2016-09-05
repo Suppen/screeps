@@ -125,6 +125,7 @@ class RepairerCreepManager extends ResourceHandlingCreepManager {
 			// Start harvesting and find a source
 			this.isRepairing = false;
 			this.resourcePickup = null;
+			this.repairTarget = null;
 		}
 
 		if (!this.isRepairing) {
@@ -149,11 +150,14 @@ class RepairerCreepManager extends ResourceHandlingCreepManager {
 				this.repairTarget = Game.getObjectById(this.repairManager.getRepairTargetId());
 				this.counter = 0;
 			}
-			// Go repair the structure
+			// Go repair the structure. Treat containers specially
 			let status = this.creep.repair(this.repairTarget);
 			switch (status) {
 				case OK:
-					this.counter++;
+					// Treat containers specially. Repair them until the container is completely fixed or until the creep has no energy left
+					if (!(this.repairTarget instanceof StructureContainer)) {
+						this.counter++;
+					}
 					break;
 				case ERR_NOT_IN_RANGE:
 					this.creep.moveTo(this.repairTarget);

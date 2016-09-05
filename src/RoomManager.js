@@ -12,13 +12,17 @@ const RepairManager = require("RepairManager");
 const MiscWorkforceManager = require("MiscWorkforceManager");
 const ScoutManager = require("ScoutManager");
 const ArmyManager = require("ArmyManager");
+const TerminalManager = require("TerminalManager");
+const MineralManager = require("MineralManager");
 
 const defaultConfig = {
 	energyManager: {},
 	repairManager: {},
 	constructionManager: {},
 	miscWorkforceManager: {},
-	armyManager: {}
+	armyManager: {},
+	terminalManager: {},
+	mineralManager: {}
 };
 
 /**
@@ -120,6 +124,8 @@ class RoomManager extends Manager {
 		this.towerManager = new TowerManager(this);
 		this.scoutManager = new ScoutManager(this);
 		this.armyManager = new ArmyManager(this, this.config.armyManager);
+		this.terminalManager = new TerminalManager(this, this.config.terminalManager);
+		this.mineralManager = new MineralManager(this, this.config.mineralManager);
 	}
 
 	/**
@@ -136,6 +142,8 @@ class RoomManager extends Manager {
 		this.miscWorkforceManager.run();
 		this.scoutManager.run();
 		this.armyManager.run();
+		this.terminalManager.run();
+		this.mineralManager.run();
 		this.spawnManager.run();
 	}
 

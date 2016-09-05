@@ -11,6 +11,7 @@
 	},
 	energyManager: {
 		useStoredEnergy: false,
+		harvestRemoteSources: true,
 		wantedCreeps: {
 			energyHarvester: {
 				amount() {

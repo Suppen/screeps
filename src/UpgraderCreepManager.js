@@ -71,13 +71,13 @@ class UpgraderCreepManager extends ResourceHandlingCreepManager {
 				return keep;
 			});
 
+			// Put the storage on
+			if (pickups.storage !== null) {
+				linksContainers.push(pickups.storage);
+			}
+
 			// Choose the closest one
 			pickup = utils.findClosest(this.creep.pos, linksContainers);
-		}
-
-		// Check the storage
-		if (pickups.storage !== null && pickup === null) {
-			pickup = pickups.storage;
 		}
 
 		// Last resort: Harvest a source

@@ -40,7 +40,12 @@ class RemoteEnergyHarvesterCreepManager extends ResourceHandlingCreepManager {
 				// Find the container
 				let s = this.resourcePickup;
 				let containers = s.room.lookForAtArea(LOOK_STRUCTURES, s.pos.y-1, s.pos.x-1, s.pos.y+1, s.pos.x+1, true).filter(s => s.structure instanceof StructureContainer);
-				whereToGo = containers[0].structure;
+				if (containers.length > 0) {
+					whereToGo = containers[0].structure;
+				} else {
+					// The container has been destroyed! Just die
+					this.creep.suicide();
+				}
 			}
 
 			this.creep.moveTo(whereToGo);

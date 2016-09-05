@@ -5,12 +5,13 @@
 				amount() {
 					return this.getRepairTargetId() !== null ? 2 : 0; 
 				},
-				body: [WORK, WORK, WORK, MOVE, MOVE, MOVE, CARRY, CARRY, CARRY]
+				body: [WORK, WORK, WORK, WORK, WORK, WORK, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY]
 			}
 		}
 	},
 	energyManager: {
 		useStoredEnergy: false,
+		harvestRemoteSources: true,
 		wantedCreeps: {
 			energyHarvester: {
 				amount() {
@@ -22,18 +23,6 @@
 			energyCollector: {
 				amount: 2,
 				priority: 2
-			},
-			remoteEnergyHarvester: {
-				amount() {
-					return this.remoteSources.length;
-				},
-				body: [WORK, WORK, WORK, WORK, WORK, MOVE, MOVE, MOVE]
-			},
-			remoteEnergyCollector: {
-				amount() {
-					return this.remoteContainers.length;
-				},
-				body: [MOVE, CARRY, CARRY, MOVE, CARRY, CARRY, MOVE, CARRY, CARRY, MOVE, CARRY, CARRY, MOVE, CARRY, CARRY, MOVE, CARRY, CARRY]
 			}
 		}
 	},
@@ -43,7 +32,7 @@
 				amount() {
 					return this.constructionQueue.size ? 2 : 0;
 				},
-				body: [WORK, WORK, WORK, MOVE, MOVE, MOVE, MOVE, CARRY, CARRY, MOVE, CARRY, CARRY, MOVE, CARRY, CARRY]
+				body: [WORK, WORK, WORK, WORK, WORK, WORK, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY]
 			}
 		}
 	},

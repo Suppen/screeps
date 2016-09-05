@@ -35,7 +35,7 @@ class PriorityQueue {
 	 *
 	 * @return {Integer} i	The 0-indexed number the element now has in the queue. This may change both ways as more elements are inserted
 	 */
-	add(element, priority) {
+	add(element, priority = 1000) {
 		// Make a queue element
 		let elem = new QueueElement(element, priority);
 

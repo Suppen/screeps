@@ -11,6 +11,7 @@ const RemoteEnergyHarvesterCreepManager = require("RemoteEnergyHarvesterCreepMan
 
 const defaultConfig = {
 	useStoredEnergy: false,
+	harvestRemoteSources: false,
 	wantedCreeps: {}
 };
 
@@ -64,6 +65,26 @@ class EnergyManager extends WorkforceManager {
 	get wantedCreeps() {
 		let wantedCreeps = this.config.wantedCreeps;
 
+		// Default creeps for remote harvesting if enabled and not specified
+		if (this.harvestRemoteSources) {
+			if (wantedCreeps.remoteEnergyHarvester === undefined) {
+				wantedCreeps.remoteEnergyHarvester = {
+					amount() {
+						return this.remoteSources.length;
+					},
+					body: [WORK, WORK, WORK, WORK, WORK, MOVE, MOVE, MOVE]
+				};
+			}
+			if (wantedCreeps.remoteEnergyCollector === undefined) {
+				wantedCreeps.remoteEnergyCollector = {
+					amount() {
+						return this.remoteContainers.length;
+					},
+					body: [MOVE, CARRY, CARRY, MOVE, CARRY, CARRY, MOVE, CARRY, CARRY, MOVE, CARRY, CARRY, MOVE, CARRY, CARRY, MOVE, CARRY, CARRY]
+				};
+			}
+		}
+
 		// Calculate bodies of energy collectors, if not specified
 		if (wantedCreeps.energyCollector !== undefined && wantedCreeps.energyCollector.body === undefined) {
 			wantedCreeps.energyCollector.body = EnergyCollectorCreepManager.calculateBody(this.roomManager.room.energyCapacityAvailable);
@@ -77,6 +98,13 @@ class EnergyManager extends WorkforceManager {
 	 */
 	get useStoredEnergy() {
 		return this.config.useStoredEnergy;
+	}
+
+	/**
+	 * Whether or not to harvest remote sources
+	 */
+	get harvestRemoteSources() {
+		return this.config.harvestRemoteSources;
 	}
 
 	/**
@@ -229,7 +257,7 @@ class EnergyManager extends WorkforceManager {
 	 * The terminal
 	 */
 	get terminal() {
-		return this.roomManager.room.terminal;
+		return this.roomManager.terminalManager.terminal;
 	}
 
 	/**

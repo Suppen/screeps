@@ -11,12 +11,13 @@
 	},
 	energyManager: {
 		useStoredEnergy: false,
+		harvestRemoteSources: true,
 		wantedCreeps: {
 			energyHarvester: {
 				amount() {
 					return this.localSources.length;
 				},
-				body: [WORK, WORK, WORK, WORK, WORK, WORK, MOVE, MOVE, MOVE, CARRY, CARRY, CARRY],
+				body: [WORK, WORK, WORK, WORK, WORK, WORK, WORK, MOVE, MOVE, MOVE, CARRY, CARRY, CARRY],
 				priority: 1
 			},
 			energyCollector: {
@@ -31,7 +32,7 @@
 				amount() {
 					return this.constructionQueue.size > 0 ? 2 : 0;
 				},
-				body: [WORK, WORK, WORK, MOVE, MOVE, CARRY, CARRY, CARRY]
+				body: [WORK, WORK, WORK, WORK, WORK, MOVE, MOVE, MOVE, MOVE, MOVE, CARRY, CARRY, CARRY, CARRY, CARRY]
 			}
 		}
 	},
@@ -39,7 +40,7 @@
 		wantedCreeps: {
 			upgrader: {
 				amount: 2,
-				body: [WORK, WORK, WORK, MOVE, MOVE, CARRY, CARRY, CARRY]
+				body: [WORK, WORK, WORK, WORK, WORK, MOVE, MOVE, MOVE, MOVE, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY]
 			}
 		}
 	},

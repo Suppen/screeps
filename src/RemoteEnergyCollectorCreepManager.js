@@ -63,6 +63,19 @@ class RemoteEnergyCollectorCreepManager extends ResourceHandlingCreepManager {
 			if (this.aquireResource() !== OK) {
 				this.creep.moveTo(this.resourcePickup);
 			}
+
+			// Don't stand on the container
+			let standingOnContainer = false;
+			if (this.creep.room === this.resourcePickup.room) {
+				standingOnContainer = this.creep.room.lookForAt(LOOK_STRUCTURES, this.creep.pos).find(s => s instanceof StructureContainer) !== undefined;
+			}
+			if (standingOnContainer === true) {
+				// The eight direction constants are numbered 1-8. Pick a random one
+				let direction = Math.floor(Math.random()*8) + 1;
+
+				// This will override the move command above
+				this.creep.move(direction);
+			}
 		} else if (!this.isInParentRoom) {
 			this.creep.moveTo(new RoomPosition(25, 25, this.parentRoomName));
 		} else {

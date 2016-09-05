@@ -3,6 +3,9 @@
 const Manager = require("Manager");
 const ScoutManager = require("ScoutManager");
 
+/**
+ * Handles road building for a room
+ */
 class RoadManager extends Manager {
 	constructor(roomManager) {
 		super();
