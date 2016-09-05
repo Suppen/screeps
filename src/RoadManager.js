@@ -80,9 +80,8 @@ class RoadManager extends Manager {
 				}
 
 				// Maintain the road if there is already a road on the tile in need of repairs
-				if (structure !== undefined && structure instanceof StructureRoad) {
+				if (structure !== undefined && structure.structure instanceof StructureRoad) {
 					if (structure.structure.hits / structure.structure.hitsMax < RoadManager.minRoadHealth) {
-console.log("Repairing", structure);
 						this.roomManager.repairManager.addToRepairQueue(structure.structure);
 					}
 				}
