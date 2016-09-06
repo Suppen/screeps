@@ -137,10 +137,10 @@ class RepairManager extends WorkforceManager {
 
 		// Check if the target is in an ok room
 		let target = Game.getObjectById(id);
-		if (target.room.name !== this.roomManager.roomName) {
-			let roomStatus = this.roomManager.scoutManager.roomStatuses[target.room.name];
+		if (target !== null && target.pos.roomName !== this.roomManager.roomName) {
+			let roomStatus = this.roomManager.scoutManager.roomStatuses[target.pos.roomName];
 			if (this.config.acceptableStatuses.indexOf(roomStatus) < 0) {
-				// Reject this repair
+				// Reject this repair and get the next one
 				id = this.getRepairTargetId();
 			}
 		}
