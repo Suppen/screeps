@@ -1,4 +1,14 @@
 {
+	repairManager: {
+		wantedCreeps: {
+			repairer: {
+				amount() {
+					return this.getRepairTargetId() !== null ? 2 : 0; 
+				},
+				body: [WORK, WORK, WORK, WORK, WORK, WORK, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY]
+			}
+		}
+	},
 	energyManager: {
 		useStoredEnergy: false,
 		harvestRemoteSources: true,
@@ -16,24 +26,6 @@
 			}
 		}
 	},
-	miscWorkforceManager: {
-		wantedCreeps: {
-			upgrader: {
-				amount: 3,
-				body: [WORK, WORK, WORK, WORK, WORK, WORK, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY]
-			}
-		}
-	},
-	repairManager: {
-		wantedCreeps: {
-			repairer: {
-				amount() {
-					return this.getRepairTargetId() !== null ? 2 : 0; 
-				},
-				body: [WORK, WORK, WORK, WORK, WORK, WORK, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY]
-			}
-		}
-	},
 	constructionManager: {
 		wantedCreeps: {
 			builder: {
@@ -41,6 +33,14 @@
 					return this.constructionQueue.size ? 1 : 0;
 				},
 				body: [WORK, WORK, WORK, WORK, WORK, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY]
+			}
+		}
+	},
+	miscWorkforceManager: {
+		wantedCreeps: {
+			upgrader: {
+				amount: 3,
+				body: [WORK, WORK, WORK, WORK, WORK, WORK, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY]
 			}
 		}
 	},

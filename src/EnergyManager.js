@@ -375,13 +375,13 @@ class EnergyManager extends WorkforceManager {
 				// Spawns, extensions and the like are full
 				dropoff.energy !== undefined &&
 				dropoff.energyCapacity !== undefined &&
-				dropoff.energy == dropoff.energyCapacity
+				dropoff.energy === dropoff.energyCapacity
 			) ||
 			(
 				// Storage, containers and the like are full
 				dropoff.store !== undefined &&
 				dropoff.storeCapacity !== undefined &&
-				_.sum(dropoff.store) == dropoff.storeCapacity
+				_.sum(dropoff.store) === dropoff.storeCapacity
 			)
 		);
 	}

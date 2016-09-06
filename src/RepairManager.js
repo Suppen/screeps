@@ -6,7 +6,11 @@ const ScoutManager = require("ScoutManager");
 const PriorityQueue = require("PriorityQueue");
 
 const defaultConfig = {
-	wantedCreeps: {}
+	wantedCreeps: {},
+	acceptableStatuses: [
+		ScoutManager.CLAIMABLE,
+		ScoutManager.RESERVED_BY_ME
+	]
 };
 
 /**
@@ -130,6 +134,17 @@ class RepairManager extends WorkforceManager {
 			// Take the first element from the unscheduled queue
 			id = this.unscheduledRepairQueue.shift();
 		}
+
+		// Check if the target is in an ok room
+		let target = Game.getObjectById(id);
+		if (target.room.name !== this.roomManager.roomName) {
+			let roomStatus = this.roomManager.scoutManager.roomStatuses[target.room.name];
+			if (this.config.acceptableStatuses.indexOf(roomStatus) < 0) {
+				// Reject this repair
+				id = this.getRepairTargetId();
+			}
+		}
+
 		return id;
 	}
 }

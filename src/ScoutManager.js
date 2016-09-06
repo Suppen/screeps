@@ -77,6 +77,9 @@ class ScoutManager extends WorkforceManager {
 	/** Owned by me */
 	static get OWNED_BY_ME() {return "owned by me";}
 
+	/** Dangerous. A hostile creep was there recently */
+	static get DANGEROUS() {return "dangerous";}
+
 	/** Array of all statuses */
 	static get ALL_STATUSES() {
 		return [
@@ -87,7 +90,8 @@ class ScoutManager extends WorkforceManager {
 			ScoutManager.CLAIMABLE,
 			ScoutManager.UNINTERESTING,
 			ScoutManager.RESERVED_BY_ME,
-			ScoutManager.OWNED_BY_ME
+			ScoutManager.OWNED_BY_ME,
+			ScoutManager.DANGEROUS
 		];
 	}
 
@@ -202,6 +206,13 @@ class ScoutManager extends WorkforceManager {
 			} else {
 				// Claimable
 				status = ScoutManager.CLAIMABLE;
+			}
+
+			// Mark the room as dangerous if there are hostile creeps there
+			if (status === ScoutManager.CLAIMABLE || status === ScoutManager.RESERVED_BY_ME) {
+				if (this.roomManager.armyManager.getHostileCreepsIn(roomName).length > 0) {
+					status = ScoutManager.DANGEROUS;
+				}
 			}
 
 			// Store it to memory

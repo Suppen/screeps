@@ -5,7 +5,11 @@ const PriorityQueue = require("PriorityQueue");
 const ScoutManager = require("ScoutManager");
 
 const defaultConfig = {
-	wantedCreeps: {}
+	wantedCreeps: {},
+	acceptableStatuses: [
+		ScoutManager.CLAIMABLE,
+		ScoutManager.RESERVED_BY_ME
+	]
 };
 
 /**
@@ -101,6 +105,15 @@ class ConstructionManager extends WorkforceManager {
 			if (site === null) {
 				// Yup, it was finished (or removed). Remove it from the queue
 				this.constructionQueue.shift();
+			}
+
+			// Check if the target is in an ok room
+			if (site.room.name !== this.roomManager.roomName) {
+				let roomStatus = this.roomManager.scoutManager.roomStatuses[site.room.name];
+				if (this.config.acceptableStatuses.indexOf(roomStatus) < 0) {
+					// Too dangerous. Drop it
+					this.constructionQueue.shift();
+				}
 			}
 		}
 
