@@ -148,7 +148,7 @@ class EnergyCollectorCreepManager extends ResourceHandlingCreepManager {
 			body = [MOVE, CARRY, CARRY, MOVE, CARRY, CARRY, MOVE, CARRY, CARRY];
 		} else if (energy >= 400) {
 			body = [MOVE, CARRY, CARRY, MOVE, CARRY, CARRY];
-		} else if (energy >= 300) {
+		} else {
 			body = [MOVE, CARRY, CARRY];
 		}
 		return body;

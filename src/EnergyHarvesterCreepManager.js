@@ -132,6 +132,25 @@ class EnergyHarvesterCreepManager extends ResourceHandlingCreepManager {
 			}
 		}
 	}
+
+	/**
+	 * Calculates a default body for the creep based on an amount of energy
+	 */
+	static calculateBody(energy) {
+		let body;
+		if (energy >= 1300) {
+			body = [WORK, WORK, WORK, WORK, WORK, WORK, MOVE, MOVE, CARRY, CARRY]
+		} else if (energy >= 900) {
+			body = [WORK, WORK, WORK, WORK, WORK, MOVE, MOVE, CARRY, CARRY];
+		} else if (energy >= 600) {
+			body = [WORK, WORK, WORK, MOVE, MOVE, CARRY, CARRY];
+		} else if (energy >= 400) {
+			body = [WORK, WORK, MOVE, MOVE, CARRY, CARRY];
+		} else {
+			body = [WORK, MOVE, MOVE, CARRY];
+		}
+		return body;
+	}
 }
 
 module.exports = EnergyHarvesterCreepManager;

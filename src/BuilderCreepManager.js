@@ -74,9 +74,11 @@ class BuilderCreepManager extends ResourceHandlingCreepManager {
 
 		// Check if there are any containers or links or storage
 		if ((pickups.containers.length > 0 || pickups.links.length > 0) && pickup === null) {
-			// Combine links and containers, and the storage
+			// Combine links and containers
 			let linksContainers = pickups.containers.concat(pickups.links);
-			if (pickups.storage !== null) {
+
+			// Put the storage in the array too, if allowed
+			if (this.constructionManager.useStoredEnergy && pickups.storage !== null) {
 				linksContainers.push(pickups.storage);
 			}
 
@@ -95,8 +97,8 @@ class BuilderCreepManager extends ResourceHandlingCreepManager {
 			pickup = this.creep.pos.findClosestByRange(linksContainers);
 		}
 
-		// Last resort: Harvest a source
-		if (pickups.sources.length > 0 && pickup === null) {
+		// Last resort: Harvest a source, but only if there are no containers
+		if (this.energyManager.localContainers.length === 0 && pickups.sources.length > 0 && pickup === null) {
 			pickup = utils.findClosest(this.creep.pos, pickups.sources);
 		}
 

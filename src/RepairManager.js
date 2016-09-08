@@ -7,9 +7,11 @@ const PriorityQueue = require("PriorityQueue");
 
 const defaultConfig = {
 	wantedCreeps: {},
+	useStoredEnergy: false,
 	acceptableStatuses: [
 		ScoutManager.CLAIMABLE,
-		ScoutManager.RESERVED_BY_ME
+		ScoutManager.RESERVED_BY_ME,
+		ScoutManager.UNINTERESTING
 	]
 };
 
@@ -62,6 +64,13 @@ class RepairManager extends WorkforceManager {
 	}
 
 	/**
+	 * Whether or not energy in the storage can be used
+	 */
+	get useStoredEnergy() {
+		return this.config.useStoredEnergy;
+	}
+
+	/**
 	 * The repair queue of the manager
 	 */
 	get repairQueue() {
@@ -84,7 +93,7 @@ class RepairManager extends WorkforceManager {
 		if (this.memory.unscheduledRepairQueue.length === 0) {
 			// Add damaged, unscheduled stuff
 			this.memory.unscheduledRepairQueue = this.roomManager.find(FIND_STRUCTURES, {
-				roomStatuses: [ScoutManager.CLAIMABLE],
+				roomStatuses: this.config.acceptableStatuses,
 				filter(s) {
 					return s.hits < s.hitsMax;
 				}

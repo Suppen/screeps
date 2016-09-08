@@ -85,6 +85,17 @@ class EnergyManager extends WorkforceManager {
 			}
 		}
 
+		// Always have an energy harvester per local source, and with a default body if not specified
+		const defaultEnergyHarvester = {
+			amount: this.localSources.length,
+			body: EnergyHarvesterCreepManager.calculateBody(this.roomManager.room.energyCapacityAvailable),
+			priority: 1
+		};
+		if (wantedCreeps.energyHarvester === undefined) {
+			wantedCreeps.energyHarvester = {};
+		}
+		wantedCreeps.energyHarvester = _.defaults(wantedCreeps.energyHarvester, defaultEnergyHarvester);
+
 		// Calculate bodies of energy collectors, if not specified
 		if (wantedCreeps.energyCollector !== undefined && wantedCreeps.energyCollector.body === undefined) {
 			wantedCreeps.energyCollector.body = EnergyCollectorCreepManager.calculateBody(this.roomManager.room.energyCapacityAvailable);

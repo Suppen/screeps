@@ -6,9 +6,11 @@ const ScoutManager = require("ScoutManager");
 
 const defaultConfig = {
 	wantedCreeps: {},
+	useStoredEnergy: true,
 	acceptableStatuses: [
 		ScoutManager.CLAIMABLE,
-		ScoutManager.RESERVED_BY_ME
+		ScoutManager.RESERVED_BY_ME,
+		ScoutManager.UNINTERESTING
 	]
 };
 
@@ -47,6 +49,13 @@ class ConstructionManager extends WorkforceManager {
 	}
 
 	/**
+	 * Whether or not energy in the storage can be used
+	 */
+	get useStoredEnergy() {
+		return this.config.useStoredEnergy;
+	}
+
+	/**
 	 * The name of this workforce
 	 */
 	get workforceName() {
@@ -80,10 +89,7 @@ class ConstructionManager extends WorkforceManager {
 	 */
 	_manageUnmanagedConstructionSites() {
 		return this.roomManager.find(FIND_CONSTRUCTION_SITES, {
-			roomStatuses: [
-				ScoutManager.CLAIMABLE,
-				ScoutManager.UNINTERESTING
-			],
+			roomStatuses: this.config.acceptableStatuses,
 			filter: site => {
 				return site.my && this.constructionQueue.queue.indexOf(site.id) < 0;
 			}

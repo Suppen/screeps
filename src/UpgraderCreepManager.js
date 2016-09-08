@@ -80,8 +80,8 @@ class UpgraderCreepManager extends ResourceHandlingCreepManager {
 			pickup = utils.findClosest(this.creep.pos, linksContainers);
 		}
 
-		// Last resort: Harvest a source
-		if (pickups.sources.length > 0 && pickup === null) {
+		// Last resort: Harvest a source, but only if there are no containers
+		if (this.energyManager.localContainers.length === 0 && pickups.sources.length > 0 && pickup === null) {
 			pickup = utils.findClosest(this.creep.pos, pickups.sources);
 		}
 
