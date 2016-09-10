@@ -113,10 +113,11 @@ class ConstructionManager extends WorkforceManager {
 				this.constructionQueue.shift();
 			} else if (site !== null && site.pos.roomName !== this.roomManager.roomName) {
 				// Check if the target is in an ok room
-				let roomStatus = this.roomManager.scoutManager.roomStatuses[site.pos.roomName];
+				let roomStatus = this.roomManager.scoutManager.roomStatuses[site.pos.roomName].status;
 				if (this.config.acceptableStatuses.indexOf(roomStatus) < 0) {
 					// Too dangerous. Drop it
 					this.constructionQueue.shift();
+					site = null;
 				}
 			}
 		}

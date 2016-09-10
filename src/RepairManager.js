@@ -150,8 +150,7 @@ class RepairManager extends WorkforceManager {
 			let roomStatus = this.roomManager.scoutManager.roomStatuses[target.pos.roomName].status;
 			if (this.config.acceptableStatuses.indexOf(roomStatus) < 0) {
 				// Reject this repair and get the next one
-console.log(id);
-//				id = this.getRepairTargetId();
+				id = this.getRepairTargetId();
 			}
 		}
 
