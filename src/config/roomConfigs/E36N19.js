@@ -4,7 +4,7 @@
 		wantedCreeps: {
 			repairer: {
 				amount() {
-					return this.getRepairTargetId() !== null ? 2 : 0; 
+					return this.repairQueue.size !== 0 ? 2 : 0; 
 				},
 				body: [WORK, WORK, WORK, WORK, WORK, MOVE, MOVE, MOVE, MOVE, MOVE, CARRY, CARRY, CARRY, CARRY, CARRY]
 			}

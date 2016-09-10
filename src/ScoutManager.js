@@ -72,7 +72,7 @@ class ScoutManager extends WorkforceManager {
 	static get UNINTERESTING() {return "uninteresting";}
 
 	/** Reserved by me */
-	static get RESERVED_BY_ME() {"reserved by me";}
+	static get RESERVED_BY_ME() {return "reserved by me";}
 
 	/** Owned by me */
 	static get OWNED_BY_ME() {return "owned by me";}
@@ -239,26 +239,23 @@ class ScoutManager extends WorkforceManager {
 				for (let roomName in this.roomStatuses) {
 					this.updateRoomStatus(roomName);
 
-					// Check if any rooms have not been scouted in a long time
-					if (Game.time - this.roomStatuses[roomName].lastScouted > ScoutManager.maxFogTime) {
-						// Check if there is a scout assigned to the room
-						if (Game.creeps[this.roomStatuses[roomName].scoutAssigned] === undefined) {
-							Game.creeps[this.roomStatuses[roomName].scoutAssigned] = null;
-							// Nope. Check if there is one in the spawn queue
-							let spawning = this.spawnManager.spawnQueue.queue.reduce((result, c) => {
-								return result || (c.role === "scout" && c.initialMemory.nameOfRoomToScout === roomName)
-							}, false);
-							if (!spawning) {
-								// Need to spawn a scout for this room
-								this.spawnManager.addToSpawnQueue({
-									body: [MOVE],
-									initialMemory: {
-										role: "scout",
-										nameOfRoomToScout: roomName,
-										workforce: this.workforceName
-									}
-								});
-							}
+					// Check if there is a scout assigned to the room
+					if (Game.creeps[this.roomStatuses[roomName].scoutAssigned] === undefined) {
+						Game.creeps[this.roomStatuses[roomName].scoutAssigned] = null;
+						// Nope. Check if there is one in the spawn queue
+						let spawning = this.spawnManager.spawnQueue.queue.reduce((result, c) => {
+							return result || (c.role === "scout" && c.initialMemory.nameOfRoomToScout === roomName)
+						}, false);
+						if (!spawning) {
+							// Need to spawn a scout for this room
+							this.spawnManager.addToSpawnQueue({
+								body: [MOVE],
+								initialMemory: {
+									role: "scout",
+									nameOfRoomToScout: roomName,
+									workforce: this.workforceName
+								}
+							});
 						}
 					}
 				}
@@ -271,13 +268,6 @@ class ScoutManager extends WorkforceManager {
 	 */
 	static get statusUpdateInterval() {
 		return 101;	// Prime
-	}
-
-	/**
-	 * Maximum time from last scouting of a room to a scout is sent
-	 */
-	static get maxFogTime() {
-		return 100;	// Not prime
 	}
 }
 

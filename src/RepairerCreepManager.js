@@ -149,7 +149,8 @@ class RepairerCreepManager extends ResourceHandlingCreepManager {
 		} else {
 			// Check if the creep has been assigned a repair site
 			if (this.repairTarget === null || this.counter >= 10 || this.repairTarget.hits === this.repairTarget.hitsMax) {
-				this.repairTarget = Game.getObjectById(this.repairManager.getRepairTargetId());
+				let repairTargetId = this.repairManager.getRepairTargetId();
+				this.repairTarget = Game.getObjectById(repairTargetId);
 				this.counter = 0;
 			}
 			// Go repair the structure. Treat containers specially

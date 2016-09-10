@@ -80,7 +80,7 @@ class EnergyManager extends WorkforceManager {
 					amount() {
 						return this.remoteContainers.length;
 					},
-					body: [MOVE, CARRY, CARRY, MOVE, CARRY, CARRY, MOVE, CARRY, CARRY, MOVE, CARRY, CARRY, MOVE, CARRY, CARRY, MOVE, CARRY, CARRY]
+					body: [MOVE, CARRY, CARRY, MOVE, CARRY, CARRY, MOVE, CARRY, CARRY, MOVE, CARRY, CARRY, MOVE, CARRY, CARRY, MOVE, CARRY, CARRY, MOVE, CARRY, CARRY]
 				};
 			}
 		}
@@ -153,7 +153,11 @@ class EnergyManager extends WorkforceManager {
 	get sources() {
 		if (this._sources === undefined) {
 			this._sources = this.roomManager.find(FIND_SOURCES, {
-				roomStatuses: [ScoutManager.CLAIMABLE]
+				roomStatuses: [
+					ScoutManager.CLAIMABLE,
+					ScoutManager.CLAIMED_BY_ME,
+					ScoutManager.UNINTERESTING
+				]
 			});
 		}
 		return this._sources;
@@ -190,12 +194,17 @@ class EnergyManager extends WorkforceManager {
 	/**
 	 * List of all containers within two tiles of a source
 	 *
-	 * @return {StructureContainer[]}	An array of all containers within two tiles of a source
+	 * @return {StructureContainer[]}	An array of all containers
 	 */
 	get containers() {
 		if (this._containers === undefined) {
 			this._containers = this.roomManager.find(FIND_STRUCTURES, {
-				roomStatuses: [ScoutManager.CLAIMABLE],
+				roomStatuses: [
+					ScoutManager.CLAIMABLE,
+					ScoutManager.CLAIMED_BY_ME,
+					ScoutManager.UNINTERESTING
+
+				],
 				filter: (s) => {
 					return s instanceof StructureContainer;
 				}
@@ -237,7 +246,11 @@ class EnergyManager extends WorkforceManager {
 	get looseEnergy() {
 		if (this._looseEnergy === undefined) {
 			this._looseEnergy = this.roomManager.find(FIND_DROPPED_ENERGY, {
-				roomStatuses: []
+				roomStatuses: [
+					ScoutManager.CLAIMABLE,
+					ScoutManager.CLAIMED_BY_ME,
+					ScoutManager.UNINTERESTING
+				]
 			});
 		}
 		return this._looseEnergy;
@@ -422,7 +435,7 @@ class EnergyManager extends WorkforceManager {
 	_checkContainerHealth() {
 		// Schedule containers for repair
 		this.containers.forEach(c => {
-			if (c.hits / c.hitsMax < 0.5) {
+			if (c.hits / c.hitsMax < 0.7) {
 				this.roomManager.repairManager.addToRepairQueue(c);
 			}
 		});

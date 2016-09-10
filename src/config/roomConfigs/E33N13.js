@@ -4,7 +4,7 @@
 		wantedCreeps: {
 			repairer: {
 				amount() {
-					return this.getRepairTargetId() !== null ? 2 : 0; 
+					return this.repairQueue.size !== 0 ? 3 : 0; 
 				},
 				body: [WORK, WORK, WORK, WORK, WORK, WORK, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY]
 			}
@@ -34,7 +34,7 @@
 	miscWorkforceManager: {
 		wantedCreeps: {
 			upgrader: {
-				amount: 2,
+				amount: 3,
 				body: [WORK, WORK, WORK, WORK, WORK, WORK, WORK, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY]
 			}
 		}
