@@ -14,13 +14,6 @@
 		useStoredEnergy: false,
 		harvestRemoteSources: true,
 		wantedCreeps: {
-			energyHarvester: {
-				amount() {
-					return this.localSources.length;
-				},
-				body: [WORK, WORK, WORK, WORK, WORK, WORK, WORK, WORK, MOVE, MOVE, MOVE, MOVE, CARRY, CARRY, CARRY, CARRY],
-				priority: 1
-			},
 			energyCollector: {
 				amount: 1,
 				priority: 2

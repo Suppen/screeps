@@ -14,16 +14,7 @@ const ScoutManager = require("ScoutManager");
 const ArmyManager = require("ArmyManager");
 const TerminalManager = require("TerminalManager");
 const MineralManager = require("MineralManager");
-
-const defaultConfig = {
-	energyManager: {},
-	repairManager: {},
-	constructionManager: {},
-	miscWorkforceManager: {},
-	armyManager: {},
-	terminalManager: {},
-	mineralManager: {}
-};
+const ReserverManager = require("ReserverManager");
 
 /**
  * Handles everything happening in a room and adjacent rooms not controlled by me
@@ -46,7 +37,16 @@ class RoomManager extends Manager {
 		/**
 		 * The room's config
 		 */
-		this.config = _.defaults(roomConfig, defaultConfig);
+		this.config = _.defaults(roomConfig, {
+			energyManager: {},
+			repairManager: {},
+			constructionManager: {},
+			miscWorkforceManager: {},
+			armyManager: {},
+			terminalManager: {},
+			mineralManager: {},
+			reserverManager: {}
+		});
 
 		// Create submanagers
 		this._createSubmanagers();
@@ -126,6 +126,7 @@ class RoomManager extends Manager {
 		this.armyManager = new ArmyManager(this, this.config.armyManager);
 		this.terminalManager = new TerminalManager(this, this.config.terminalManager);
 		this.mineralManager = new MineralManager(this, this.config.mineralManager);
+		this.reserverManager = new ReserverManager(this, this.config.reserverManager);
 	}
 
 	/**
@@ -144,6 +145,7 @@ class RoomManager extends Manager {
 		this.armyManager.run();
 		this.terminalManager.run();
 		this.mineralManager.run();
+		this.reserverManager.run();
 		this.spawnManager.run();
 	}
 

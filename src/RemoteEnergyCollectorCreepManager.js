@@ -103,19 +103,7 @@ class RemoteEnergyCollectorCreepManager extends ResourceHandlingCreepManager {
 	 * Calculates a default body for the creep based on an amount of energy
 	 */
 	static calculateBody(energy) {
-		let body;
-		if (energy >= 1200) {
-			body = [MOVE, CARRY, CARRY, MOVE, CARRY, CARRY, MOVE, CARRY, CARRY, MOVE, CARRY, CARRY, MOVE, CARRY, CARRY];
-		} else if (energy >= 900) {
-			body = [MOVE, CARRY, CARRY, MOVE, CARRY, CARRY, MOVE, CARRY, CARRY, MOVE, CARRY, CARRY];
-		} else if (energy >= 600) {
-			body = [MOVE, CARRY, CARRY, MOVE, CARRY, CARRY, MOVE, CARRY, CARRY];
-		} else if (energy >= 400) {
-			body = [MOVE, CARRY, CARRY, MOVE, CARRY, CARRY];
-		} else if (energy >= 300) {
-			body = [MOVE, CARRY, CARRY];
-		}
-		return body;
+		return [MOVE, CARRY, CARRY, MOVE, CARRY, CARRY, MOVE, CARRY, CARRY, MOVE, CARRY, CARRY, MOVE, CARRY, CARRY, MOVE, CARRY, CARRY, MOVE, CARRY, CARRY, MOVE, CARRY, CARRY];
 	}
 }
 

@@ -2,14 +2,6 @@
 
 const WorkforceManager = require("WorkforceManager");
 
-const defaultConfig = {
-	isWar: false,
-	targetRoom: null,
-	breachpoints: [],
-	allies: [],
-	wantedCreeps: {}
-};
-
 /**
  * Handles war
  */
@@ -31,7 +23,13 @@ class ArmyManager extends WorkforceManager {
 		/**
 		 * The config for this construction manager
 		 */
-		this.config = _.defaults(config, defaultConfig);
+		this.config = _.defaults(config, {
+			isWar: false,
+			targetRoom: null,
+			breachpoints: [],
+			allies: [],
+			wantedCreeps: {}
+		});
 	}
 
 	/**

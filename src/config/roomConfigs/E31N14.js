@@ -14,13 +14,6 @@
 		useStoredEnergy: false,
 		harvestRemoteSources: true,
 		wantedCreeps: {
-			energyHarvester: {
-				amount() {
-					return this.localSources.length;
-				},
-				body: [WORK, WORK, WORK, WORK, WORK, WORK, WORK, MOVE, MOVE, CARRY, CARRY],
-				priority: 1
-			},
 			energyCollector: {
 				amount: 2,
 				priority: 2
@@ -41,8 +34,8 @@
 	miscWorkforceManager: {
 		wantedCreeps: {
 			upgrader: {
-				amount: 2,
-				body: [WORK, WORK, WORK, WORK, WORK, MOVE, MOVE, MOVE, MOVE, MOVE, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY]
+				amount: 3,
+				body: [WORK, WORK, WORK, WORK, WORK, WORK, WORK, WORK, MOVE, MOVE, MOVE, MOVE, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY]
 			}
 		}
 	},

@@ -16,7 +16,8 @@ const roleManagerMap = {
 	claimer: require("ClaimerCreepManager"),
 	healer: require("HealerCreepManager"),
 	scout: require("ScoutCreepManager"),
-	constructionSiteDestroyer: require("ConstructionSiteDestroyerCreepManager")
+	constructionSiteDestroyer: require("ConstructionSiteDestroyerCreepManager"),
+	reserver: require("ReserverCreepManager")
 };
 
 /**
@@ -258,7 +259,7 @@ class WorkforceManager extends Manager {
 		this.creepManagers.forEach(m => m.run());
 
 		// Spawn stuff if the time is right
-		if (this.wantedCreeps !== null && Game.time % WorkforceManager.checkInterval === 0) {
+		if (Game.time % WorkforceManager.checkInterval === 0) {
 			this.doSpawning();
 		}
 	}

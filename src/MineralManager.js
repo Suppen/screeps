@@ -2,10 +2,6 @@
 
 const WorkforceManager = require("WorkforceManager");
 
-const defaultConfig = {
-	wantedCreeps: {}
-};
-
 /**
  * Handles the minerals and reactions for a room
  */
@@ -27,7 +23,9 @@ class MineralManager extends WorkforceManager {
 		/**
 		 * The config for this mineral manager
 		 */
-		this.config = _.defaults(config, defaultConfig);
+		this.config = _.defaults(config, {
+			wantedCreeps: {}
+		});
 	}
 
 	/**

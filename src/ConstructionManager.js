@@ -4,16 +4,6 @@ const WorkforceManager = require("WorkforceManager");
 const PriorityQueue = require("PriorityQueue");
 const ScoutManager = require("ScoutManager");
 
-const defaultConfig = {
-	wantedCreeps: {},
-	useStoredEnergy: true,
-	acceptableStatuses: [
-		ScoutManager.CLAIMABLE,
-		ScoutManager.RESERVED_BY_ME,
-		ScoutManager.UNINTERESTING
-	]
-};
-
 /**
  * Handles all construction for a room manager
  */
@@ -35,7 +25,15 @@ class ConstructionManager extends WorkforceManager {
 		/**
 		 * The config for this construction manager
 		 */
-		this.config = _.defaults(config, defaultConfig);
+		this.config = _.defaults(config, {
+			wantedCreeps: {},
+			useStoredEnergy: true,
+			acceptableStatuses: [
+				ScoutManager.CLAIMABLE,
+				ScoutManager.RESERVED_BY_ME,
+				ScoutManager.UNINTERESTING
+			]
+		});
 	}
 
 	/**

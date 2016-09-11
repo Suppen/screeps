@@ -267,7 +267,7 @@ class ScoutManager extends WorkforceManager {
 	 * Interval between status updates
 	 */
 	static get statusUpdateInterval() {
-		return 37;	// Prime
+		return 59;	// Prime
 	}
 }
 

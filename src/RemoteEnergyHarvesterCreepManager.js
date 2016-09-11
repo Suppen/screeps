@@ -51,6 +51,13 @@ class RemoteEnergyHarvesterCreepManager extends ResourceHandlingCreepManager {
 			this.creep.moveTo(whereToGo);
 		}
 	}
+
+	/**
+	 * Calculates a default body for the creep based on an amount of energy
+	 */
+	static calculateBody(energy) {
+		return [WORK, WORK, WORK, WORK, WORK, WORK, MOVE, MOVE, MOVE];
+	}
 }
 
 module.exports = RemoteEnergyHarvesterCreepManager;

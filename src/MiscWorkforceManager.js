@@ -2,10 +2,6 @@
 
 const WorkforceManager = require("WorkforceManager");
 
-const defaultConfig = {
-	wantedCreeps: {}
-};
-
 /**
  * Handles creeps which do not fit in other workforces
  */
@@ -20,14 +16,16 @@ class MiscWorkforceManager extends WorkforceManager {
 		super(roomManager.spawnManager);
 
 		/**
-		 * The room manager for this energy manager
+		 * The room manager for this workforce manager
 		 */
 		this.roomManager = roomManager;
 
 		/**
 		 * The config for this misc workforce manager
 		 */
-		this.config = _.defaults(config, defaultConfig);
+		this.config = _.defaults(config, {
+			wantedCreeps: {}
+		});
 	}
 
 	/**

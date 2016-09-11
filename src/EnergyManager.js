@@ -9,12 +9,6 @@ const RemoteEnergyCollectorCreepManager = require("RemoteEnergyCollectorCreepMan
 const EnergyHarvesterCreepManager = require("EnergyHarvesterCreepManager");
 const RemoteEnergyHarvesterCreepManager = require("RemoteEnergyHarvesterCreepManager");
 
-const defaultConfig = {
-	useStoredEnergy: false,
-	harvestRemoteSources: false,
-	wantedCreeps: {}
-};
-
 /**
  * Manages sources and containers and makes sure spawns, extensions and the like are filled
  */
@@ -36,7 +30,15 @@ class EnergyManager extends WorkforceManager {
 		/**
 		 * The config for this energy manager
 		 */
-		this.config = _.defaults(config, defaultConfig);
+		this.config = _.defaults(config, {
+			useStoredEnergy: false,
+			harvestRemoteSources: false,
+			wantedCreeps: {},
+			acceptableStatuses: [
+				ScoutManager.CLAIMABLE,
+				ScoutManager.RESERVED_BY_ME
+			]
+		});
 
 		// Create a link manager
 		this.linkManager = new LinkManager(this);
@@ -72,7 +74,7 @@ class EnergyManager extends WorkforceManager {
 					amount() {
 						return this.remoteSources.length;
 					},
-					body: [WORK, WORK, WORK, WORK, WORK, MOVE, MOVE, MOVE]
+					body: RemoteEnergyHarvesterCreepManager.calculateBody(this.roomManager.room.energyCapacityAvailable)
 				};
 			}
 			if (wantedCreeps.remoteEnergyCollector === undefined) {
@@ -80,7 +82,7 @@ class EnergyManager extends WorkforceManager {
 					amount() {
 						return this.remoteContainers.length;
 					},
-					body: [MOVE, CARRY, CARRY, MOVE, CARRY, CARRY, MOVE, CARRY, CARRY, MOVE, CARRY, CARRY, MOVE, CARRY, CARRY, MOVE, CARRY, CARRY, MOVE, CARRY, CARRY]
+					body: RemoteEnergyCollectorCreepManager.calculateBody(this.roomManager.room.energyCapacityAvailable)
 				};
 			}
 		}
@@ -127,6 +129,7 @@ class EnergyManager extends WorkforceManager {
 		}
 		return this.memory.localSourceHarvesterMap;
 	}
+
 	/**
 	 * Map between remote sources and harvester creeps
 	 */
@@ -153,11 +156,7 @@ class EnergyManager extends WorkforceManager {
 	get sources() {
 		if (this._sources === undefined) {
 			this._sources = this.roomManager.find(FIND_SOURCES, {
-				roomStatuses: [
-					ScoutManager.CLAIMABLE,
-					ScoutManager.CLAIMED_BY_ME,
-					ScoutManager.UNINTERESTING
-				]
+				roomStatuses: this.config.acceptableStatuses
 			});
 		}
 		return this._sources;
@@ -199,12 +198,7 @@ class EnergyManager extends WorkforceManager {
 	get containers() {
 		if (this._containers === undefined) {
 			this._containers = this.roomManager.find(FIND_STRUCTURES, {
-				roomStatuses: [
-					ScoutManager.CLAIMABLE,
-					ScoutManager.CLAIMED_BY_ME,
-					ScoutManager.UNINTERESTING
-
-				],
+				roomStatuses: this.config.acceptableStatuses,
 				filter: (s) => {
 					return s instanceof StructureContainer;
 				}
@@ -246,11 +240,7 @@ class EnergyManager extends WorkforceManager {
 	get looseEnergy() {
 		if (this._looseEnergy === undefined) {
 			this._looseEnergy = this.roomManager.find(FIND_DROPPED_ENERGY, {
-				roomStatuses: [
-					ScoutManager.CLAIMABLE,
-					ScoutManager.CLAIMED_BY_ME,
-					ScoutManager.UNINTERESTING
-				]
+				roomStatuses: this.config.acceptableStatuses
 			});
 		}
 		return this._looseEnergy;
