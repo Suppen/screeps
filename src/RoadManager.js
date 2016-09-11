@@ -150,7 +150,8 @@ class RoadManager extends Manager {
 		// Use all tiles with creeps on them
 		this.roomManager.find(FIND_MY_CREEPS, {
 			roomStatuses: [
-				ScoutManager.CLAIMABLE
+				ScoutManager.CLAIMABLE,
+				ScoutManager.RESERVED_BY_ME
 			]
 		}).forEach(c => {
 			if (c.memory.role !== "builder") {
