@@ -6,7 +6,7 @@
 				amount() {
 					return this.repairQueue.size !== 0 ? 2 : 0; 
 				},
-				body: [WORK, WORK, WORK, WORK, WORK, MOVE, MOVE, MOVE, MOVE, MOVE, CARRY, CARRY, CARRY, CARRY, CARRY]
+				body: [WORK, WORK, WORK, WORK, WORK, WORK, WORK, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY]
 			}
 		}
 	},
@@ -39,6 +39,8 @@
 			}
 		}
 	},
+	reserverManager: {},
+	mineralManager: {},
 	armyManager: {
 		isWar: false,
 		targetRoom: {

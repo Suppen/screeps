@@ -154,7 +154,7 @@ class RoadManager extends Manager {
 				ScoutManager.RESERVED_BY_ME
 			]
 		}).forEach(c => {
-			if (c.memory.role !== "builder") {
+			if (c.memory.role !== "reserver") {
 				this._useTile(c.room.name, c.pos.x, c.pos.y);
 			}
 		});

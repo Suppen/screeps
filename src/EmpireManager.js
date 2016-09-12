@@ -3,6 +3,7 @@
 const Manager = require("Manager");
 
 const RoomManager = require("RoomManager");
+const TerminalNetworkManager = require("TerminalNetworkManager");
 
 const config = require("config");
 
@@ -24,6 +25,12 @@ class EmpireManager extends Manager {
 
 		// Create room managers
 		this._createRoomManagers();
+
+		// Create a terminal network manager
+		if (config.terminalNetworkManager === undefined) {
+			config.terminalNetworkManager = {};
+		}
+		this.terminalNetworkManager = new TerminalNetworkManager(config.terminalNetworkManager);
 	}
 
 	/**

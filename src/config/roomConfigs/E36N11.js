@@ -15,7 +15,7 @@
 		harvestRemoteSources: true,
 		wantedCreeps: {
 			energyCollector: {
-				amount: 1,
+				amount: 2,
 				priority: 2
 			}
 		}
@@ -34,11 +34,13 @@
 	miscWorkforceManager: {
 		wantedCreeps: {
 			upgrader: {
-				amount: 3,
+				amount: 2,
 				body: [WORK, WORK, WORK, WORK, WORK, WORK, WORK, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY]
 			}
 		}
 	},
+	reserverManager: {},
+	mineralManager: {},
 	armyManager: {
 		isWar: false,
 		targetRoom: {

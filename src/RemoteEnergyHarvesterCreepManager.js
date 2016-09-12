@@ -56,7 +56,7 @@ class RemoteEnergyHarvesterCreepManager extends ResourceHandlingCreepManager {
 	 * Calculates a default body for the creep based on an amount of energy
 	 */
 	static calculateBody(energy) {
-		return [WORK, WORK, WORK, WORK, WORK, WORK, MOVE, MOVE, MOVE];
+		return [WORK, WORK, WORK, WORK, WORK, MOVE, MOVE, MOVE];
 	}
 }
 

@@ -6,7 +6,7 @@ const Manager = require("Manager");
  * Handles the terminal for a room
  */
 class TerminalManager extends Manager {
-	constructor(roomManager) {
+	constructor(roomManager, config) {
 		super();
 
 		// Store the room manager
@@ -33,12 +33,6 @@ class TerminalManager extends Manager {
 		return this._terminal;
 	}
 
-	run() {
-		// Don't do anything if the terminal doesn't exist
-		if (this.terminal !== undefined) {
-
-		}
-	}
 }
 
 module.exports = TerminalManager;
