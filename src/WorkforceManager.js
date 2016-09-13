@@ -18,7 +18,8 @@ const roleManagerMap = {
 	scout: require("ScoutCreepManager"),
 	constructionSiteDestroyer: require("ConstructionSiteDestroyerCreepManager"),
 	reserver: require("ReserverCreepManager"),
-	mineralHarvester: require("MineralHarvesterCreepManager")
+	mineralHarvester: require("MineralHarvesterCreepManager"),
+	defender: require("DefenderCreepManager")
 };
 
 /**

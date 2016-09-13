@@ -4,9 +4,9 @@
 		wantedCreeps: {
 			repairer: {
 				amount() {
-					return this.repairQueue.size !== 0 ? 3 : 0; 
+					return this.repairQueue.size !== 0 ? 4 : 0; 
 				},
-				body: [WORK, WORK, WORK, WORK, WORK, WORK, WORK, WORK, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY]
+				body: [WORK, WORK, WORK, WORK, WORK, WORK, WORK, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, CARRY,CARRY, CARRY, CARRY, CARRY, CARRY, CARRY]
 			}
 		}
 	},
@@ -44,13 +44,13 @@
 	armyManager: {
 		isWar: false,
 		targetRoom: {
-			name: "E34N13",
+			name: "E33N12",
 			entryX: 1,
 			entryY: 19,
 			protectX: 15,
 			protectY: 27
 		},
-		breachpoints: ["577d75895e50ee077be01560"],
+		breachpoints: [],
 		allies: [],
 		wantedCreeps: {
 			attacker: {

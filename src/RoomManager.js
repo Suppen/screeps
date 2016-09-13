@@ -15,6 +15,7 @@ const ArmyManager = require("ArmyManager");
 const TerminalManager = require("TerminalManager");
 const MineralManager = require("MineralManager");
 const ReserverManager = require("ReserverManager");
+const DefenseManager = require("DefenseManager");
 
 /**
  * Handles everything happening in a room and adjacent rooms not controlled by me
@@ -127,6 +128,7 @@ class RoomManager extends Manager {
 		this.terminalManager = new TerminalManager(this, this.config.terminalManager);
 		this.mineralManager = new MineralManager(this, this.config.mineralManager);
 		this.reserverManager = new ReserverManager(this, this.config.reserverManager);
+		this.defenseManager = new DefenseManager(this);
 	}
 
 	/**
@@ -146,6 +148,7 @@ class RoomManager extends Manager {
 		this.terminalManager.run();
 		this.mineralManager.run();
 		this.reserverManager.run();
+		this.defenseManager.run();
 		this.spawnManager.run();
 	}
 
