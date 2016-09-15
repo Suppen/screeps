@@ -138,12 +138,10 @@ class EnergyHarvesterCreepManager extends ResourceHandlingCreepManager {
 	 */
 	static calculateBody(energy) {
 		let body;
-		if (energy >= 1300) {
-			body = [WORK, WORK, WORK, WORK, WORK, WORK, MOVE, MOVE, CARRY, CARRY]
-		} else if (energy >= 900) {
+		if (energy >= 800) {
+			body = [WORK, WORK, WORK, WORK, WORK, WORK, MOVE, MOVE, CARRY, CARRY];
+		} else if (energy >= 700) {
 			body = [WORK, WORK, WORK, WORK, WORK, MOVE, MOVE, CARRY, CARRY];
-		} else if (energy >= 600) {
-			body = [WORK, WORK, WORK, MOVE, MOVE, CARRY, CARRY];
 		} else if (energy >= 400) {
 			body = [WORK, WORK, MOVE, MOVE, CARRY, CARRY];
 		} else {

@@ -52,7 +52,7 @@ class ReserverCreepManager extends CreepManager {
 	 * Calculates a default body for the creep based on an amount of energy
 	 */
 	static calculateBody(energy) {
-		return [MOVE, MOVE, CLAIM, CLAIM];
+		return [MOVE, CLAIM, CLAIM];
 	}
 }
 

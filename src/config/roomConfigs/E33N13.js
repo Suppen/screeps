@@ -35,27 +35,27 @@
 		wantedCreeps: {
 			upgrader: {
 				amount: 3,
-				body: [WORK, WORK, WORK, WORK, WORK, WORK, WORK, WORK, WORK, WORK, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY]
+				body: [WORK, WORK, WORK, WORK, WORK, WORK, WORK, WORK, WORK, WORK, WORK, WORK, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY]
 			}
 		}
 	},
 	reserverManager: {},
 	mineralManager: {},
 	armyManager: {
-		isWar: false,
+		isWar: true,
 		targetRoom: {
-			name: "E33N12",
-			entryX: 1,
-			entryY: 19,
-			protectX: 15,
-			protectY: 27
+			name: "E33N14",
+			entryX: 48,
+			entryY: 46,
+			protectX: 2,
+			protectY: 26
 		},
 		breachpoints: [],
 		allies: [],
 		wantedCreeps: {
 			attacker: {
 				amount: 1,
-				body: [MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, ATTACK, ATTACK, ATTACK, ATTACK, ATTACK, ATTACK, ATTACK, ATTACK]
+				body: [MOVE]
 			}
 		}
 	}

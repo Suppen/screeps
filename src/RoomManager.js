@@ -46,7 +46,8 @@ class RoomManager extends Manager {
 			armyManager: {},
 			terminalManager: {},
 			mineralManager: {},
-			reserverManager: {}
+			reserverManager: {},
+			defenseManager: {}
 		});
 
 		// Create submanagers
@@ -128,7 +129,7 @@ class RoomManager extends Manager {
 		this.terminalManager = new TerminalManager(this, this.config.terminalManager);
 		this.mineralManager = new MineralManager(this, this.config.mineralManager);
 		this.reserverManager = new ReserverManager(this, this.config.reserverManager);
-		this.defenseManager = new DefenseManager(this);
+		this.defenseManager = new DefenseManager(this, this.config.defenseManager);
 	}
 
 	/**

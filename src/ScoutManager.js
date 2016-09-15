@@ -211,9 +211,6 @@ class ScoutManager extends WorkforceManager {
 			// Mark the room as dangerous if there are hostile creeps there
 			if (status === ScoutManager.CLAIMABLE || status === ScoutManager.RESERVED_BY_ME) {
 				let hostileCreeps = this.roomManager.armyManager.getHostileCreepsIn(roomName);
-				hostileCreeps = hostileCreeps.filter(c => {
-					return c.getActiveBodyparts(ATTACK) !== 0 || c.getActiveBodyparts(RANGED_ATTACK) !== 0 || c.getActiveBodyparts(HEAL) !== 0 || c.getActiveBodyparts(CLAIM) !== 0;
-				});
 				if (hostileCreeps.length > 0) {
 					status = ScoutManager.DANGEROUS;
 				}

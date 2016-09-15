@@ -53,6 +53,10 @@ class RemoteEnergyCollectorCreepManager extends ResourceHandlingCreepManager {
 
 		if (this.loadLevel === 0 && !this.isSwooping) {
 			this.isSwooping = true;
+			// Kill the creep if it is too old and is unlikely to survive another trip
+			if (this.creep.ticksToLive < 150) {
+				this.creep.suicide();
+			}
 		} else if (this.loadLevel === 1 && this.isSwooping) {
 			this.isSwooping = false;
 			this.resourceDropoff = null;

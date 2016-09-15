@@ -60,7 +60,7 @@ class DefenderCreepManager extends CreepManager {
 				if (this.creep.room.name !== this.defenseManager.roomManager.roomName && this.scoutManager.roomStatuses[this.creep.room.name].status === this.scoutManager.constructor.DANGEROUS) {
 					this.scoutManager.updateRoomStatus(this.creep.room.name);
 				}
-				this.creep.moveTo(new RoomPosition(25, 25, roomToDefend));
+				this.creep.moveTo(this.defenseManager.idlePoint);
 			}
 		}
 	}

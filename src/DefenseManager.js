@@ -11,14 +11,24 @@ class DefenderManager extends WorkforceManager {
 	 * Creates a new defender manager
 	 *
 	 * @param {RoomManager} roomManager	The room manager which owns this workforce manager. Must have a spawn manager on it!
+	 * @param {Object} config	Configuration for the defense manager
 	 */
-	constructor(roomManager) {
+	constructor(roomManager, config) {
 		super(roomManager.spawnManager);
 
 		/**
 		 * The room manager for this workforce manager
 		 */
 		this.roomManager = roomManager;
+
+		
+		/**
+		 * The config for this energy manager
+		 */
+		this.config = _.defaults(config, {
+			idleX: 25,
+			idleY: 25
+		});
 	}
 
 	/**
@@ -46,7 +56,7 @@ class DefenderManager extends WorkforceManager {
 		if (this.dangerousNeighbourRooms.length > 0) {
 			wantedCreeps.defender = {
 				amount: 1,
-				body: [MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, ATTACK, ATTACK, ATTACK, ATTACK, ATTACK]
+				body: [MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, ATTACK, ATTACK, ATTACK, ATTACK, ATTACK]
 			}
 		}
 		return wantedCreeps;
@@ -76,6 +86,13 @@ class DefenderManager extends WorkforceManager {
 	 */
 	get roomToDefend() {
 		return this.dangerousNeighbourRooms.length > 0 ? this.dangerousNeighbourRooms[0] : this.roomManager.roomName;
+	}
+
+	/**
+	 * Point to go to in the main room when there is nothing to defend
+	 */
+	get idlePoint() {
+		return new RoomPosition(this.config.idleX, this.config.idleY, this.roomManager.roomName);
 	}
 }
 
