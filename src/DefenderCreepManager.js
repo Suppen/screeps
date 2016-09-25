@@ -55,6 +55,7 @@ class DefenderCreepManager extends CreepManager {
 				if (this.creep.attack(target) === ERR_NOT_IN_RANGE) {
 					this.creep.moveTo(target);
 				}
+				this.creep.rangedAttack(target);
 			} else {
 				// Tell the scout manager the room is no longer dangerous
 				if (this.creep.room.name !== this.defenseManager.roomManager.roomName && this.scoutManager.roomStatuses[this.creep.room.name].status === this.scoutManager.constructor.DANGEROUS) {

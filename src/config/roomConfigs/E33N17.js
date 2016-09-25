@@ -4,9 +4,9 @@
 		wantedCreeps: {
 			repairer: {
 				amount() {
-					return this.repairQueue.size !== 0 ? 3 : 0; 
+					return this.repairQueue.size !== 0 ? 4 : 0; 
 				},
-				body: [WORK, WORK, WORK, WORK, WORK, WORK, WORK, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY]
+				body: [WORK, WORK, WORK, WORK, WORK, WORK, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY]
 			}
 		}
 	},
@@ -25,7 +25,7 @@
 		wantedCreeps: {
 			builder: {
 				amount() {
-					return this.constructionQueue.size > 0 ? 2 : 0;
+					return this.constructionQueue.size > 0 ? 1 : 0;
 				},
 				body: [WORK, WORK, WORK, WORK, WORK, WORK, WORK, WORK, WORK, WORK, WORK, WORK, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY]
 			}

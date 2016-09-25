@@ -44,6 +44,13 @@ class CreepManager extends Manager {
 	}
 
 	/**
+	 * Role name of the creep
+	 */
+	get role() {
+		return this.memory.role;
+	}
+
+	/**
 	 * True if the creep is in its parent room, false otherwise
 	 */
 	get isInParentRoom() {

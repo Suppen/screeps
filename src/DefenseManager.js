@@ -56,7 +56,7 @@ class DefenderManager extends WorkforceManager {
 		if (this.dangerousNeighbourRooms.length > 0) {
 			wantedCreeps.defender = {
 				amount: 1,
-				body: [MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, ATTACK, ATTACK, ATTACK, ATTACK, ATTACK]
+				body: [TOUGH, TOUGH, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, RANGED_ATTACK, RANGED_ATTACK, ATTACK, ATTACK, ATTACK]
 			}
 		}
 		return wantedCreeps;

@@ -146,6 +146,19 @@ class RoadManager extends Manager {
 		}
 	}
 
+	/**
+	 * When to next iterate over the usage map
+	 */
+	get nextUsageMapIteration() {
+		if (this.memory.nextUsageMapIteration === undefined) {
+			this.memory.nextUsageMapIteration = 0;
+		}
+		return this.memory.nextUsageMapIteration;
+	}
+	set nextUsageMapIteration(tickNumber) {
+		this.memory.nextUsageMapIteration = tickNumber;
+	}
+
 	run() {
 		// Use all tiles with creeps on them
 		this.roomManager.find(FIND_MY_CREEPS, {
@@ -165,8 +178,13 @@ class RoadManager extends Manager {
 		}
 
 		// Iterate over the entire usage map every now and then
-		if (Game.time % RoadManager.mapIterationInterval === 0) {
+		if (Game.time >= this.nextUsageMapIteration) {
 			this._doMapStuff();
+
+			// Figure out when to iterate next time. Current game time + RoadManager.mapIterationInterval ± 10 ticks
+			// The random element is to stop "Script execution timeout" by spreading the iteration out for the rooms
+			let nextIteration = Game.time + RoadManager.mapIterationInterval + Math.floor(Math.random()*21)-10;
+			this.nextUsageMapIteration = nextIteration;
 		}
 	}
 
@@ -195,7 +213,7 @@ class RoadManager extends Manager {
 	 * Time between each iteration of the usage map
 	 */
 	static get mapIterationInterval() {
-		return 53;	// Prime
+		return 60;	// Not prime
 	}
 
 	/**

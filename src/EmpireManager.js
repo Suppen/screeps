@@ -3,6 +3,7 @@
 const Manager = require("Manager");
 
 const RoomManager = require("RoomManager");
+const ExperimentalRoomManager = require("ExperimentalRoomManager");
 const TerminalNetworkManager = require("TerminalNetworkManager");
 
 const config = require("config");
@@ -57,6 +58,57 @@ class EmpireManager extends Manager {
 			this.memory.unmanagedCreeps = {};
 		}
 		return this.memory.unmanagedCreeps;
+	}
+
+	/**
+	 * Map of newly spawned creeps which have not been picked up by their workforce manager yet
+	 *
+	 * @private
+	 */
+	get _newlySpawnedCreeps() {
+		if (this.memory.newlySpawnedCreeps === undefined) {
+			this.memory.newlySpawnedCreeps = {};
+		}
+		return this.memory.newlySpawnedCreeps;
+	}
+
+get scriptTimeout() {
+	if (Memory.scriptTimeout === undefined) {
+		Memory.scriptTimeout = 1;
+	}
+	return Memory.scriptTimeout;
+}
+set scriptTimeout(newVal) {
+	Memory.scriptTimeout = newVal;
+}
+
+	/**
+	 * Adds a newly spawned creep to the map of newly spawned creeps
+	 */
+	addNewlySpawnedCreep(uid, name) {
+		this._newlySpawnedCreeps[uid] = name;
+	}
+
+	/**
+	 * Marks a creep as failed to spawn
+	 */
+	failedToSpawnCreep(uid) {
+		this._newlySpawnedCreeps[uid] = null;
+	}
+
+	/**
+	 * Takes the name of a newly spawned creep
+	 *
+	 * @return {String}	Name of the newly spawned creep, or null if it has not spawned yet
+	 */
+	takeCreep(uid) {
+		let name = this._newlySpawnedCreeps[uid];
+		if (name !== undefined) {
+			delete this._newlySpawnedCreeps[uid];
+		} else {
+			name = null;
+		}
+		return name;
 	}
 
 	/**
@@ -139,6 +191,9 @@ class EmpireManager extends Manager {
 				}
 
 				// Make the manager
+//if (roomName === "E33N13")
+//this.roomManagers[roomName] = new ExperimentalRoomManager(roomName, roomConfig);
+//else
 				this.roomManagers[roomName] = new RoomManager(roomName, roomConfig);
 			}
 		}

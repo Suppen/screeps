@@ -3,6 +3,7 @@
 const Manager = require("Manager");
 
 const PriorityQueue = require("PriorityQueue");
+const makeUID = require("makeUID");
 
 /**
  * Handles all spawning
@@ -76,16 +77,24 @@ class SpawnManager extends Manager {
 	 * @param {String} [options.name]	Name of the creep. If not set, a random name will be given
 	 * @param {Object} [options.initialMemory]	Initial memory for the creep. Should be JSON-serializable. Undefined if not set
 	 * @param {Integer} [priority]	Spawn priority of this creep. Lower number = higher priority. Defaults to 1000
+	 *
+	 * @return {String}	A unique ID for the yet-to-be-spawned creep
 	 */
 	addToSpawnQueue(options, priority = 1000) {
 		// Set defaults
 		options = _.defaults(options, {
 			name: null,
-			initialMemory: {}
+			initialMemory: {},
 		});
+
+		// Make an ID for the entry
+		options.uid = makeUID();
 
 		// Put the creep in the spawn queue
 		this.spawnQueue.add(options, priority);
+
+		// Return the ID
+		return options.uid;
 	}
 
 	/**
@@ -128,8 +137,9 @@ class SpawnManager extends Manager {
 					// Spawn it!
 					let name = spawn.createCreep(creepToSpawn.body, creepToSpawn.name, creepToSpawn.initialMemory);
 
-					// Tell the empire manager there is an unmanaged creep
-					this.empireManager.addUnmanagedCreep(name, creepToSpawn.initialMemory.workforce);
+					// Tell the empire manager there is a new unmanaged creep
+					this.empireManager.addNewlySpawnedCreep(creepToSpawn.uid, name);
+					this.empireManager.addUnmanagedCreep(name, creepToSpawn.initialMemory.workforce);	// XXX Legacy
 
 					// Mark the spawn as busy
 					spawn.willSpawn = true;
@@ -151,6 +161,9 @@ class SpawnManager extends Manager {
 						// This creep is too expensive for the room. Remove it from the queue
 						console.log("The creep with body [" + creepToSpawn.body.join(", ") + "] costs " + energyCost + " to spawn. Room " + this.roomManager.roomName + " only has a capacity of " + energyCapacity + ". Removing the creep from the spawn queue");
 						this.spawnQueue.shift();
+
+						// Mark the creep as failed to spawn
+						this.empireManager.failedToSpawnCreep(creepToSpawn.uid);
 
 						// Try to spawn more creeps
 						spawnMore = true;

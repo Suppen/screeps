@@ -21,7 +21,7 @@ class HealerCreepManager extends CreepManager {
 		let woundedCreeps = this.armyManager.getInjuredCreepsIn(this.creep.room.name);
 		if (woundedCreeps.length > 0) {
 			if (this.creep.heal(woundedCreeps[0]) === ERR_NOT_IN_RANGE) {
-			    this.creep.rangedHeal(woundedCreeps[0])
+				this.creep.rangedHeal(woundedCreeps[0])
 				this.creep.moveTo(woundedCreeps[0]);
 			}
 		}

@@ -70,7 +70,7 @@ class WorkforceManager extends Manager {
 	}
 
 	/**
-	 * All creep managers managed by this workforce manager
+	 * All creeps managed by this workforce manager
 	 */
 	get workforce() {
 		// Check if the memory location exists

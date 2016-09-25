@@ -191,6 +191,23 @@ class EnergyManager extends WorkforceManager {
 	}
 
 	/**
+	 * The nuke
+	 */
+	get nuke() {
+		if (this._nuke === undefined) {
+			let nuke = this.roomManager.room.find(FIND_MY_STRUCTURES, {
+				filter(s) {
+					return s instanceof StructureNuker;
+				}
+			});
+			if (nuke.length === 1) {
+				this._nuke = nuke[0];
+			}
+		}
+		return this._nuke;
+	}
+
+	/**
 	 * List of all containers within two tiles of a source
 	 *
 	 * @return {StructureContainer[]}	An array of all containers
@@ -364,6 +381,7 @@ class EnergyManager extends WorkforceManager {
 			links: this.linkManager.dropoffLinks.filter(EnergyManager.dropoffIsGood),
 			storage: EnergyManager.dropoffIsGood(this.storage) ? this.storage : null,
 			terminal: EnergyManager.dropoffIsGood(this.terminal) ? this.terminal : null,
+			nuke: EnergyManager.dropoffIsGood(this.nuke) ? this.nuke : null,
 			containers: this.containers.filter(EnergyManager.dropoffIsGood),
 			extensions: this.extensions.filter(EnergyManager.dropoffIsGood),
 			spawns: this.spawns.filter(EnergyManager.dropoffIsGood),

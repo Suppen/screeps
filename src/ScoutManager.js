@@ -245,7 +245,7 @@ class ScoutManager extends WorkforceManager {
 						Game.creeps[this.roomStatuses[roomName].scoutAssigned] = null;
 						// Nope. Check if there is one in the spawn queue
 						let spawning = this.spawnManager.spawnQueue.queue.reduce((result, c) => {
-							return result || (c.role === "scout" && c.initialMemory.nameOfRoomToScout === roomName)
+							return result || (c.initialMemory.role === "scout" && c.initialMemory.nameOfRoomToScout === roomName)
 						}, false);
 						if (!spawning) {
 							// Need to spawn a scout for this room
@@ -268,7 +268,7 @@ class ScoutManager extends WorkforceManager {
 	 * Interval between status updates
 	 */
 	static get statusUpdateInterval() {
-		return 59;	// Prime
+		return 17;	// Prime
 	}
 }
 

@@ -65,11 +65,9 @@ const utils = {
 */
 
 		// Fill up the nuke
-/*
 		if (dropoff === null && dropoffs.nuke !== null) {
 			dropoff = dropoffs.nuke;
 		}
-*/
 
 		// Last chance: The storage!
 		if (dropoff === null && dropoffs.storage !== null) {

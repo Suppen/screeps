@@ -4,9 +4,9 @@
 		wantedCreeps: {
 			repairer: {
 				amount() {
-					return this.repairQueue.size !== 0 ? 3 : 0; 
+					return this.repairQueue.size !== 0 ? 4 : 0; 
 				},
-				body: [WORK, WORK, WORK, MOVE, MOVE, MOVE, MOVE, CARRY, CARRY, CARRY, CARRY]
+				body: [WORK, WORK, WORK, WORK, MOVE, MOVE, MOVE, MOVE, MOVE, CARRY, CARRY, CARRY, CARRY, CARRY]
 			}
 		}
 	},
@@ -25,7 +25,7 @@
 		wantedCreeps: {
 			builder: {
 				amount() {
-					return this.constructionQueue.size > 0 ? 2 : 0;
+					return this.constructionQueue.size > 0 ? 3 : 0;
 				},
 				body: [WORK, WORK, WORK, MOVE, MOVE, MOVE, MOVE, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY]
 			}
@@ -34,8 +34,8 @@
 	miscWorkforceManager: {
 		wantedCreeps: {
 			upgrader: {
-				amount: 2,
-				body: [WORK, WORK, WORK, MOVE, MOVE, MOVE, MOVE, CARRY, CARRY, CARRY, CARRY]
+				amount: 4,
+				body: [WORK, WORK, WORK, WORK, WORK, WORK, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY]
 			}
 		}
 	},
@@ -48,18 +48,20 @@
 	armyManager: {
 		isWar: false,
 		targetRoom: {
-			name: "E33N16",
-			entryX: 30,
-			entryY: 1,
+			name: "E36N17",
+			entryX: 1,
+			entryY: 30,
 			protectX: 15,
 			protectY: 31
 		},
-		breachpoints: [],
+		breachpoints: [
+			"57a0c7f41b7f4573116446bf"
+		],
 		allies: [],
 		wantedCreeps: {
-			constructionSiteDestroyer: {
+			attacker: {
 				amount: 1,
-				body: [MOVE, MOVE, MOVE, MOVE, MOVE]
+				body: [MOVE, MOVE, MOVE, MOVE, MOVE, ATTACK, ATTACK, ATTACK, ATTACK, ATTACK]
 			}
 		}
 	}
