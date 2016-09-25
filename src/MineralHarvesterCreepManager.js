@@ -84,6 +84,12 @@ class MineralHarvesterCreepManager extends ResourceHandlingCreepManager {
 				this.resourceDropoff = this.findDropoff();
 			}
 
+			// Calculate amount to drop off
+			let amount = undefined;	// Drop off whatever amount the creep is carrying
+			if (this.resourceDropoff instanceof StructureTerminal) {
+				amount = Math.min(TerminalNetworkManager.maximumOfEachResource - this.resourceDropoff.store[this.resourceType], amount);
+			}
+
 			// Go dump the energy somewhere
 			let status = this.dropoffResource();
 			switch (status) {

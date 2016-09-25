@@ -109,8 +109,8 @@ class MineralManager extends WorkforceManager {
 			)
 		);
 	}
-	dropoffIsBad(dropoff) {
-		return MineralManager.dropoffIsBad(dropoff);
+	dropoffIsBad(dropoff, resourceType) {
+		return MineralManager.dropoffIsBad(dropoff, resourceType);
 	}
 
 	/**
@@ -120,11 +120,11 @@ class MineralManager extends WorkforceManager {
 	 *
 	 * @return {Boolean}	True if the dropoff is good, false otherwise
 	 */
-	static dropoffIsGood(dropoff) {
-		return !MineralManager.dropoffIsBad(dropoff);
+	static dropoffIsGood(dropoff, resourceType) {
+		return !MineralManager.dropoffIsBad(dropoff, resourceType);
 	}
-	dropoffIsGood(dropoff) {
-		return MineralManager.dropoffIsGood(dropoff);
+	dropoffIsGood(dropoff, resourceType) {
+		return MineralManager.dropoffIsGood(dropoff, resourceType);
 	}
 
 	/**
