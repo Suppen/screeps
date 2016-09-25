@@ -72,16 +72,6 @@ class EmpireManager extends Manager {
 		return this.memory.newlySpawnedCreeps;
 	}
 
-get scriptTimeout() {
-	if (Memory.scriptTimeout === undefined) {
-		Memory.scriptTimeout = 1;
-	}
-	return Memory.scriptTimeout;
-}
-set scriptTimeout(newVal) {
-	Memory.scriptTimeout = newVal;
-}
-
 	/**
 	 * Adds a newly spawned creep to the map of newly spawned creeps
 	 */
@@ -191,9 +181,6 @@ set scriptTimeout(newVal) {
 				}
 
 				// Make the manager
-//if (roomName === "E33N13")
-//this.roomManagers[roomName] = new ExperimentalRoomManager(roomName, roomConfig);
-//else
 				this.roomManagers[roomName] = new RoomManager(roomName, roomConfig);
 			}
 		}

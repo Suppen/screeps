@@ -44,7 +44,14 @@
 		idleY: 29
 	},
 	reserverManager: {},
-	mineralManager: {},
+	mineralManager: {
+		wantedCreeps: {
+			mineralHarvester: {
+				amount: 1,
+				body: [WORK, WORK, WORK, WORK, WORK, MOVE, MOVE, MOVE, MOVE, MOVE, CARRY, CARRY, CARRY, CARRY, CARRY]
+			}
+		}
+	},
 	armyManager: {
 		isWar: false,
 		targetRoom: {

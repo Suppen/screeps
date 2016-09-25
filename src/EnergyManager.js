@@ -302,6 +302,7 @@ class EnergyManager extends WorkforceManager {
 	 * All labs
 	 */
 	get labs() {
+//		return this.roomManager.labManager.labs;
 		return this.roomManager.room.find(FIND_STRUCTURES, {
 			filter(s) {
 				return s instanceof StructureLab;

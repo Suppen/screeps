@@ -34,13 +34,20 @@
 	miscWorkforceManager: {
 		wantedCreeps: {
 			upgrader: {
-				amount: 3,
+				amount: 4,
 				body: [WORK, WORK, WORK, WORK, WORK, WORK, WORK, WORK, WORK, WORK, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY]
 			}
 		}
 	},
 	reserverManager: {},
-	mineralManager: {},
+	mineralManager: {
+		wantedCreeps: {
+			mineralHarvester: {
+				amount: 1,
+				body: [WORK, WORK, WORK, WORK, WORK, MOVE, MOVE, MOVE, MOVE, MOVE, CARRY, CARRY, CARRY, CARRY, CARRY]
+			}
+		}
+	},
 	armyManager: {
 		isWar: true,
 		targetRoom: {

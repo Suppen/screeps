@@ -1,5 +1,7 @@
 "use strict";
 
+const TerminalNetworkManager = require("TerminalNetworkManager");
+
 const WorkforceManager = require("WorkforceManager");
 
 /**
@@ -50,6 +52,79 @@ class MineralManager extends WorkforceManager {
 	 */
 	get wantedCreeps() {
 		return this.config.wantedCreeps;
+	}
+
+	/**
+	 * The terminal
+	 */
+	get terminal() {
+		return this.roomManager.terminalManager.terminal;
+	}
+
+	/**
+	 * All labs
+	 */
+	get labs() {
+//		return this.roomManager.labManager.labs;
+		return this.roomManager.room.find(FIND_STRUCTURES, {
+			filter(s) {
+				return s instanceof StructureLab;
+			}
+		});
+	}
+
+	/**
+	 * Everything which can somehow be used to drop off minerals
+	 *
+	 * @param {String} resourceType	One of the RESOURCE_* constants
+	 */
+	allDropoffs(resourceType) {
+		return {
+			terminal: MineralManager.dropoffIsGood(this.terminal, resourceType) ? this.terminal : null,
+			labs: this.labs.filter(lab => MineralManager.dropoffIsGood(lab, resourceType))
+		};
+	}
+
+	/**
+	 * Checks whether or not a dropoff is bad (full or non-existent)
+	 *
+	 * @param {Structure} dropoff	Anything which can somehow be used to dump energy
+	 *
+	 * @return {Boolean}	True if the dropoff is bad, false otherwise
+	 */
+	static dropoffIsBad(dropoff, resourceType) {
+		return (
+			// The dropoff doesn't exist (or isn't visible)
+			dropoff === undefined ||
+			dropoff === null ||
+			(
+				// The terminal is full of this resource
+				dropoff instanceof StructureTerminal &&
+				dropoff.store[resourceType] >= TerminalNetworkManager.maximumOfEachResource
+			) ||
+			(
+				// The lab is full
+				dropoff instanceof StructureLab &&
+				_.sum(dropoff.store) === dropoff.storeCapacity
+			)
+		);
+	}
+	dropoffIsBad(dropoff) {
+		return MineralManager.dropoffIsBad(dropoff);
+	}
+
+	/**
+	 * Checks whether or not a dropoff is good (exists and is not full)
+	 *
+	 * @param {Structure} dropoff	Anything which can somehow be used to dump minerals
+	 *
+	 * @return {Boolean}	True if the dropoff is good, false otherwise
+	 */
+	static dropoffIsGood(dropoff) {
+		return !MineralManager.dropoffIsBad(dropoff);
+	}
+	dropoffIsGood(dropoff) {
+		return MineralManager.dropoffIsGood(dropoff);
 	}
 
 	/**

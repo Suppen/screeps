@@ -1,5 +1,7 @@
 "use strict";
 
+const TerminalNetworkManager = require("TerminalNetworkManager");
+
 /**
  * Useful utility functions
  */
@@ -57,16 +59,14 @@ const utils = {
 			dropoff = this.creep.pos.findClosestByRange(dropoffs.labs);
 		}
 
-		// Does the terminal have capacity for more energy?
-/*
-		if (dropoff === null && dropoffs.terminal !== null && dropoffs.terminal.store.energy < TerminalManager.energyBuffer) {
-			dropoff = dropoffs.terminal;
-		}
-*/
-
 		// Fill up the nuke
 		if (dropoff === null && dropoffs.nuke !== null) {
 			dropoff = dropoffs.nuke;
+		}
+
+		// Does the terminal have capacity for more energy?
+		if (dropoff === null && dropoffs.terminal !== null && dropoffs.terminal.store.energy < TerminalNetworkManager.maxEnergy) {
+			dropoff = dropoffs.terminal;
 		}
 
 		// Last chance: The storage!

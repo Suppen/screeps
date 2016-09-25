@@ -34,7 +34,7 @@
 	miscWorkforceManager: {
 		wantedCreeps: {
 			upgrader: {
-				amount: 2,
+				amount: 3,
 				body: [WORK, WORK, WORK, WORK, WORK, WORK, WORK, MOVE, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY]
 			}
 		}
@@ -44,7 +44,14 @@
 		idleY: 40
 	},
 	reserverManager: {},
-	mineralManager: {},
+	mineralManager: {
+		wantedCreeps: {
+			mineralHarvester: {
+				amount: 1,
+				body: [WORK, WORK, WORK, WORK, WORK, MOVE, MOVE, MOVE, MOVE, MOVE, CARRY, CARRY, CARRY, CARRY, CARRY]
+			}
+		}
+	},
 	armyManager: {
 		isWar: true,
 		targetRoom: {

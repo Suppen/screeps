@@ -28,7 +28,7 @@ class TerminalManager extends Manager {
 	 */
 	get terminal() {
 		if (this._terminal === undefined) {
-			this._terminal = this.roomManager.terminal;
+			this._terminal = this.roomManager.room.terminal;
 		}
 		return this._terminal;
 	}
