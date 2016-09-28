@@ -1,7 +1,5 @@
 "use strict";
 
-const TerminalNetworkManager = require("TerminalNetworkManager");
-
 const ResourceHandlingCreepManager = require("ResourceHandlingCreepManager");
 
 const utils = require("utils");
@@ -125,7 +123,7 @@ class EnergyCollectorCreepManager extends ResourceHandlingCreepManager {
 			// Calculate amount to drop off
 			let amount = undefined;	// Drop off whatever amount the creep is carrying
 			if (this.resourceDropoff instanceof StructureTerminal) {
-				amount = Math.min(TerminalNetworkManager.maxEnergy - this.resourceDropoff.store.energy, amount);
+				amount = Math.min(this.energyManager.roomManager.terminalManager.maxEnergy - this.resourceDropoff.store.energy, amount);
 			}
 
 			// Go dump the energy somewhere

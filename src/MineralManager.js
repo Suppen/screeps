@@ -1,7 +1,5 @@
 "use strict";
 
-const TerminalNetworkManager = require("TerminalNetworkManager");
-
 const WorkforceManager = require("WorkforceManager");
 
 /**
@@ -100,7 +98,7 @@ class MineralManager extends WorkforceManager {
 			(
 				// The terminal is full of this resource
 				dropoff instanceof StructureTerminal &&
-				dropoff.store[resourceType] >= TerminalNetworkManager.maximumOfEachResource
+				dropoff.store[resourceType] >= this.roomManager.terminalManager.maximumOfEachResource
 			) ||
 			(
 				// The lab is full

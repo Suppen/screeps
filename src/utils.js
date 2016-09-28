@@ -1,7 +1,5 @@
 "use strict";
 
-const TerminalNetworkManager = require("TerminalNetworkManager");
-
 /**
  * Useful utility functions
  */
@@ -65,7 +63,7 @@ const utils = {
 		}
 
 		// Does the terminal have capacity for more energy?
-		if (dropoff === null && dropoffs.terminal !== null && dropoffs.terminal.store.energy < TerminalNetworkManager.maxEnergy) {
+		if (dropoff === null && dropoffs.terminal !== null && dropoffs.terminal.store.energy < this.energyManager.roomManager.terminalManager.maxEnergy) {
 			dropoff = dropoffs.terminal;
 		}
 

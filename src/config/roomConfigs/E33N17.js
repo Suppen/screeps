@@ -4,7 +4,7 @@
 		wantedCreeps: {
 			repairer: {
 				amount() {
-					return this.repairQueue.size !== 0 ? 4 : 0; 
+					return (this.repairQueue.size > 0 || this.unscheduledRepairQueue.length > 0) ? 4 : 0; 
 				},
 				body: [WORK, WORK, WORK, WORK, WORK, WORK, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY]
 			}

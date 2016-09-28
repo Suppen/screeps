@@ -4,9 +4,9 @@
 		wantedCreeps: {
 			repairer: {
 				amount() {
-					return this.repairQueue.size !== 0 ? 5 : 0; 
+					return (this.repairQueue.size > 0 || this.unscheduledRepairQueue.length > 0) ? 5 : 0; 
 				},
-				body: [WORK, WORK, WORK, WORK, WORK, WORK, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, CARRY,CARRY, CARRY, CARRY, CARRY, CARRY]
+				body: [WORK, WORK, WORK, WORK, WORK, WORK, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY]
 			}
 		}
 	},
@@ -53,7 +53,7 @@
 		targetRoom: {
 			name: "E33N14",
 			entryX: 48,
-			entryY: 46,
+			entryY: 45,
 			protectX: 2,
 			protectY: 26
 		},

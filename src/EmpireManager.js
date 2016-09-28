@@ -196,6 +196,9 @@ class EmpireManager extends Manager {
 		for (let r in this.roomManagers) {
 			this.roomManagers[r].run();
 		}
+
+		// Run the terminal network manager
+		this.terminalNetworkManager.run();
 	}
 
 	/**

@@ -38,7 +38,7 @@ class AttackerCreepManager extends CreepManager {
 			if (targets.length === 0) {
 				targets = this.creep.room.find(FIND_STRUCTURES, {
 					filter(s) {
-						return s instanceof StructureTower;
+						return s instanceof StructureTower && !s.my;
 					}
 				});
 			}
@@ -54,7 +54,7 @@ class AttackerCreepManager extends CreepManager {
 			if (targets.length === 0) {
 				targets = this.creep.room.find(FIND_STRUCTURES, {
 					filter(s) {
-						return !(s instanceof StructureWall || s instanceof StructureRampart || s instanceof StructureRoad || s instanceof StructureController || s instanceof StructureContainer);
+						return !(s.my || s instanceof StructureWall || s instanceof StructureRampart || s instanceof StructureRoad || s instanceof StructureController || s instanceof StructureContainer);
 					}
 				});
 			}

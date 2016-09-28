@@ -168,6 +168,23 @@ class SpawnManager extends Manager {
 	run() {
 		// Do some spawning
 		this.spawnCreeps();
+
+		// Check if any spawn is damaged
+		if (Game.time % SpawnManager.healthCheckInterval) {
+			this.spawns.forEach(s => {
+				if (s.hits < s.hitsMax) {
+					// Fix it immediately!!!
+					this.roomManager.repairManager.addToRepairQueue(s);
+				}
+			});
+		}
+	}
+
+	/**
+	 * Interval for spawn health checking
+	 */
+	static get healthCheckInterval() {
+		return 11;	// Prime
 	}
 }
 
