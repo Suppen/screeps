@@ -20,9 +20,11 @@ class HealerCreepManager extends CreepManager {
 		// Find wounded creeps in current room
 		let woundedCreeps = this.armyManager.getInjuredCreepsIn(this.creep.room.name);
 		if (woundedCreeps.length > 0) {
-			if (this.creep.heal(woundedCreeps[0]) === ERR_NOT_IN_RANGE) {
-				this.creep.rangedHeal(woundedCreeps[0])
-				this.creep.moveTo(woundedCreeps[0]);
+			// Find the closest one
+			let closest = this.creep.pos.findClosestByRange(woundedCreeps);
+			if (this.creep.heal(closest) === ERR_NOT_IN_RANGE) {
+				this.creep.rangedHeal(closest);
+				this.creep.moveTo(closest);
 			}
 		}
 
@@ -32,14 +34,16 @@ class HealerCreepManager extends CreepManager {
 				// Go to target room if not there
 				this.creep.moveTo(new RoomPosition(targetRoom.entryX, targetRoom.entryY, targetRoom.name));
 			} else {
-				// Stick to a fighter
+				// Find all my fighters
 				let fighters = this.creep.room.find(FIND_MY_CREEPS, {
 					filter(c) {
 						return c.getActiveBodyparts(ATTACK) > 0 || c.getActiveBodyparts(RANGED_ATTACK);
 					}
 				});
 				if (fighters.length > 0) {
-					this.creep.moveTo(fighters[0]);
+					// Stick to the closest one
+					let closest = this.creep.pos.findClosestByRange(fighters);
+					this.creep.moveTo(closest);
 				}
 			}
 		}

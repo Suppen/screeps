@@ -25,8 +25,6 @@ class TerminalNetworkManager extends Manager {
 	run() {
 		// Distribute resources every now and then
 		if (Game.time % TerminalNetworkManager.resourceDistributionInterval === 0) {
-let startCpu = Game.cpu.getUsed();
-console.log("Kake");
 			// Collect data from all terminal managers
 			let data = {};
 			Object.keys(this.empireManager.roomManagers).forEach(roomName => {

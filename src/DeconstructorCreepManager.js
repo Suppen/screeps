@@ -2,9 +2,12 @@
 
 const CreepManager = require("CreepManager");
 
-class AttackerCreepManager extends CreepManager {
+/**
+ * Creep type which deconstructs enemt structures
+ */
+class DeconstructorCreepManager extends CreepManager {
 	/**
-	 * Creates a new attacker creep manager
+	 * Creates a new deconstructor creep manager
 	 *
 	 * @param {String} creepName	Name of the creep to manage
 	 * @param {ArmyManager} armyManager	Army manager this creep is part of
@@ -29,23 +32,6 @@ class AttackerCreepManager extends CreepManager {
 				targets = [breachpoint];
 			}
 
-			// Find dangerous hostile creeps
-			let hostiles = this.armyManager.getHostileCreepsIn(this.creep.room.name)
-			  .filter(c => c.getActiveBodyparts(ATTACK) !== 0 || c.getActiveBodyparts(RANGED_ATTACK) !== 0 || c.getActiveBodyparts(HEAL) !== 0 || c.getActiveBodyparts(CLAIM) !== 0)
-
-			// If a breachpoint is available, but the creep can shoot and a hostile creep is nearby, go for that instead
-			if (targets.length > 0 && this.creep.getActiveBodyparts(RANGED_ATTACK) && hostiles.length > 0) {
-				let target = this.creep.pos.findClosestByRange(hostiles);
-				if (this.creep.pos.getRangeTo(target) <= 3) {
-					// KILL IT!!!!!
-					targets = [target];
-				}
-			}
-
-			// Hostile creeps
-			if (targets.length === 0 && hostiles.length !== 0) {
-				targets = hostiles;
-			}
 			// Hostile towers
 			if (targets.length === 0) {
 				targets = this.creep.room.find(FIND_STRUCTURES, {
@@ -57,10 +43,6 @@ class AttackerCreepManager extends CreepManager {
 			// Hostile spawns
 			if (targets.length === 0) {
 				targets = this.creep.room.find(FIND_HOSTILE_SPAWNS);
-			}
-			// Other hostile creeps
-			if (targets.length === 0) {
-				targets = this.armyManager.getHostileCreepsIn(this.creep.room.name);
 			}
 			// Structures
 			if (targets.length === 0) {
@@ -75,11 +57,9 @@ class AttackerCreepManager extends CreepManager {
 			if (targets.length > 0) {
 				// Go for the closest one
 				let target = this.creep.pos.findClosestByRange(targets);
-				if (this.creep.attack(target) !== OK) {
+				if (this.creep.dismantle(target) !== OK) {
 					this.creep.moveTo(target);
 				}
-				// Try to shoot at it
-				this.creep.rangedAttack(target);
 			} else {
 				// Go defend some point
 				this.creep.moveTo(targetRoom.protectX, targetRoom.protectY);
@@ -89,4 +69,4 @@ class AttackerCreepManager extends CreepManager {
 }
 
 
-module.exports = AttackerCreepManager;
+module.exports = DeconstructorCreepManager;

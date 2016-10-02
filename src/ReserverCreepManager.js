@@ -7,10 +7,10 @@ const CreepManager = require("CreepManager");
  */
 class ReserverCreepManager extends CreepManager {
 	/**
-	 * Creates a new Energy harvester manager
+	 * Creates a new Reserver creep manager
 	 *
 	 * @param {String} creepName	Name of the creep to manage
-	 * @param {EnergyManager} energyManager	The energy manager this creep is managed by
+	 * @param {ReserverManager} energyManager	The reserver manager this creep is managed by
 	 */
 	constructor(creepName, reserverManager) {
 		super(creepName, reserverManager);

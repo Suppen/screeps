@@ -62,16 +62,16 @@ class EnergyCollectorCreepManager extends ResourceHandlingCreepManager {
 		}
 
 		// Then, Go for containers and links
-		if ((pickups.containers.length > 0 || pickups.links.length > 0) && pickup === null) {
+		if (pickup === null && (pickups.containers.length > 0 || pickups.links.length > 0)) {
 			let linksContainers = pickups.containers.concat(pickups.links);
 
 			// Ignore containers with less than 50 energy
 			linksContainers = linksContainers.filter(s => {
 				let keep = false;
 				if (s instanceof StructureLink) {
-					keep = s.energy > 50
+					keep = s.energy >= 50;
 				} else {
-					keep = s.store.energy > 50;
+					keep = s.store.energy >= 50;
 				}
 				return keep;
 			});

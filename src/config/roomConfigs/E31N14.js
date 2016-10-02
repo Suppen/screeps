@@ -53,20 +53,30 @@
 		}
 	},
 	armyManager: {
-		isWar: true,
+		isWar: false,
 		targetRoom: {
-			name: "E32N15",
-			entryX: 6,
-			entryY: 48,
-			protectX: 47,
-			protectY: 29
+			name: "E33N15",
+			entryX: 1,
+			entryY: 12,
+			protectX: 42,
+			protectY: 17
 		},
-		breachpoints: [],
+		breachpoints: [
+			"57a804228c55fc6e2065501c"
+		],
 		allies: [],
 		wantedCreeps: {
 			attacker: {
 				amount: 1,
-				body: [MOVE]
+				body: [MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, RANGED_ATTACK, RANGED_ATTACK, RANGED_ATTACK, RANGED_ATTACK, RANGED_ATTACK, RANGED_ATTACK, RANGED_ATTACK, RANGED_ATTACK, RANGED_ATTACK, RANGED_ATTACK, RANGED_ATTACK, RANGED_ATTACK, RANGED_ATTACK, RANGED_ATTACK, RANGED_ATTACK, RANGED_ATTACK, RANGED_ATTACK, RANGED_ATTACK, RANGED_ATTACK, RANGED_ATTACK]
+			},
+			deconstructor: {
+				amount: 2,
+				body: [MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, WORK, WORK, WORK, WORK, WORK, WORK, WORK, WORK, WORK, WORK, WORK, WORK, WORK, WORK, WORK, WORK, WORK, WORK, WORK, WORK]
+			},
+			healer: {
+				amount: 1,
+				body: [MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, HEAL, HEAL, HEAL, HEAL, HEAL, HEAL, HEAL, HEAL, HEAL, HEAL, HEAL, HEAL, HEAL, HEAL, HEAL, HEAL, HEAL, HEAL, HEAL, HEAL]
 			}
 		}
 	}

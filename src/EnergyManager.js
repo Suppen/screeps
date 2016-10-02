@@ -74,7 +74,8 @@ class EnergyManager extends WorkforceManager {
 					amount() {
 						return this.remoteSources.length;
 					},
-					body: RemoteEnergyHarvesterCreepManager.calculateBody(this.roomManager.room.energyCapacityAvailable)
+					body: RemoteEnergyHarvesterCreepManager.calculateBody(this.roomManager.room.energyCapacityAvailable),
+					priority: 3
 				};
 			}
 			if (wantedCreeps.remoteEnergyCollector === undefined) {
@@ -82,7 +83,8 @@ class EnergyManager extends WorkforceManager {
 					amount() {
 						return this.remoteContainers.length;
 					},
-					body: RemoteEnergyCollectorCreepManager.calculateBody(this.roomManager.room.energyCapacityAvailable)
+					body: RemoteEnergyCollectorCreepManager.calculateBody(this.roomManager.room.energyCapacityAvailable),
+					priority: 4
 				};
 			}
 		}

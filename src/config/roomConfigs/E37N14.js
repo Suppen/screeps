@@ -4,18 +4,18 @@
 		wantedCreeps: {
 			repairer: {
 				amount() {
-					return (this.repairQueue.size > 0 || this.unscheduledRepairQueue.length > 0) ? 4 : 0; 
+					return (this.repairQueue.size > 0 || this.unscheduledRepairQueue.length > 0) ? 6 : 0; 
 				},
-				body: [WORK, WORK, WORK, WORK, MOVE, MOVE, MOVE, MOVE, CARRY, CARRY, CARRY, CARRY]
+				body: [WORK, WORK, WORK, WORK, WORK, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY]
 			}
 		}
 	},
 	energyManager: {
-		useStoredEnergy: true,
+		useStoredEnergy: false,
 		harvestRemoteSources: true,
 		wantedCreeps: {
 			energyCollector: {
-				amount: 1,
+				amount: 2,
 				priority: 2
 			}
 		}
@@ -27,7 +27,7 @@
 				amount() {
 					return this.constructionQueue.size > 0 ? 1 : 0;
 				},
-				body: [WORK, WORK, WORK, WORK, MOVE, MOVE, MOVE, MOVE, CARRY, CARRY, CARRY, CARRY]
+				body: [WORK, WORK, WORK, WORK, WORK, WORK, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY]
 			}
 		}
 	},
@@ -35,14 +35,11 @@
 		wantedCreeps: {
 			upgrader: {
 				amount: 2,
-				body: [WORK, WORK, WORK, WORK, MOVE, MOVE, MOVE, MOVE, CARRY, CARRY, CARRY, CARRY]
+				body: [WORK, WORK, WORK, WORK, WORK, WORK, WORK, WORK, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY]
 			}
 		}
 	},
-	defenseManager: {
-		idleX: 7,
-		idleY: 45
-	},
+	defenseManager: {},
 	reserverManager: {},
 	mineralManager: {
 		wantedCreeps: {
@@ -55,18 +52,23 @@
 	armyManager: {
 		isWar: false,
 		targetRoom: {
-			name: "E37N11",
-			entryX: 16,
-			entryY: 48,
+			name: "E38N14",
+			entryX: 1,
+			entryY: 25,
 			protectX: 35,
 			protectY: 12
 		},
-		breachpoints: [],
+		breachpoints: [
+			"57c285c14ff10ad2712ddc49",
+			"57c285b4642930d171035ed0",
+			"57c285ad61c65dd25979bb34",
+			"57c2a699e4152b6a316492a2"
+		],
 		allies: [],
 		wantedCreeps: {
-			attacker: {
+			deconstructor: {
 				amount: 1,
-				body: [MOVE, MOVE, MOVE, MOVE, MOVE, RANGED_ATTACK, RANGED_ATTACK, RANGED_ATTACK, RANGED_ATTACK, RANGED_ATTACK]
+				body: [MOVE, MOVE, MOVE, MOVE, WORK, WORK, WORK, WORK, WORK, WORK, WORK, WORK]
 			}
 		}
 	}

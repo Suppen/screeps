@@ -53,20 +53,30 @@
 		}
 	},
 	armyManager: {
-		isWar: false,
+		isWar: true,
 		targetRoom: {
-			name: "E33N16",
-			entryX: 30,
+			name: "E33N15",
+			entryX: 27,
 			entryY: 1,
-			protectX: 15,
-			protectY: 31
+			protectX: 42,
+			protectY: 17
 		},
-		breachpoints: [],
+		breachpoints: [
+			"57a6526ccdeea7772e228901"
+		],
 		allies: [],
 		wantedCreeps: {
-			constructionSiteDestroyer: {
+			deconstructor: {
+				amount: 2,
+				body: [MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, WORK, WORK, WORK, WORK, WORK, WORK, WORK, WORK, WORK, WORK, WORK, WORK, WORK, WORK, WORK, WORK, WORK, WORK, WORK, WORK]
+			},
+			healer: {
 				amount: 1,
-				body: [MOVE, MOVE, MOVE, MOVE, MOVE]
+				body: [MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, HEAL, HEAL, HEAL, HEAL, HEAL, HEAL, HEAL, HEAL, HEAL, HEAL, HEAL, HEAL, HEAL, HEAL, HEAL, HEAL, HEAL, HEAL, HEAL, HEAL]
+			},
+			controllerAttacker: {
+				amount: 1,
+				body: [MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, CLAIM, CLAIM, CLAIM, CLAIM, CLAIM, CLAIM, CLAIM, CLAIM, CLAIM, CLAIM]
 			}
 		}
 	}
