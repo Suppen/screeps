@@ -78,8 +78,8 @@ class MineralManager extends WorkforceManager {
 	 */
 	allDropoffs(resourceType) {
 		return {
-			terminal: MineralManager.dropoffIsGood(this.terminal, resourceType) ? this.terminal : null,
-			labs: this.labs.filter(lab => MineralManager.dropoffIsGood(lab, resourceType))
+			terminal: this.dropoffIsGood(this.terminal, resourceType) ? this.terminal : null,
+			labs: this.labs.filter(lab => this.dropoffIsGood(lab, resourceType))
 		};
 	}
 
@@ -90,7 +90,7 @@ class MineralManager extends WorkforceManager {
 	 *
 	 * @return {Boolean}	True if the dropoff is bad, false otherwise
 	 */
-	static dropoffIsBad(dropoff, resourceType) {
+	dropoffIsBad(dropoff, resourceType) {
 		return (
 			// The dropoff doesn't exist (or isn't visible)
 			dropoff === undefined ||
@@ -107,9 +107,6 @@ class MineralManager extends WorkforceManager {
 			)
 		);
 	}
-	dropoffIsBad(dropoff, resourceType) {
-		return MineralManager.dropoffIsBad(dropoff, resourceType);
-	}
 
 	/**
 	 * Checks whether or not a dropoff is good (exists and is not full)
@@ -118,11 +115,8 @@ class MineralManager extends WorkforceManager {
 	 *
 	 * @return {Boolean}	True if the dropoff is good, false otherwise
 	 */
-	static dropoffIsGood(dropoff, resourceType) {
-		return !MineralManager.dropoffIsBad(dropoff, resourceType);
-	}
 	dropoffIsGood(dropoff, resourceType) {
-		return MineralManager.dropoffIsGood(dropoff, resourceType);
+		return !this.dropoffIsBad(dropoff, resourceType);
 	}
 
 	/**

@@ -79,9 +79,14 @@ class EnergyCollectorCreepManager extends ResourceHandlingCreepManager {
 			pickup = this.creep.pos.findClosestByRange(linksContainers);
 		}
 
-		// Last chance! The storage!
+		// The storage!
 		if (pickup === null && pickups.storage !== null) {
 			pickup = pickups.storage;
+		}
+
+		// Last chance: The terminal!
+		if (pickup === null && pickups.terminal !== null) {
+			pickup = pickups.terminal;
 		}
 
 		return pickup;

@@ -123,6 +123,24 @@ class ScoutManager extends WorkforceManager {
 	}
 
 	/**
+	 * The room's observer
+	 */
+	get observer() {
+		// Is it cached?
+		if (this._observer === undefined) {
+			let structures = this.roomManager.room.find(FIND_MY_STRUCTURES, {
+				filter(s) {
+					return s instanceof StructureObserver;
+				}
+			});
+			if (structures.length === 1) {
+				this._observer = structures[0];
+			}
+		}
+		return this._observer;
+	}
+
+	/**
 	 * Statuses of rooms
 	 */
 	get roomStatuses() {

@@ -34,7 +34,7 @@
 	miscWorkforceManager: {
 		wantedCreeps: {
 			upgrader: {
-				amount: 2,
+				amount: 3,
 				body: [WORK, WORK, WORK, WORK, WORK, WORK, WORK, WORK, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY]
 			}
 		}
@@ -44,7 +44,7 @@
 	mineralManager: {
 		wantedCreeps: {
 			mineralHarvester: {
-				amount: 0,
+				amount: 1,
 				body: [WORK, WORK, WORK, WORK, WORK, MOVE, MOVE, MOVE, MOVE, MOVE, CARRY, CARRY, CARRY, CARRY, CARRY]
 			}
 		}
@@ -52,17 +52,13 @@
 	armyManager: {
 		isWar: false,
 		targetRoom: {
-			name: "E38N14",
+			name: "E36N13",
 			entryX: 1,
 			entryY: 25,
 			protectX: 35,
 			protectY: 12
 		},
 		breachpoints: [
-			"57c285c14ff10ad2712ddc49",
-			"57c285b4642930d171035ed0",
-			"57c285ad61c65dd25979bb34",
-			"57c2a699e4152b6a316492a2"
 		],
 		allies: [],
 		wantedCreeps: {

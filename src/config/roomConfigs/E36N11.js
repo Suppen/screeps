@@ -6,7 +6,7 @@
 				amount() {
 					return (this.repairQueue.size > 0 || this.unscheduledRepairQueue.length > 0) ? 2 : 0; 
 				},
-				body: [WORK, WORK, WORK, WORK, WORK, MOVE, MOVE, MOVE, MOVE, MOVE, CARRY, CARRY, CARRY, CARRY, CARRY]
+				body: [WORK, WORK, WORK, WORK, MOVE, MOVE, MOVE, MOVE, MOVE, CARRY, CARRY, CARRY, CARRY, CARRY]
 			}
 		}
 	},
@@ -24,20 +24,12 @@
 		useStoredEnergy: true,
 		wantedCreeps: {
 			builder: {
-				amount() {
-					return this.constructionQueue.size > 0 ? 1 : 0;
-				},
+				amount: 1,
 				body: [WORK, WORK, WORK, WORK, WORK, WORK, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY]
 			}
 		}
 	},
 	miscWorkforceManager: {
-		wantedCreeps: {
-			upgrader: {
-				amount: 2,
-				body: [WORK, WORK, WORK, WORK, WORK, WORK, MOVE, MOVE, MOVE, MOVE, MOVE, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY]
-			}
-		}
 	},
 	defenseManager: {
 		idleX: 7,
@@ -46,27 +38,27 @@
 	reserverManager: {},
 	mineralManager: {
 		wantedCreeps: {
-			mineralHarvester: {
-				amount: 0,
-				body: [WORK, WORK, WORK, WORK, WORK, MOVE, MOVE, MOVE, MOVE, MOVE, CARRY, CARRY, CARRY, CARRY, CARRY]
-			}
 		}
 	},
 	armyManager: {
 		isWar: false,
 		targetRoom: {
-			name: "E37N11",
+			name: "E36N11",
 			entryX: 16,
 			entryY: 48,
-			protectX: 35,
-			protectY: 12
+			protectX: 11,
+			protectY: 44
 		},
 		breachpoints: [],
 		allies: [],
 		wantedCreeps: {
 			attacker: {
-				amount: 1,
-				body: [MOVE, MOVE, MOVE, MOVE, MOVE, RANGED_ATTACK, RANGED_ATTACK, RANGED_ATTACK, RANGED_ATTACK, RANGED_ATTACK]
+				amount: 4,
+				body: [MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, RANGED_ATTACK, RANGED_ATTACK, RANGED_ATTACK, RANGED_ATTACK, RANGED_ATTACK, RANGED_ATTACK, RANGED_ATTACK, RANGED_ATTACK, RANGED_ATTACK, RANGED_ATTACK, RANGED_ATTACK, RANGED_ATTACK, RANGED_ATTACK, RANGED_ATTACK, RANGED_ATTACK, RANGED_ATTACK]
+			},
+			healer: {
+				amount: 2,
+				body: [MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, HEAL, HEAL, HEAL, HEAL, HEAL, HEAL, HEAL, HEAL, HEAL, HEAL, HEAL, HEAL, HEAL, HEAL, HEAL, HEAL, HEAL, HEAL, HEAL, HEAL]
 			}
 		}
 	}

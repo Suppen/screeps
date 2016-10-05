@@ -5,3 +5,6 @@ Object.keys(Game.empireManager.roomManagers).forEach(roomName => {let storage = 
 
 // List how many items are in the repair queues of the rooms
 Object.keys(Game.empireManager.roomManagers).forEach(roomName => console.log(roomName, Game.empireManager.roomManagers[roomName].repairManager.repairQueue.size))
+
+// List abundant resources in rooms
+Object.keys(Game.empireManager.roomManagers).map(name => Game.empireManager.roomManagers[name]).forEach(rm => console.log(rm.roomName, JSON.stringify(rm.terminalManager.abundantResources)))

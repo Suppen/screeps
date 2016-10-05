@@ -119,11 +119,12 @@ class RepairManager extends WorkforceManager {
 	 * Adds a structure to the repair queue. Will not add if the structure is already there
 	 *
 	 * @param {Structure} structure	The structure to add
+	 * @param {Integer} priority	Priority of the repair job
 	 */
-	addToRepairQueue(structure) {
+	addToRepairQueue(structure, priority) {
 		let id = structure.id;
 		if (this.repairQueue.queue.indexOf(id) < 0) {
-			this.repairQueue.add(id);
+			this.repairQueue.add(id, priority);
 		}
 	}
 

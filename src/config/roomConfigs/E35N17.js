@@ -47,8 +47,8 @@
 	mineralManager: {
 		wantedCreeps: {
 			mineralHarvester: {
-				amount: 0,
-				body: [WORK, WORK, WORK, WORK, WORK, MOVE, MOVE, MOVE, MOVE, MOVE, CARRY, CARRY, CARRY, CARRY, CARRY]
+				amount: 1,
+				body: [WORK, WORK, WORK, WORK, WORK, WORK, WORK, WORK, WORK, WORK, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY]
 			}
 		}
 	},
@@ -61,9 +61,7 @@
 			protectX: 42,
 			protectY: 17
 		},
-		breachpoints: [
-			"57a74b573147765464849322"
-		],
+		breachpoints: [],
 		allies: [],
 		wantedCreeps: {
 			deconstructor: {

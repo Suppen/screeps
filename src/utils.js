@@ -31,6 +31,14 @@ const utils = {
 		// The selected dropoff
 		let dropoff = null;
 
+		// Are there hostiles in the room?
+		if (this.energyManager.roomManager.armyManager.getHostileCreepsIn(this.energyManager.roomManager.roomName).length > 0) {
+			// Yup. Put towers high on the priority list
+			if (Math.random() > 0.5) {
+				dropoff =this.creep.pos.findClosestByRange(dropoffs.towers);
+			}
+		}
+
 		// First, check for links
 		if (dropoffs.links.length > 0) {
 			let link = this.creep.pos.findClosestByRange(dropoffs.links);

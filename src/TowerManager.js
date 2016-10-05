@@ -74,6 +74,11 @@ class TowerManager extends Manager {
 					}
 				}
 			}
+
+			// Check tower health
+			if (tower.hits < tower.hitsMax) {
+				this.roomManager.repairManager.addToRepairQueue(tower, 1);
+			}
 		});
 	}
 

@@ -22,75 +22,133 @@ class TerminalNetworkManager extends Manager {
 		return this.empireManager.memory.terminalNetworkManager;
 	}
 
-	run() {
-		// Distribute resources every now and then
-		if (Game.time % TerminalNetworkManager.resourceDistributionInterval === 0) {
-			// Collect data from all terminal managers
-			let data = {};
-			Object.keys(this.empireManager.roomManagers).forEach(roomName => {
-				data[roomName] = {
-					abundant: this.empireManager.roomManagers[roomName].terminalManager.abundantResources,
-					scarce: this.empireManager.roomManagers[roomName].terminalManager.scarceResources
-				};
-			});
+	/**
+	 * Distributes resources between the terminals
+	 */
+	distributeResources() {
+		// Collect data from all terminal managers
+		let data = {};
+		Object.keys(this.empireManager.roomManagers).forEach(roomName => {
+			data[roomName] = {
+				abundant: this.empireManager.roomManagers[roomName].terminalManager.abundantResources,
+				scarce: this.empireManager.roomManagers[roomName].terminalManager.scarceResources
+			};
+		});
 
-			// Process the data
-			for (let sourceRoomName in data) {
+		// Process the data
+		for (let sourceRoomName in data) {
 
-				// Iterate over the resources this room has in abundance
-				for (let resourceType in data[sourceRoomName].abundant) {
+			// Iterate over the resources this room has in abundance
+			for (let resourceType in data[sourceRoomName].abundant) {
 
-					// Need to know if the terminal in this room has been told to transfer, so it's not told to twice
-					let sent = false;
+				// Need to know if the terminal in this room has been told to transfer, so it's not told to twice
+				let sent = false;
 
-					// Check if any of the other rooms lack this resource
-					for (let destinationRoomName in data) {
+				// Check if any of the other rooms lack this resource
+				for (let destinationRoomName in data) {
 
-						// Find out how much the room is lacking
-						let lacking = data[destinationRoomName].scarce[resourceType];
+					// Find out how much the room is lacking
+					let lacking = data[destinationRoomName].scarce[resourceType];
 
-						// Is it lacking this resource?
-						if (lacking) {
+					// Is it lacking this resource?
+					if (lacking) {
 
-							// Calculate how much to send
-							let amountToSend = Math.min(lacking, data[sourceRoomName].abundant[resourceType]);
+						// Calculate how much to send
+						let amountToSend = Math.min(lacking, data[sourceRoomName].abundant[resourceType]);
 
-							// Get the terminal
-							let terminal = this.empireManager.roomManagers[sourceRoomName].terminalManager.terminal;
+						// Get the terminal
+						let terminal = this.empireManager.roomManagers[sourceRoomName].terminalManager.terminal;
 
-							// Try to send it
-							let status = terminal.send(resourceType, amountToSend, destinationRoomName);
+						// Try to send it
+						let status = terminal.send(resourceType, amountToSend, destinationRoomName);
 
-							// Did it go well?
-							if (status === OK) {
-								// Yup! Reduce the scarce amount
-								data[destinationRoomName].scarce[resourceType] -= amountToSend;
+						// Did it go well?
+						if (status === OK) {
+							// Yup! Reduce the scarce amount
+							data[destinationRoomName].scarce[resourceType] -= amountToSend;
 
-								// Mark the terminal as used
-								sent = true;
-								break;
+							// Reduce the abundant amount
+							data[sourceRoomName].abundant[resourceType] -= amountToSend;
+
+							// Remove the resource from the abundant/scarce objects if the amount is reduced to 0
+							if (data[destinationRoomName].scarce[resourceType] === 0) {
+								delete data[destinationRoomName].scarce[resourceType];
 							}
-						}
-					}
+							if (data[sourceRoomName].abundant[resourceType] === 0) {
+								delete data[sourceRoomName].abundant[resourceType];
+							}
 
-					// Stop process
-					if (sent) break;
-				}
-			}
-
-
-			for (let destinationRoomName in data) {
-				// Check which resources this room lacks
-				for (let resourceType in data[destinationRoomName].scarce) {
-					// Go through all the abundant resources in the other rooms, and check if a room has an abundance of this type
-					for (let sourceRoomName in data) {
-						// Check the room only if the terminal has not yet been used in the source room
-						if (!data[sourceRoomName].terminalUsed) {
-							// Check if the room
+							// Mark the terminal as used
+							sent = true;
+							break;
 						}
 					}
 				}
+
+				// Stop process
+				if (sent) break;
 			}
+		}
+	}
+
+	/**
+	 * Sells off resources which have taken their quota in terminals
+	 */
+	sellResources() {
+		// Cache object for all orders
+		let allOrders = null;
+
+		// Iterate over all the rooms
+		Object.keys(this.empireManager.roomManagers).forEach(roomName => {
+			// Grab the terminal manager and the terminal
+			let terminalManager = this.empireManager.roomManagers[roomName].terminalManager;
+			let terminal = terminalManager.terminal;
+
+			// Check if the terminal exists
+			if (terminal !== undefined) {
+
+				// Iterate over all the stuff in the terminal
+				for (let resourceType in terminal.store) {
+
+					// Get amount of this resource type in the terminal
+					let amount = terminal.store[resourceType] - terminalManager.minimumOfEachResource;
+
+					// Skip energy and resources not at their max levels
+					if (resourceType !== RESOURCE_ENERGY && amount >= terminalManager.maximumOfEachResource) {
+
+						// Check if the orders are cached
+						if (allOrders === null) {
+							allOrders = Game.market.getAllOrders(o => o.type === ORDER_BUY);
+						}
+
+						// Go through the market for orders of this type which can receive all the resources
+						let orders = allOrders.filter(o => o.resourceType === resourceType && o.amount >= amount);
+
+						// Find the one which costs least energy to send to	TODO Weigh by distance and price
+						let order = orders.reduce((best, current) => {
+							current.cost = Game.market.calcTransactionCost(amount, roomName, current.roomName);
+							if (current.cost < best.cost) {
+								best = current;
+							}
+							return best;
+						}, {cost: Number.MAX_SAFE_INTEGER});
+
+						// Do the deal
+						Game.market.deal(order.id, amount, roomName);
+					}
+				}
+			}
+		});
+	}
+
+	run() {
+		// Distribute resources if the time is right
+		if (Game.time % TerminalNetworkManager.resourceDistributionInterval === 0) {
+			this.distributeResources();
+		}
+		// Sell off resources the next tick
+		if ((Game.time-1) % TerminalNetworkManager.resourceDistributionInterval === 0) {
+			this.sellResources();
 		}
 	}
 
@@ -98,7 +156,7 @@ class TerminalNetworkManager extends Manager {
 	 * Resource distribution interval
 	 */
 	static get resourceDistributionInterval() {
-		return 599;	// Prime
+		return 97;	// Prime
 	}
 }
 
