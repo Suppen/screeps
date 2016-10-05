@@ -69,6 +69,23 @@ class SpawnManager extends Manager {
 	}
 
 	/**
+	 * Converts creep bodies on object form to array form
+	 */
+	static bodyObjectToArray(obj) {
+		let body = [];
+
+		// Iterate over all body parts
+		for (let part in obj) {
+			// Make the instances
+			for (let n = 0; n < obj[part]; n++) {
+				body.push(eval(part));	// XXX The eval part is very hacky, but not using it means using the literals instead of the constants in the configs
+			}
+		}
+
+		return body;
+	}
+
+	/**
 	 * Adds a creep to the spawn queue
 	 *
 	 * @param {Object} options	Options for the creep
