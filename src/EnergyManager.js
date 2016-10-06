@@ -447,7 +447,8 @@ class EnergyManager extends WorkforceManager {
 		// Schedule containers for repair
 		this.containers.forEach(c => {
 			if (c.hits / c.hitsMax < 0.7) {
-				this.roomManager.repairManager.addToRepairQueue(c);
+				// Damaged. Put it on the repair queue with high priority
+				this.roomManager.repairManager.addToRepairQueue(c, 2);
 			}
 		});
 	}

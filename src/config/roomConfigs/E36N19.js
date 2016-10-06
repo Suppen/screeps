@@ -36,6 +36,10 @@
 			upgrader: {
 				amount: 2,
 				body: [WORK, WORK, WORK, WORK, WORK, WORK, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY]
+			},
+			remoteBuilder: {
+				amount: 1,
+				body: [WORK, WORK, WORK, WORK, WORK, MOVE, MOVE, MOVE, MOVE, MOVE, CARRY, CARRY, CARRY, CARRY, CARRY]
 			}
 		}
 	},
@@ -49,20 +53,24 @@
 		}
 	},
 	armyManager: {
-		isWar: false,
+		isWar: true,
 		targetRoom: {
-			name: "E38N18",
+			name: "E34N22",
 			entryX: 8,
 			entryY: 1,
-			protectX: 19,
-			protectY: 39
+			protectX: 21,
+			protectY: 24
 		},
 		breachpoints: [],
 		allies: [],
 		wantedCreeps: {
 			attacker: {
 				amount: 1,
-				body: [MOVE, MOVE, MOVE, MOVE, MOVE, ATTACK, ATTACK, ATTACK, ATTACK, ATTACK]
+				body: {MOVE: 5, ATTACK: 5}
+			},
+			healer: {
+				amount: 1,
+				body: [MOVE, HEAL]
 			}
 		}
 	}

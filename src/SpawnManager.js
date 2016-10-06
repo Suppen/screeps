@@ -173,7 +173,15 @@ class SpawnManager extends Manager {
 						spawnMore = true;
 					}
 					break;
+				case ERR_INVALID_ARGS:
+					// Drop it from the queue
+					console.log("Invalid body on creep in spawn queue in room " + this.roomManager.roomName + ":", JSON.stringify(creepToSpawn.body));
+					this.spawnQueue.shift();
+					break;
 				default:
+					// Drop it from the queue
+					console.log("Spawn error:", canCreate, this.roomManager.roomName);
+					this.spawnQueue.shift();
 					break;
 			}
 		}

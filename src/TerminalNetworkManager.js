@@ -111,10 +111,12 @@ class TerminalNetworkManager extends Manager {
 				for (let resourceType in terminal.store) {
 
 					// Get amount of this resource type in the terminal
-					let amount = terminal.store[resourceType] - terminalManager.minimumOfEachResource;
+					let amount = terminal.store[resourceType];
 
 					// Skip energy and resources not at their max levels
 					if (resourceType !== RESOURCE_ENERGY && amount >= terminalManager.maximumOfEachResource) {
+						// Reduce amount so that it leaves the minimum amount
+						amount -= terminalManager.minimumOfEachResource;
 
 						// Check if the orders are cached
 						if (allOrders === null) {

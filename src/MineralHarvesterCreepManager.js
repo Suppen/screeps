@@ -10,7 +10,7 @@ class MineralHarvesterCreepManager extends ResourceHandlingCreepManager {
 	 * Creates a new Mineral harvester manager
 	 *
 	 * @param {String} creepName	Name of the creep to manage
-	 * @param {EnergyManager} mineralManager	The mineral manager this creep is managed by
+	 * @param {MineralManager} mineralManager	The mineral manager this creep is managed by
 	 */
 	constructor(creepName, mineralManager) {
 		super(creepName, mineralManager);
@@ -88,7 +88,7 @@ class MineralHarvesterCreepManager extends ResourceHandlingCreepManager {
 				amount = Math.min(this.mineralManager.roomManager.terminalManager.maximumOfEachResource - this.resourceDropoff.store[this.resourceType], amount);
 			}
 
-			// Go dump the energy somewhere
+			// Go dump the mineral somewhere
 			let status = this.dropoffResource();
 			switch (status) {
 				case ERR_NOT_IN_RANGE:

@@ -111,7 +111,7 @@ class RepairerCreepManager extends ResourceHandlingCreepManager {
 		}
 
 		// Last resort: Harvest a source, but only if there are no containers
-		if (this.energyManager.localContainers.length === 0 && pickups.sources.length > 0 && pickup === null) {
+		if (pickup === null && this.energyManager.localContainers.length === 0 && pickups.sources.length > 0) {
 			pickup = utils.findClosest(this.creep.pos, pickups.sources);
 		}
 

@@ -23,7 +23,8 @@ const roleManagerMap = {
 	mineralHarvester: require("MineralHarvesterCreepManager"),
 	defender: require("DefenderCreepManager"),
 	deconstructor: require("DeconstructorCreepManager"),
-	controllerAttacker: require("ControllerAttackerCreepManager")
+	controllerAttacker: require("ControllerAttackerCreepManager"),
+	nukeFiller: require("NukeFillerCreepManager")
 };
 
 /**
@@ -230,11 +231,11 @@ class WorkforceManager extends Manager {
 				let body = this.wantedCreeps[role].body;
 				if (body instanceof Function) {
 					body = body.call(this);
-					// Check if the body is on array or object form
-					if (!(body instanceof Array)) {
-						// It is on object form. Convert it to array form
-						body = SpawnManager.bodyObjectToArray(body);
-					}
+				}
+				// Check if the body is on array or object form
+				if (!(body instanceof Array)) {
+					// It is on object form. Convert it to array form
+					body = SpawnManager.bodyObjectToArray(body);
 				}
 
 				this.spawnManager.addToSpawnQueue({

@@ -45,7 +45,7 @@
 		wantedCreeps: {
 			mineralHarvester: {
 				amount: 1,
-				body: [WORK, WORK, WORK, WORK, WORK, MOVE, MOVE, MOVE, MOVE, MOVE, CARRY, CARRY, CARRY, CARRY, CARRY]
+				body: {WORK: 10, MOVE: 10, CARRY: 10}
 			}
 		}
 	},
