@@ -6,7 +6,7 @@
 				amount() {
 					return (this.repairQueue.size > 0 || this.unscheduledRepairQueue.length > 0) ? 3 : 0; 
 				},
-				body: [WORK, WORK, WORK, WORK, WORK, WORK, WORK, WORK, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY]
+				body: {WORK: 8, MOVE: 8, CARRY: 8}
 			}
 		}
 	},
@@ -27,15 +27,15 @@
 				amount() {
 					return this.constructionQueue.size > 0 ? 1 : 0;
 				},
-				body: [WORK, WORK, WORK, WORK, WORK, WORK, WORK, WORK, WORK, WORK, WORK, WORK, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY]
+				body: {WORK: 6, MOVE: 6, CARRY: 6}
 			}
 		}
 	},
 	miscWorkforceManager: {
 		wantedCreeps: {
 			upgrader: {
-				amount: 1,
-				body: [WORK, WORK, WORK, WORK, WORK, WORK, WORK, WORK, WORK, WORK, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY]
+				amount: 2,
+				body: {WORK: 10, MOVE: 5, CARRY: 10}
 			}
 		}
 	},
@@ -47,7 +47,9 @@
 	mineralManager: {
 		wantedCreeps: {
 			mineralHarvester: {
-				amount: 1,
+				amount() {
+					return this.mineralInRoom.mineralAmount > 0 ? 1 : 0;
+				},
 				body: {WORK: 5, MOVE: 5, CARRY: 5}
 			}
 		}
@@ -64,18 +66,6 @@
 		breachpoints: [],
 		allies: [],
 		wantedCreeps: {
-			attacker: {
-				amount: 2,
-				body: [MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, ATTACK, ATTACK, ATTACK, ATTACK, ATTACK, RANGED_ATTACK, RANGED_ATTACK, RANGED_ATTACK, RANGED_ATTACK, RANGED_ATTACK, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, ATTACK, ATTACK, ATTACK, ATTACK, ATTACK, RANGED_ATTACK, RANGED_ATTACK, RANGED_ATTACK, RANGED_ATTACK, RANGED_ATTACK]
-			},
-			healer: {
-				amount: 1,
-				body: [MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, HEAL, HEAL, HEAL, HEAL, HEAL, HEAL, HEAL, HEAL, HEAL, HEAL]
-			},
-			constructionSiteDestroyer: {
-				amount: 1,
-				body: [MOVE]
-			}
 		}
 	}
 }

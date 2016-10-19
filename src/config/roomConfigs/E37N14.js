@@ -6,7 +6,7 @@
 				amount() {
 					return (this.repairQueue.size > 0 || this.unscheduledRepairQueue.length > 0) ? 6 : 0; 
 				},
-				body: [WORK, WORK, WORK, WORK, WORK, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY]
+				body: {WORK: 5, MOVE: 5, CARRY: 5}
 			}
 		}
 	},
@@ -25,17 +25,17 @@
 		wantedCreeps: {
 			builder: {
 				amount() {
-					return this.constructionQueue.size > 0 ? 1 : 0;
+					return this.constructionQueue.size > 0 ? 2 : 0;
 				},
-				body: [WORK, WORK, WORK, WORK, WORK, WORK, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY]
+				body: {WORK: 6, MOVE: 6, CARRY: 6}
 			}
 		}
 	},
 	miscWorkforceManager: {
 		wantedCreeps: {
 			upgrader: {
-				amount: 3,
-				body: [WORK, WORK, WORK, WORK, WORK, WORK, WORK, WORK, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY]
+				amount: 2,
+				body: {WORK: 10, MOVE: 5, CARRY: 10}
 			}
 		}
 	},
@@ -44,7 +44,9 @@
 	mineralManager: {
 		wantedCreeps: {
 			mineralHarvester: {
-				amount: 1,
+				amount() {
+					return this.mineralInRoom.mineralAmount > 0 ? 1 : 0;
+				},
 				body: {WORK: 10, MOVE: 10, CARRY: 10}
 			}
 		}

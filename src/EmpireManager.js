@@ -3,7 +3,6 @@
 const Manager = require("Manager");
 
 const RoomManager = require("RoomManager");
-const ExperimentalRoomManager = require("ExperimentalRoomManager");
 const TerminalNetworkManager = require("TerminalNetworkManager");
 
 const config = require("config");
@@ -215,7 +214,7 @@ class EmpireManager extends Manager {
 	 * Interval between each memory cleanup of dead creeps
 	 */
 	static get cleanupInterval() {
-		return 47;	// Prime
+		return 1;	// Prime
 	}
 }
 

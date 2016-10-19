@@ -36,10 +36,6 @@
 			upgrader: {
 				amount: 2,
 				body: [WORK, WORK, WORK, WORK, WORK, WORK, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY]
-			},
-			remoteBuilder: {
-				amount: 1,
-				body: [WORK, WORK, WORK, WORK, WORK, MOVE, MOVE, MOVE, MOVE, MOVE, CARRY, CARRY, CARRY, CARRY, CARRY]
 			}
 		}
 	},
@@ -47,13 +43,15 @@
 	mineralManager: {
 		wantedCreeps: {
 			mineralHarvester: {
-				amount: 1,
+				amount() {
+					return this.mineralInRoom.mineralAmount > 0 ? 1 : 0;
+				},
 				body: [WORK, WORK, WORK, WORK, WORK, WORK, WORK, WORK, WORK, WORK, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY]
 			}
 		}
 	},
 	armyManager: {
-		isWar: true,
+		isWar: false,
 		targetRoom: {
 			name: "E34N22",
 			entryX: 8,

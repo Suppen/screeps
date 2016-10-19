@@ -1,12 +1,12 @@
 {
 	repairManager: {
-		useStoredEnergy: false,
+		useStoredEnergy: true,
 		wantedCreeps: {
 			repairer: {
 				amount() {
-					return (this.repairQueue.size > 0 || this.unscheduledRepairQueue.length > 0) ? 4 : 0; 
+					return (this.repairQueue.size > 0 || this.unscheduledRepairQueue.length > 0) ? 3 : 0; 
 				},
-				body: [WORK, WORK, WORK, WORK, MOVE, MOVE, MOVE, MOVE, MOVE, CARRY, CARRY, CARRY, CARRY, CARRY]
+				body: {WORK: 6, MOVE: 6, CARRY: 6}
 			}
 		}
 	},
@@ -27,7 +27,7 @@
 				amount() {
 					return this.constructionQueue.size > 0 ? 2 : 0;
 				},
-				body: [WORK, WORK, WORK, MOVE, MOVE, MOVE, MOVE, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY]
+				body: {WORK: 6, MOVE: 6, CARRY: 6}
 			}
 		}
 	},
@@ -35,40 +35,39 @@
 		wantedCreeps: {
 			upgrader: {
 				amount: 3,
-				body: {WORK: 15, MOVE: 12, CARRY: 15}
+				body: {WORK: 6, MOVE: 1, CARRY: 6}
 			}
 		}
 	},
-	defenseManager: {
-		idleX: 11,
-		idleY: 29
-	},
+	defenseManager: {},
 	reserverManager: {},
 	mineralManager: {
 		wantedCreeps: {
 			mineralHarvester: {
 				amount() {
+				    return 0;
 					return this.mineralInRoom.mineralAmount > 0 ? 1 : 0;
 				},
-				body: {WORK: 5, MOVE: 5, CARRY: 5}
+				body: {WORK: 10, MOVE: 10, CARRY: 10}
 			}
 		}
 	},
 	armyManager: {
 		isWar: false,
 		targetRoom: {
-			name: "E33N15",
-			entryX: 48,
+			name: "E36N13",
+			entryX: 1,
 			entryY: 25,
-			protectX: 42,
-			protectY: 17
+			protectX: 35,
+			protectY: 12
 		},
-		breachpoints: [],
+		breachpoints: [
+		],
 		allies: [],
 		wantedCreeps: {
 			deconstructor: {
-				amount: 2,
-				body: [MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, WORK, WORK, WORK, WORK, WORK, WORK, WORK, WORK, WORK, WORK]
+				amount: 1,
+				body: [MOVE, MOVE, MOVE, MOVE, WORK, WORK, WORK, WORK, WORK, WORK, WORK, WORK]
 			}
 		}
 	}

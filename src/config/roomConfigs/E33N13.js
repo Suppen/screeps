@@ -4,9 +4,9 @@
 		wantedCreeps: {
 			repairer: {
 				amount() {
-					return (this.repairQueue.size > 0 || this.unscheduledRepairQueue.length > 0) ? 3 : 0; 
+					return (this.repairQueue.size > 0 || this.unscheduledRepairQueue.length > 0) ? 4 : 0; 
 				},
-				body: [WORK, WORK, WORK, WORK, WORK, WORK, WORK, WORK, WORK, WORK, WORK, WORK, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY]
+				body: {WORK: 8, MOVE: 8, CARRY: 8}
 			}
 		}
 	},
@@ -27,15 +27,15 @@
 				amount() {
 					return this.constructionQueue.size > 0 ? 2 : 0;
 				},
-				body: [WORK, WORK, WORK, WORK, WORK, WORK, WORK, WORK, WORK, WORK, WORK, WORK, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY]
+				body: {WORK: 6, MOVE: 6, CARRY: 6}
 			}
 		}
 	},
 	miscWorkforceManager: {
 		wantedCreeps: {
 			upgrader: {
-				amount: 2,
-				body: [WORK, WORK, WORK, WORK, WORK, WORK, WORK, WORK, WORK, WORK, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY]
+				amount: 3,
+				body: {WORK: 8, MOVE: 8, CARRY: 8}
 			}
 		}
 	},
@@ -43,15 +43,17 @@
 	mineralManager: {
 		wantedCreeps: {
 			mineralHarvester: {
-				amount: 1,
-				body: {WORK: 10, MOVE: 10, CARRY: 10}
+				amount() {
+					return this.mineralInRoom.mineralAmount > 0 ? 1 : 0;
+				},
+				body: {WORK: 5, MOVE: 5, CARRY: 5}
 			}
 		}
 	},
 	armyManager: {
-		isWar: false,
+		isWar: true,
 		targetRoom: {
-			name: "E33N15",
+			name: "E36N13",
 			entryX: 28,
 			entryY: 28,
 			protectX: 42,
@@ -60,18 +62,6 @@
 		breachpoints: [],
 		allies: [],
 		wantedCreeps: {
-			attacker: {
-				amount: 1,
-				body: [MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, ATTACK, ATTACK, ATTACK, ATTACK, ATTACK, RANGED_ATTACK, RANGED_ATTACK, RANGED_ATTACK, RANGED_ATTACK, RANGED_ATTACK, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, ATTACK, ATTACK, ATTACK, ATTACK, ATTACK, RANGED_ATTACK, RANGED_ATTACK, RANGED_ATTACK, RANGED_ATTACK, RANGED_ATTACK]
-			},
-			healer: {
-				amount: 1,
-				body: [MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, HEAL, HEAL, HEAL, HEAL, HEAL, HEAL, HEAL, HEAL, HEAL, HEAL]
-			},
-			controllerAttacker: {
-				amount: 1,
-				body: [MOVE, MOVE, MOVE, MOVE, MOVE, CLAIM, CLAIM, CLAIM, CLAIM, CLAIM]
-			}
 		}
 	}
 }
