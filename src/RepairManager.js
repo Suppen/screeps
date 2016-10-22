@@ -2,6 +2,7 @@
 
 const WorkforceManager = require("WorkforceManager");
 const ScoutManager = require("ScoutManager");
+const RepairerCreepManager = require("RepairerCreepManager");
 
 const PriorityQueue = require("PriorityQueue");
 
@@ -29,6 +30,7 @@ class RepairManager extends WorkforceManager {
 		this.config = _.defaults(config, {
 			wantedCreeps: {},
 			useStoredEnergy: false,
+			minRepairers: RepairManager.minNumberOfRepairers,
 			acceptableStatuses: [
 				ScoutManager.CLAIMABLE,
 				ScoutManager.RESERVED_BY_ME,
@@ -48,7 +50,23 @@ class RepairManager extends WorkforceManager {
 	 * Map of creeps wanted for this manager, with role names as the key
 	 */
 	get wantedCreeps() {
-		return this.config.wantedCreeps;
+		let wantedCreeps = this.config.wantedCreeps;
+
+		// Always have some repairers
+		if (wantedCreeps.repairer === undefined) {
+			wantedCreeps.repairer = {};
+		}
+		// Is the repairer body specfied? If not, give them default bodies
+		if (wantedCreeps.repairer.body === undefined) {
+			wantedCreeps.repairer.body = RepairerCreepManager.calculateBody(this.roomManager.room.energyCapacityAvailable);
+		}
+		// Is an amount specified? If not, set a default amount
+		if (wantedCreeps.repairer.amount === undefined) {
+			// Calculate an amount based on length of repair queue
+			wantedCreeps.repairer.amount = Math.max(this.config.minRepairers, Math.round(Math.sqrt(this.repairQueue.size)));
+		}
+
+		return wantedCreeps;
 	}
 
 	/**
@@ -154,6 +172,13 @@ class RepairManager extends WorkforceManager {
 		}
 
 		return id;
+	}
+
+	/**
+	 * Minimum amount of repairers to have in the workforce. Can be overridden by the manager's config
+	 */
+	static get minNumberOfRepairers() {
+		return 3; // Not prime
 	}
 }
 

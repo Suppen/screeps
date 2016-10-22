@@ -46,7 +46,7 @@
 				amount() {
 					return this.mineralInRoom.mineralAmount > 0 ? 1 : 0;
 				},
-				body: [WORK, WORK, WORK, WORK, WORK, WORK, WORK, WORK, WORK, WORK, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY]
+				body: {WORK: 5, MOVE: 5, CARRY: 5}
 			}
 		}
 	},

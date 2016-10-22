@@ -34,7 +34,7 @@
 	miscWorkforceManager: {
 		wantedCreeps: {
 			upgrader: {
-				amount: 2,
+				amount: 1,
 				body: {WORK: 10, MOVE: 5, CARRY: 10}
 			}
 		}
@@ -47,7 +47,7 @@
 				amount() {
 					return this.mineralInRoom.mineralAmount > 0 ? 1 : 0;
 				},
-				body: {WORK: 10, MOVE: 10, CARRY: 10}
+				body: {WORK: 5, MOVE: 5, CARRY: 5}
 			}
 		}
 	},

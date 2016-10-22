@@ -1,14 +1,6 @@
 {
 	repairManager: {
-		useStoredEnergy: false,
-		wantedCreeps: {
-			repairer: {
-				amount() {
-					return (this.repairQueue.size > 0 || this.unscheduledRepairQueue.length > 0) ? 4 : 0; 
-				},
-				body: {WORK: 8, MOVE: 8, CARRY: 8}
-			}
-		}
+		useStoredEnergy: false
 	},
 	energyManager: {
 		useStoredEnergy: false,
@@ -51,7 +43,7 @@
 		}
 	},
 	armyManager: {
-		isWar: true,
+		isWar: false,
 		targetRoom: {
 			name: "E36N13",
 			entryX: 28,

@@ -41,12 +41,14 @@
 	},
 	reserverManager: {},
 	mineralManager: {
-	    mineralHarvester: {
-			amount() {
-				return this.mineralInRoom.mineralAmount > 0 ? 1 : 0;
-			},
-			body: {WORK: 5, MOVE: 5, CARRY: 5}
-	    }
+		wantedCreeps: {
+			mineralHarvester: {
+				amount() {
+					return this.mineralInRoom.mineralAmount > 0 ? 1 : 0;
+				},
+				body: {WORK: 5, MOVE: 5, CARRY: 5}
+			}
+		}
 	},
 	armyManager: {
 		isWar: false,

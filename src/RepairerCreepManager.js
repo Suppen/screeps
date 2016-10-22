@@ -100,7 +100,7 @@ class RepairerCreepManager extends ResourceHandlingCreepManager {
 				let keep = false;
 				if (s instanceof StructureLink) {
 					keep = s.energy > 50
-				} else {
+				} else {
 					keep = s.store.energy > 50;
 				}
 				return keep;
@@ -169,6 +169,26 @@ class RepairerCreepManager extends ResourceHandlingCreepManager {
 					break;
 			}
 		}
+	}
+
+	/**
+	 * Calculates a default body for the creep based on an amount of energy
+	 */
+	static calculateBody(energy) {
+		let body;
+
+		if (energy >= 1400) {
+			body = {WORK: 7, MOVE: 7, CARRY: 7};
+		} else if (energy >= 1000) {
+			body = {WORK: 5, MOVE: 5, CARRY: 5};
+		} else if (energy >= 600) {
+			body = {WORK: 3, MOVE: 3, CARRY: 3};
+		} else if (energy >= 400) {
+			body = {WORK: 2, MOVE: 2, CARRY: 2};
+		} else {
+			body = {WORK: 1, MOVE: 1, CARRY: 2};
+		}
+		return body;
 	}
 }
 

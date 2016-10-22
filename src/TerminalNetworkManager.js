@@ -126,14 +126,21 @@ class TerminalNetworkManager extends Manager {
 						// Go through the market for orders of this type which can receive all the resources
 						let orders = allOrders.filter(o => o.resourceType === resourceType && o.amount >= amount);
 
-						// Find the one which costs least energy to send to	TODO Weigh by distance and price
+						// Find the one which sells for most	TODO Weigh by distance and price
 						let order = orders.reduce((best, current) => {
-							current.cost = Game.market.calcTransactionCost(amount, roomName, current.roomName);
-							if (current.cost < best.cost) {
+							if (current.price > best.price) {
+								// Current is better than best
 								best = current;
+							} else if (current.price === best.price) {
+								// They are the same. Which costs the least energy?
+								let currentCost = Game.market.calcTransactionCost(amount, roomName, current.roomName);
+								let bestCost = Game.market.calcTransactionCost(amount, roomName, current.roomName);
+								if (currentCost < bestCost) {
+									best = current;
+								}
 							}
 							return best;
-						}, {cost: Number.MAX_SAFE_INTEGER});
+						}, {price: -Number.MAX_SAFE_INTEGER});
 
 						// Do the deal
 						Game.market.deal(order.id, amount, roomName);
