@@ -44,16 +44,7 @@
 		idleY: 40
 	},
 	reserverManager: {},
-	mineralManager: {
-		wantedCreeps: {
-			mineralHarvester: {
-				amount() {
-					return this.mineralInRoom.mineralAmount > 0 ? 1 : 0;
-				},
-				body: {WORK: 5, MOVE: 5, CARRY: 5}
-			}
-		}
-	},
+	mineralManager: {},
 	armyManager: {
 		isWar: false,
 		targetRoom: {

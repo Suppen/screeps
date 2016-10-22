@@ -1,6 +1,7 @@
 "use strict";
 
 const WorkforceManager = require("WorkforceManager");
+const MineralHarvesterCreepManager = require("MineralHarvesterCreepManager");
 
 /**
  * Handles the minerals and reactions for a room
@@ -49,7 +50,26 @@ class MineralManager extends WorkforceManager {
 	 * Map of creeps wanted for this manager, with role names as the key
 	 */
 	get wantedCreeps() {
-		return this.config.wantedCreeps;
+		// Get the config
+		let wantedCreeps = this.config.wantedCreeps;
+
+		// Check if there is a config for mineral harvesters
+		if (wantedCreeps.mineralHarvester === undefined) {
+			wantedCreeps.mineralHarvester = {};
+		}
+		if (wantedCreeps.mineralHarvester.amount === undefined) {
+			let amount = 0;
+			if (this.mineralInRoom.mineralAmount > 0 && this.extractor !== undefined) {
+				amount = 1;
+			}
+
+			wantedCreeps.mineralHarvester.amount = amount;
+		}
+		if (wantedCreeps.mineralHarvester.body === undefined) {
+			wantedCreeps.mineralHarvester.body = MineralHarvesterCreepManager.calculateBody(this.roomManager.room.energyCapacityAvailable);
+		}
+
+		return wantedCreeps;
 	}
 
 	/**
@@ -131,6 +151,20 @@ class MineralManager extends WorkforceManager {
 			this._mineralInRoom = Game.getObjectById(this.memory.mineralInRoom);
 		}
 		return this._mineralInRoom;
+	}
+
+	/**
+	 * Gets the extractor in the room. Undefined if there is no extractor
+	 */
+	get extractor() {
+		if (this._extractor === undefined) {
+			let structures = this.roomManager.room.lookForAt(LOOK_STRUCTURES, this.mineralInRoom);
+			if (structures.length === 1 && structures[0].structureType === STRUCTURE_EXTRACTOR) {
+				this._extractor = Game.getObjectById(structures[0].id);
+			}
+		}
+
+		return this._extractor;
 	}
 }
 

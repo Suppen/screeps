@@ -105,6 +105,13 @@ class MineralHarvesterCreepManager extends ResourceHandlingCreepManager {
 			}
 		}
 	}
+
+	/**
+	 * Calculates a default body for the creep based on an amount of energy
+	 */
+	static calculateBody(energy) {
+		return {WORK: 5, MOVE: 5, CARRY: 5};
+	}
 }
 
 module.exports = MineralHarvesterCreepManager;
