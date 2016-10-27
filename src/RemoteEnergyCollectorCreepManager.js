@@ -65,7 +65,7 @@ class RemoteEnergyCollectorCreepManager extends ResourceHandlingCreepManager {
 		if (this.isSwooping) {
 			// Go to the container
 			if (this.aquireResource() !== OK) {
-				this.creep.moveTo(this.resourcePickup);
+				this.creep.moveTo(this.resourcePickup, {reusePath: 10});
 			}
 
 			// Don't stand on the container
@@ -81,7 +81,7 @@ class RemoteEnergyCollectorCreepManager extends ResourceHandlingCreepManager {
 				this.creep.move(direction);
 			}
 		} else if (!this.isInParentRoom) {
-			this.creep.moveTo(new RoomPosition(25, 25, this.parentRoomName));
+			this.creep.moveTo(new RoomPosition(25, 25, this.parentRoomName), {reusePath: 10});
 		} else {
 			// Check if a new dropoff is needed
 			if (this.energyManager.dropoffIsBad(this.resourceDropoff)) {
@@ -92,7 +92,7 @@ class RemoteEnergyCollectorCreepManager extends ResourceHandlingCreepManager {
 			let status = this.dropoffResource();
 			switch (status) {
 				case ERR_NOT_IN_RANGE:
-					this.creep.moveTo(this.resourceDropoff);
+					this.creep.moveTo(this.resourceDropoff, {reusePath: 10});
 					break;
 				case ERR_FULL:
 					this.resourceDropoff = this.findDropoff();

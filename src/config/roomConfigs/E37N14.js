@@ -1,14 +1,7 @@
 {
 	repairManager: {
 		useStoredEnergy: true,
-		wantedCreeps: {
-			repairer: {
-				amount() {
-					return (this.repairQueue.size > 0 || this.unscheduledRepairQueue.length > 0) ? 6 : 0; 
-				},
-				body: {WORK: 5, MOVE: 5, CARRY: 5}
-			}
-		}
+		useTerminalEnergy: false
 	},
 	energyManager: {
 		useStoredEnergy: false,
@@ -34,14 +27,11 @@
 	miscWorkforceManager: {
 		wantedCreeps: {
 			upgrader: {
-				amount: 1,
-				body: {WORK: 10, MOVE: 5, CARRY: 10}
+				amount: 2,
+				body: {WORK: 12, MOVE: 5, CARRY: 13}
 			}
 		}
 	},
-	defenseManager: {},
-	reserverManager: {},
-	mineralManager: {},
 	armyManager: {
 		isWar: false,
 		targetRoom: {

@@ -48,7 +48,7 @@ class RemoteEnergyHarvesterCreepManager extends ResourceHandlingCreepManager {
 				}
 			}
 
-			this.creep.moveTo(whereToGo);
+			this.creep.moveTo(whereToGo, {reusePath: 10});
 		}
 	}
 

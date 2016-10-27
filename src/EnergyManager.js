@@ -65,47 +65,49 @@ class EnergyManager extends WorkforceManager {
 	 * Map of creeps wanted for this manager, with role names as the key
 	 */
 	get wantedCreeps() {
-		let wantedCreeps = this.config.wantedCreeps;
+		if (this._wantedCreeps === undefined) {
+			this._wantedCreeps = this.config.wantedCreeps;
 
-		// Default creeps for remote harvesting if enabled and not specified
-		if (this.harvestRemoteSources) {
-			if (wantedCreeps.remoteEnergyHarvester === undefined) {
-				wantedCreeps.remoteEnergyHarvester = {
-					amount() {
-						return this.remoteSources.length;
-					},
-					body: RemoteEnergyHarvesterCreepManager.calculateBody(this.roomManager.room.energyCapacityAvailable),
-					priority: 3
-				};
+			// Default creeps for remote harvesting if enabled and not specified
+			if (this.harvestRemoteSources) {
+				if (this._wantedCreeps.remoteEnergyHarvester === undefined) {
+					this._wantedCreeps.remoteEnergyHarvester = {
+						amount() {
+							return this.remoteSources.length;
+						},
+						body: RemoteEnergyHarvesterCreepManager.calculateBody(this.roomManager.room.energyCapacityAvailable),
+						priority: 3
+					};
+				}
+				if (this._wantedCreeps.remoteEnergyCollector === undefined) {
+					this._wantedCreeps.remoteEnergyCollector = {
+						amount() {
+							return this.remoteContainers.length;
+						},
+						body: RemoteEnergyCollectorCreepManager.calculateBody(this.roomManager.room.energyCapacityAvailable),
+						priority: 4
+					};
+				}
 			}
-			if (wantedCreeps.remoteEnergyCollector === undefined) {
-				wantedCreeps.remoteEnergyCollector = {
-					amount() {
-						return this.remoteContainers.length;
-					},
-					body: RemoteEnergyCollectorCreepManager.calculateBody(this.roomManager.room.energyCapacityAvailable),
-					priority: 4
-				};
+
+			// Always have an energy harvester per local source, and with a default body if not specified
+			const defaultEnergyHarvester = {
+				amount: this.localSources.length,
+				body: EnergyHarvesterCreepManager.calculateBody(this.roomManager.room.energyCapacityAvailable),
+				priority: 1
+			};
+			if (this._wantedCreeps.energyHarvester === undefined) {
+				this._wantedCreeps.energyHarvester = {};
+			}
+			this._wantedCreeps.energyHarvester = _.defaults(this._wantedCreeps.energyHarvester, defaultEnergyHarvester);
+
+			// Calculate bodies of energy collectors, if not specified
+			if (this._wantedCreeps.energyCollector !== undefined && this._wantedCreeps.energyCollector.body === undefined) {
+				this._wantedCreeps.energyCollector.body = EnergyCollectorCreepManager.calculateBody(this.roomManager.room.energyCapacityAvailable);
 			}
 		}
 
-		// Always have an energy harvester per local source, and with a default body if not specified
-		const defaultEnergyHarvester = {
-			amount: this.localSources.length,
-			body: EnergyHarvesterCreepManager.calculateBody(this.roomManager.room.energyCapacityAvailable),
-			priority: 1
-		};
-		if (wantedCreeps.energyHarvester === undefined) {
-			wantedCreeps.energyHarvester = {};
-		}
-		wantedCreeps.energyHarvester = _.defaults(wantedCreeps.energyHarvester, defaultEnergyHarvester);
-
-		// Calculate bodies of energy collectors, if not specified
-		if (wantedCreeps.energyCollector !== undefined && wantedCreeps.energyCollector.body === undefined) {
-			wantedCreeps.energyCollector.body = EnergyCollectorCreepManager.calculateBody(this.roomManager.room.energyCapacityAvailable);
-		}
-
-		return wantedCreeps;
+		return this._wantedCreeps;
 	}
 
 	/**

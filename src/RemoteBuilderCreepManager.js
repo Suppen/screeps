@@ -4,24 +4,24 @@ const ResourceHandlingCreepManager = require("ResourceHandlingCreepManager");
 
 class RemoteBuilderCreepManager extends ResourceHandlingCreepManager {
 	run() {
-		if (this.creep.pos.x === 47 && this.creep.pos.y === 17 && this.creep.room.name === "E34N21") {
+		if (this.creep.pos.x === 47 && this.creep.pos.y === 15 && this.creep.room.name === "E29N15") {
 			this.waypointReached = true;
 		}
 
 		if (!this.waypointReached) {
-			this.creep.moveTo(new RoomPosition(47, 17, "E34N21"));
-		} else if (this.waypointReached && this.creep.room.name !== "E34N22") {
-			this.creep.moveTo(new RoomPosition(38, 46, "E34N22"));
+			this.creep.moveTo(new RoomPosition(47, 15, "E29N15"));
+		} else if (this.waypointReached && this.creep.room.name !== "E28N15") {
+			this.creep.moveTo(new RoomPosition(23, 24, "E28N15"));
 		} else {
 			this.workforceManager._removeCreepFromWorkforce(this.creepName);
-			if (Math.random() > 1) {
-				this.constructionManager = this.empireManager.roomManagers.E34N22.constructionManager;
+			if (Math.random() > 0.5) {
+				this.constructionManager = this.empireManager.roomManagers.E28N15.constructionManager;
 				this.creep.memory.role = "builder";
-				this.empireManager.addUnmanagedCreep(this.creepName, "E34N22.constructionManager");
+				this.empireManager.addUnmanagedCreep(this.creepName, "E28N15.constructionManager");
 			} else {
-				this.miscWorkforceManager = this.empireManager.roomManagers.E34N22.miscWorkforceManager;
+				this.miscWorkforceManager = this.empireManager.roomManagers.E28N15.miscWorkforceManager;
 				this.creep.memory.role = "upgrader";
-				this.empireManager.addUnmanagedCreep(this.creepName, "E34N22.miscWorkforce");
+				this.empireManager.addUnmanagedCreep(this.creepName, "E28N15.miscWorkforce");
 			}
 		}
 	}

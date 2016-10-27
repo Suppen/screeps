@@ -30,6 +30,7 @@ class RepairManager extends WorkforceManager {
 		this.config = _.defaults(config, {
 			wantedCreeps: {},
 			useStoredEnergy: false,
+			useTerminalEnergy: false,
 			minRepairers: RepairManager.minNumberOfRepairers,
 			acceptableStatuses: [
 				ScoutManager.CLAIMABLE,
@@ -84,6 +85,13 @@ class RepairManager extends WorkforceManager {
 	 */
 	get useStoredEnergy() {
 		return this.config.useStoredEnergy;
+	}
+
+	/**
+	 * Whether or not energy in the terminal can be used
+	 */
+	get useTerminalEnergy() {
+		return this.config.useTerminalEnergy;
 	}
 
 	/**

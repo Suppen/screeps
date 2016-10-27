@@ -214,7 +214,7 @@ class EmpireManager extends Manager {
 	 * Interval between each memory cleanup of dead creeps
 	 */
 	static get cleanupInterval() {
-		return 1;	// Prime
+		return 53;	// Prime
 	}
 }
 

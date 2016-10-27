@@ -1,6 +1,7 @@
 {
 	repairManager: {
-		useStoredEnergy: true
+		useStoredEnergy: true,
+		useTerminalEnergy: false
 	},
 	energyManager: {
 		useStoredEnergy: false,
@@ -31,9 +32,10 @@
 			}
 		}
 	},
-	defenseManager: {},
-	reserverManager: {},
-	mineralManager: {},
+	defenseManager: {
+		idleX: 17,
+		idleY: 13
+	},
 	armyManager: {
 		isWar: false,
 		targetRoom: {

@@ -54,7 +54,7 @@ if (this.roomManager.roomName === "E36N11") {
 	 * Maximum amount of energy to keep in the terminals
 	 */
 	get maxEnergy() {
-		return 48000;
+		return 100000;
 	}
 
 	/**

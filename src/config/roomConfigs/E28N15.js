@@ -20,7 +20,7 @@
 				amount() {
 					return this.constructionQueue.size > 0 ? 2 : 0;
 				},
-				body: [WORK, WORK, WORK, MOVE, MOVE, MOVE, MOVE, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY]
+				body: {WORK: 4, MOVE: 4, CARRY: 4}
 			}
 		}
 	},
@@ -28,30 +28,21 @@
 		wantedCreeps: {
 			upgrader: {
 				amount: 4,
-				body: {WORK: 20, MOVE: 10, CARRY: 20}
+				body: {WORK: 4, MOVE: 4, CARRY: 4}
 			}
 		}
-	},
-	defenseManager: {
-		idleX: 11,
-		idleY: 29
 	},
 	armyManager: {
 		isWar: false,
 		targetRoom: {
-			name: "E33N15",
+			name: "E29N15",
 			entryX: 48,
-			entryY: 25,
+			entryY: 15,
 			protectX: 42,
 			protectY: 17
 		},
 		breachpoints: [],
 		allies: [],
-		wantedCreeps: {
-			deconstructor: {
-				amount: 2,
-				body: [MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, WORK, WORK, WORK, WORK, WORK, WORK, WORK, WORK, WORK, WORK]
-			}
-		}
+		wantedCreeps: {}
 	}
 }

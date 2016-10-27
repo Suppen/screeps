@@ -213,7 +213,7 @@ class RoadManager extends Manager {
 	 * Time between each iteration of the usage map
 	 */
 	static get mapIterationInterval() {
-		return 60;	// Not prime
+		return 100;	// Not prime
 	}
 
 	/**

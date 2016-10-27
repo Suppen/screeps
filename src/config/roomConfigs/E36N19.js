@@ -1,14 +1,7 @@
 {
 	repairManager: {
-		useStoredEnergy: false,
-		wantedCreeps: {
-			repairer: {
-				amount() {
-					return (this.repairQueue.size > 0 || this.unscheduledRepairQueue.length > 0) ? 2 : 0; 
-				},
-				body: [WORK, WORK, WORK, WORK, WORK, WORK, WORK, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY]
-			}
-		}
+		useStoredEnergy: true,
+		useTerminalEnergy: false
 	},
 	energyManager: {
 		useStoredEnergy: false,
@@ -39,12 +32,10 @@
 			}
 		}
 	},
-	reserverManager: {},
-	mineralManager: {},
 	armyManager: {
 		isWar: false,
 		targetRoom: {
-			name: "E34N22",
+			name: "E37N22",
 			entryX: 8,
 			entryY: 1,
 			protectX: 21,
@@ -53,13 +44,9 @@
 		breachpoints: [],
 		allies: [],
 		wantedCreeps: {
-			attacker: {
+			deconstructor: {
 				amount: 1,
-				body: {MOVE: 5, ATTACK: 5}
-			},
-			healer: {
-				amount: 1,
-				body: [MOVE, HEAL]
+				body: [MOVE, WORK]
 			}
 		}
 	}

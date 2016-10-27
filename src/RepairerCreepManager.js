@@ -110,6 +110,11 @@ class RepairerCreepManager extends ResourceHandlingCreepManager {
 			pickup = this.creep.pos.findClosestByRange(linksContainers);
 		}
 
+		// Can the terminal provide energy?
+		if (pickup === null && this.repairManager.useTerminalEnergy && this.repairManager.roomManager.terminalManager.terminal.store[RESOURCE_ENERGY] > 0) {
+			pickup = this.repairManager.roomManager.terminalManager.terminal;
+		}
+
 		// Last resort: Harvest a source, but only if there are no containers
 		if (pickup === null && this.energyManager.localContainers.length === 0 && pickups.sources.length > 0) {
 			pickup = utils.findClosest(this.creep.pos, pickups.sources);

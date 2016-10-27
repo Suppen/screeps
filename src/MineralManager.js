@@ -50,26 +50,28 @@ class MineralManager extends WorkforceManager {
 	 * Map of creeps wanted for this manager, with role names as the key
 	 */
 	get wantedCreeps() {
-		// Get the config
-		let wantedCreeps = this.config.wantedCreeps;
+		if (this._wantedCreeps === undefined) {
+			// Get the config
+			this._wantedCreeps = this.config.wantedCreeps;
 
-		// Check if there is a config for mineral harvesters
-		if (wantedCreeps.mineralHarvester === undefined) {
-			wantedCreeps.mineralHarvester = {};
-		}
-		if (wantedCreeps.mineralHarvester.amount === undefined) {
-			let amount = 0;
-			if (this.mineralInRoom.mineralAmount > 0 && this.extractor !== undefined) {
-				amount = 1;
+			// Check if there is a config for mineral harvesters
+			if (this._wantedCreeps.mineralHarvester === undefined) {
+				this._wantedCreeps.mineralHarvester = {};
 			}
+			if (this._wantedCreeps.mineralHarvester.amount === undefined) {
+				let amount = 0;
+				if (this.mineralInRoom.mineralAmount > 0 && this.extractor !== undefined) {
+					amount = 1;
+				}
 
-			wantedCreeps.mineralHarvester.amount = amount;
-		}
-		if (wantedCreeps.mineralHarvester.body === undefined) {
-			wantedCreeps.mineralHarvester.body = MineralHarvesterCreepManager.calculateBody(this.roomManager.room.energyCapacityAvailable);
+				this._wantedCreeps.mineralHarvester.amount = amount;
+			}
+			if (this._wantedCreeps.mineralHarvester.body === undefined) {
+				this._wantedCreeps.mineralHarvester.body = MineralHarvesterCreepManager.calculateBody(this.roomManager.room.energyCapacityAvailable);
+			}
 		}
 
-		return wantedCreeps;
+		return this._wantedCreeps;
 	}
 
 	/**

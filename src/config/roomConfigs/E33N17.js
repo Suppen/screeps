@@ -1,14 +1,7 @@
 {
 	repairManager: {
-		useStoredEnergy: false,
-		wantedCreeps: {
-			repairer: {
-				amount() {
-					return (this.repairQueue.size > 0 || this.unscheduledRepairQueue.length > 0) ? 4 : 0; 
-				},
-				body: [WORK, WORK, WORK, WORK, WORK, WORK, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY]
-			}
-		}
+		useStoredEnergy: true,
+		useTerminalEnergy: false
 	},
 	energyManager: {
 		useStoredEnergy: false,
@@ -43,8 +36,6 @@
 		idleX: 11,
 		idleY: 29
 	},
-	reserverManager: {},
-	mineralManager: {},
 	armyManager: {
 		isWar: false,
 		targetRoom: {

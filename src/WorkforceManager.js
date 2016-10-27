@@ -4,6 +4,8 @@ const Manager = require("Manager");
 
 const SpawnManager = require("SpawnManager");
 
+const makeUID = require("makeUID");
+
 // Make a map between creep managers and roles
 const roleManagerMap = {
 	energyHarvester: require("EnergyHarvesterCreepManager"),
@@ -243,7 +245,8 @@ class WorkforceManager extends Manager {
 					initialMemory: {
 						role,
 						workforce: this.workforceName
-					}
+					},
+					name: makeUID()
 				}, priority);
 				amount++;
 			}
