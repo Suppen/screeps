@@ -142,8 +142,10 @@ class TerminalNetworkManager extends Manager {
 							return best;
 						}, {price: -Number.MAX_SAFE_INTEGER});
 
-						// Do the deal
-						Game.market.deal(order.id, amount, roomName);
+						// Do the deal if the price is at least 1 credit
+						if (order.price >= 1) {
+							Game.market.deal(order.id, amount, roomName);
+						}
 					}
 				}
 			}

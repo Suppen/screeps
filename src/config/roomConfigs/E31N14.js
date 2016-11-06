@@ -27,8 +27,8 @@
 	miscWorkforceManager: {
 		wantedCreeps: {
 			upgrader: {
-				amount: 1,
-				body: {WORK: 10, MOVE: 5, CARRY: 10}
+				amount: 4,
+				body: {WORK: 15, MOVE: 5, CARRY: 15}
 			}
 		}
 	},

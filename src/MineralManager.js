@@ -60,7 +60,7 @@ class MineralManager extends WorkforceManager {
 			}
 			if (this._wantedCreeps.mineralHarvester.amount === undefined) {
 				let amount = 0;
-				if (this.mineralInRoom.mineralAmount > 0 && this.extractor !== undefined) {
+				if (this.roomManager.terminalManager.terminal.store[this.mineralInRoom.mineralType] < this.roomManager.terminalManager.maximumOfEachResource && this.mineralInRoom.mineralAmount > 0 && this.extractor !== undefined) {
 					amount = 1;
 				}
 

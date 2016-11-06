@@ -28,7 +28,7 @@
 		wantedCreeps: {
 			upgrader: {
 				amount: 2,
-				body: {WORK: 10, MOVE: 1, CARRY: 10}
+				body: {WORK: 15, MOVE: 1, CARRY: 15}
 			}
 		}
 	},

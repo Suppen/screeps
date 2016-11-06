@@ -20,15 +20,15 @@
 				amount() {
 					return this.constructionQueue.size > 0 ? 2 : 0;
 				},
-				body: {WORK: 4, MOVE: 4, CARRY: 4}
+				body: {WORK: 6, MOVE: 6, CARRY: 6}
 			}
 		}
 	},
 	miscWorkforceManager: {
 		wantedCreeps: {
 			upgrader: {
-				amount: 4,
-				body: {WORK: 4, MOVE: 4, CARRY: 4}
+				amount: 3,
+				body: {WORK: 9, MOVE: 9, CARRY: 9}
 			}
 		}
 	},

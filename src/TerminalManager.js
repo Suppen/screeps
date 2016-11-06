@@ -27,9 +27,6 @@ class TerminalManager extends Manager {
 	 * The terminal structure
 	 */
 	get terminal() {
-if (this.roomManager.roomName === "E36N11") {
-	return undefined;
-}
 		if (this._terminal === undefined) {
 			this._terminal = this.roomManager.room.terminal;
 		}
