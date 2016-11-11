@@ -25,6 +25,7 @@ class MineralManager extends WorkforceManager {
 		 * The config for this mineral manager
 		 */
 		this.config = _.defaults(config, {
+			labConfig: {},
 			wantedCreeps: {}
 		});
 	}
@@ -60,7 +61,8 @@ class MineralManager extends WorkforceManager {
 			}
 			if (this._wantedCreeps.mineralHarvester.amount === undefined) {
 				let amount = 0;
-				if (this.roomManager.terminalManager.terminal.store[this.mineralInRoom.mineralType] < this.roomManager.terminalManager.maximumOfEachResource && this.mineralInRoom.mineralAmount > 0 && this.extractor !== undefined) {
+				let terminal = this.roomManager.terminalManager.terminal;
+				if (terminal && terminal.store[this.mineralInRoom.mineralType] < this.roomManager.terminalManager.maximumOfEachResource && this.mineralInRoom.mineralAmount > 0 && this.extractor !== undefined) {
 					amount = 1;
 				}
 
@@ -75,6 +77,13 @@ class MineralManager extends WorkforceManager {
 	}
 
 	/**
+	 * The config for the labs
+	 */
+	get labConfig() {
+		return this.config.labConfig;
+	}
+
+	/**
 	 * The terminal
 	 */
 	get terminal() {
@@ -85,7 +94,6 @@ class MineralManager extends WorkforceManager {
 	 * All labs
 	 */
 	get labs() {
-//		return this.roomManager.labManager.labs;
 		return this.roomManager.room.find(FIND_STRUCTURES, {
 			filter(s) {
 				return s instanceof StructureLab;
@@ -167,6 +175,44 @@ class MineralManager extends WorkforceManager {
 		}
 
 		return this._extractor;
+	}
+
+	run() {
+		super.run();
+
+		// Do labreactions now and then
+		if (Game.time % MineralManager.labCooldown === 0) {
+
+			// Go through the config
+			for (let labId in this.labConfig) {
+
+				// Wrap it all in a try/catch to not crash everything
+				try {
+
+					// Get the lab
+					let lab = Game.getObjectById(labId);
+
+					// Check if this lab is supposed to combine something
+					let combines = this.labConfig[labId].combines;
+					if (combines !== null) {
+						let lab1 = Game.getObjectById(combines[0]);
+						let lab2 = Game.getObjectById(combines[1]);
+
+						// Do the reaction
+						lab.runReaction(lab1, lab2);
+					}
+				} catch (e) {
+					console.log(e);
+				}
+			}
+		}
+	}
+
+	/**
+	 * Time between doing reactions with the labs
+	 */
+	static get labCooldown() {
+		return LAB_COOLDOWN;
 	}
 }
 

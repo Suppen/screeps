@@ -1,7 +1,12 @@
 {
 	repairManager: {
 		useStoredEnergy: true,
-		useTerminalEnergy: false
+		useTerminalEnergy: false,
+		wantedCreeps: {
+			repairer: {
+				amount: 10
+			}
+		}
 	},
 	energyManager: {
 		useStoredEnergy: false,
@@ -27,8 +32,8 @@
 	miscWorkforceManager: {
 		wantedCreeps: {
 			upgrader: {
-				amount: 3,
-				body: {WORK: 20, MOVE: 10, CARRY: 20}
+				amount: 2,
+				body: {WORK: 15, MOVE: 10, CARRY: 15}
 			}
 		}
 	},

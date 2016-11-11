@@ -201,6 +201,16 @@ class EmpireManager extends Manager {
 	}
 
 	/**
+	 * Spawns emergency creeps in ALL rooms, to restart energy production in them
+	 */
+	emergencyEnergyReboot() {
+		// Run the room managers
+		for (let r in this.roomManagers) {
+			this.roomManagers[r].energyManager.spawnEmergencyCreeps();
+		}
+	}
+
+	/**
 	 * The singleton instance
 	 */
 	static get manager() {

@@ -1,5 +1,7 @@
 "use strict";
 
+const makeUID = require("makeUID");
+
 const WorkforceManager = require("WorkforceManager");
 const LinkManager = require("LinkManager");
 const ScoutManager = require("ScoutManager");
@@ -560,6 +562,30 @@ class EnergyManager extends WorkforceManager {
 
 		// Run the link manager
 		this.linkManager.run();
+	}
+
+	/**
+	 * Spawns a very simple energy harvester and energy collector to restart energy production in a room
+	 */
+	spawnEmergencyCreeps() {
+		// Emergency harvester
+		this.spawnManager.addToSpawnQueue({
+			body: [WORK, MOVE, CARRY],
+			initialMemory: {
+				role: "energyHarvester",
+				workforce: this.workforceName
+			},
+			name: makeUID()
+		}, 0);
+		// Emergency energy collector
+		this.spawnManager.addToSpawnQueue({
+			body: [MOVE, CARRY],
+			initialMemory: {
+				role: "energyCollector",
+				workforce: this.workforceName
+			},
+			name: makeUID()
+		}, 0);
 	}
 
 	/**

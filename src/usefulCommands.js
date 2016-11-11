@@ -8,3 +8,6 @@ Object.keys(Game.empireManager.roomManagers).forEach(roomName => console.log(roo
 
 // List abundant resources in rooms
 Object.keys(Game.empireManager.roomManagers).map(name => Game.empireManager.roomManagers[name]).forEach(rm => console.log(rm.roomName, JSON.stringify(rm.terminalManager.abundantResources)))
+
+// List how many of each mineral type my owned rooms contain
+let minerals = {}; Object.keys(Game.empireManager.roomManagers).forEach(roomName => {let mineral = Game.empireManager.roomManagers[roomName].mineralManager.mineralInRoom; if (!minerals[mineral.mineralType]) minerals[mineral.mineralType] = 0; minerals[mineral.mineralType]++}); console.log(JSON.stringify(minerals, null, " "))
