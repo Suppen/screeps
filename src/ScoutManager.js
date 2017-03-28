@@ -1,6 +1,7 @@
 "use strict";
 
 const WorkforceManager = require("WorkforceManager");
+const makeUID = require("makeUID");
 
 /**
  * Manages scouts, which go to neighbour rooms and give visibility of them
@@ -269,6 +270,7 @@ class ScoutManager extends WorkforceManager {
 							// Need to spawn a scout for this room
 							this.spawnManager.addToSpawnQueue({
 								body: [MOVE],
+								name: makeUID(),
 								initialMemory: {
 									role: "scout",
 									nameOfRoomToScout: roomName,

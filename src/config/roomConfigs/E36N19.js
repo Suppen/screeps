@@ -18,9 +18,9 @@
 		wantedCreeps: {
 			builder: {
 				amount() {
-					return this.constructionQueue.size > 0 ? 1 : 0;
+					return this.constructionQueue.size > 0 ? 2 : 0;
 				},
-				body: [WORK, WORK, WORK, WORK, WORK, WORK, WORK, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY]
+				body: {WORK: 6, MOVE: 6, CARRY: 6}
 			}
 		}
 	},
@@ -35,18 +35,28 @@
 	armyManager: {
 		isWar: false,
 		targetRoom: {
-			name: "E37N22",
-			entryX: 8,
-			entryY: 1,
-			protectX: 21,
-			protectY: 24
+			name: "E38N22",
+			entryX: 32,
+			entryY: 48,
+			protectX: 29,
+			protectY: 19
 		},
-		breachpoints: [],
+		breachpoints: [
+			"5829a43efccb80411829b4b5"
+		],
 		allies: [],
 		wantedCreeps: {
+			attacker: {
+				amount: 2,
+				body: {MOVE: 20, ATTACK: 10, RANGED_ATTACK: 10}
+			},
+			helaer: {
+				amount: 2,
+				body: {MOVE: 15, HEAL: 15}
+			},
 			deconstructor: {
-				amount: 1,
-				body: [MOVE, WORK]
+				amount: 2,
+				body: {MOVE: 25, WORK: 25}
 			}
 		}
 	}

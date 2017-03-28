@@ -1,12 +1,7 @@
 {
 	repairManager: {
 		useStoredEnergy: true,
-		useTerminalEnergy: false,
-		wantedCreeps: {
-			repairer: {
-				amount: 10
-			}
-		}
+		useTerminalEnergy: false
 	},
 	energyManager: {
 		useStoredEnergy: false,
@@ -86,24 +81,30 @@
 		idleY: 29
 	},
 	armyManager: {
-		isWar: false,
+		isWar: true,
 		targetRoom: {
-			name: "E33N16",
-			entryX: 28,
+			name: "E33N15",
+			entryX: 31,
 			entryY: 1,
-			protectX: 33,
-			protectY: 46
+			protectX: 42,
+			protectY: 17
 		},
-		breachpoints: [],
+		breachpoints: [
+			"57a64ce8d31fdecd574cdc72"
+		],
 		allies: [],
 		wantedCreeps: {
-			controllerAttacker: {
-				amount: 1,
-				body: [MOVE, MOVE, MOVE, MOVE, MOVE, CLAIM, CLAIM, CLAIM, CLAIM, CLAIM]
-			},
 			attacker: {
-				amount: 1,
-				body: [MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, ATTACK, ATTACK,ATTACK,ATTACK,ATTACK,ATTACK,ATTACK,ATTACK,ATTACK,ATTACK]
+				amount: 2,
+				body: {MOVE: 20, ATTACK: 10, RANGED_ATTACK: 10}
+			},
+			helaer: {
+				amount: 2,
+				body: {MOVE: 15, HEAL: 15}
+			},
+			deconstructor: {
+				amount: 2,
+				body: {MOVE: 25, WORK: 25}
 			}
 		}
 	}

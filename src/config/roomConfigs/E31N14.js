@@ -37,17 +37,31 @@
 		idleY: 40
 	},
 	armyManager: {
-		isWar: false,
+		isWar: true,
 		targetRoom: {
-			name: "E32N15",
+			name: "E26N9",
 			entryX: 1,
-			entryY: 12,
-			protectX: 46,
-			protectY: 12
+			entryY: 29,
+			protectX: 17,
+			protectY: 23
 		},
-		breachpoints: [],
+		breachpoints: [
+			"583a64ef906116ef03e74fc3"
+		],
 		allies: [],
 		wantedCreeps: {
+			attacker: {
+				amount: 2,
+				body: {MOVE: 20, ATTACK: 10, RANGED_ATTACK: 10}
+			},
+			helaer: {
+				amount: 2,
+				body: {MOVE: 15, HEAL: 15}
+			},
+			deconstructor: {
+				amount: 2,
+				body: {MOVE: 25, WORK: 25}
+			}
 		}
 	}
 }

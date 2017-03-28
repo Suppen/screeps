@@ -4,14 +4,14 @@ const CreepManager = require("CreepManager");
 
 class ClaimerCreepManager extends CreepManager {
 	run() {
-		if (this.creep.pos.x === 26 && this.creep.pos.y === 26 && this.creep.room.name === "E37N22") {
+		if (this.creep.pos.x === 3 && this.creep.pos.y === 3 && this.creep.room.name === "E30N15") {
 			this.waypointReached = true;
 		}
 
 		if (!this.waypointReached) {
-			this.creep.moveTo(new RoomPosition(26, 26, "E37N22"));
-		} else if (this.waypointReached && this.creep.room.name !== "E38N23") {
-			this.creep.moveTo(new RoomPosition(23, 24, "E38N23"));
+			this.creep.moveTo(new RoomPosition(3, 3, "E30N15"));
+		} else if (this.waypointReached && this.creep.room.name !== "E29N19") {
+			this.creep.moveTo(new RoomPosition(25, 25, "E29N19"));
 		} else {
 		    let controller = this.creep.room.controller;
 			if (this.creep.claimController(controller) !== OK) {

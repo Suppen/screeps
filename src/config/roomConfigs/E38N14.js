@@ -27,7 +27,7 @@
 	miscWorkforceManager: {
 		wantedCreeps: {
 			upgrader: {
-				amount: 2,
+				amount: 1,
 				body: {WORK: 15, MOVE: 1, CARRY: 15}
 			}
 		}
@@ -37,21 +37,30 @@
 		idleY: 13
 	},
 	armyManager: {
-		isWar: false,
+		isWar: true,
 		targetRoom: {
-			name: "E36N13",
+			name: "E41N9",
 			entryX: 1,
-			entryY: 25,
-			protectX: 35,
-			protectY: 12
+			entryY: 20,
+			protectX: 38,
+			protectY: 36
 		},
 		breachpoints: [
+			"57c3b7e7220c9e450b511b96"
 		],
 		allies: [],
 		wantedCreeps: {
+			attacker: {
+				amount: 2,
+				body: {MOVE: 20, ATTACK: 10, RANGED_ATTACK: 10}
+			},
+			helaer: {
+				amount: 2,
+				body: {MOVE: 15, HEAL: 15}
+			},
 			deconstructor: {
-				amount: 1,
-				body: [MOVE, MOVE, MOVE, MOVE, WORK, WORK, WORK, WORK, WORK, WORK, WORK, WORK]
+				amount: 2,
+				body: {MOVE: 25, WORK: 25}
 			}
 		}
 	}

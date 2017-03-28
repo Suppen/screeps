@@ -19,6 +19,7 @@ const roleManagerMap = {
 	remoteBuilder: require("RemoteBuilderCreepManager"),
 	claimer: require("ClaimerCreepManager"),
 	healer: require("HealerCreepManager"),
+	helaer: require("HealerCreepManager"),
 	scout: require("ScoutCreepManager"),
 	constructionSiteDestroyer: require("ConstructionSiteDestroyerCreepManager"),
 	reserver: require("ReserverCreepManager"),

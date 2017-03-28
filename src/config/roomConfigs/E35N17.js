@@ -4,7 +4,7 @@
 		useTerminalEnergy: false,
 		wantedCreeps: {
 			repairer: {
-				amount: 10
+				amount: 8
 			}
 		}
 	},
@@ -42,24 +42,31 @@
 		idleY: 29
 	},
 	armyManager: {
-		isWar: false,
+		isWar: true,
 		targetRoom: {
-			name: "E35N15",
-			entryX: 23,
-			entryY: 1,
-			protectX: 22,
-			protectY: 3
+			name: "E34N18",
+			entryX: 40,
+			entryY: 48,
+			protectX: 19,
+			protectY: 22
 		},
-		breachpoints: [],
+		breachpoints: [
+			"57e40c02256ea9355ac9b639",
+			"582220f33313e7c152925ba2"
+		],
 		allies: [],
 		wantedCreeps: {
 			attacker: {
-				amount: 1,
-				body: {MOVE: 10, ATTACK: 5, RANGED_ATTACK: 5}
+				amount: 2,
+				body: {MOVE: 20, ATTACK: 10, RANGED_ATTACK: 10}
 			},
-			healer: {
-				amount: 1,
-				body: {MOVE: 10, HEAL: 10}
+			helaer: {
+				amount: 2,
+				body: {MOVE: 15, HEAL: 15}
+			},
+			deconstructor: {
+				amount: 2,
+				body: {MOVE: 25, WORK: 25}
 			}
 		}
 	}

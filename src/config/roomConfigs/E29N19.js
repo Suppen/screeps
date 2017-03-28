@@ -8,8 +8,12 @@
 		harvestRemoteSources: true,
 		wantedCreeps: {
 			energyCollector: {
-				amount: 3,
+				amount: 2,
 				priority: 2
+			},
+			energyHarvester: {
+				amount: 2,
+				priority: 1
 			}
 		}
 	},
@@ -20,30 +24,28 @@
 				amount() {
 					return this.constructionQueue.size > 0 ? 2 : 0;
 				},
-				body: {WORK: 6, MOVE: 6, CARRY: 6}
+				body: {WORK: 4, MOVE: 4, CARRY: 4}
 			}
 		}
 	},
 	miscWorkforceManager: {
 		wantedCreeps: {
 			upgrader: {
-				amount: 2,
-				body: {WORK: 15, MOVE: 15, CARRY: 15}
+				amount: 4,
+				body: {WORK: 4, MOVE: 4, CARRY: 4}
 			}
 		}
 	},
 	armyManager: {
 		isWar: true,
 		targetRoom: {
-			name: "E33N6",
-			entryX: 19,
-			entryY: 1,
-			protectX: 48,
-			protectY: 17
+			name: "E25N21",
+			entryX: 20,
+			entryY: 48,
+			protectX: 38,
+			protectY: 41
 		},
 		breachpoints: [
-			"580d0b8bd81dc5a564acd34d",
-			"57ee4d889f039ca25632aadc"
 		],
 		allies: [],
 		wantedCreeps: {

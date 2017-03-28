@@ -20,37 +20,37 @@
 				amount() {
 					return this.constructionQueue.size > 0 ? 2 : 0;
 				},
-				body: {WORK: 4, MOVE: 4, CARRY: 3}
+				body: {WORK: 6, MOVE: 6, CARRY: 6}
 			}
 		}
 	},
 	miscWorkforceManager: {
 		wantedCreeps: {
 			upgrader: {
-				amount: 4,
-				body: {WORK: 4, MOVE: 4, CARRY: 3}
+				amount: 2,
+				body: {WORK: 15, MOVE: 15, CARRY: 15}
 			}
 		}
 	},
 	armyManager: {
 		isWar: false,
 		targetRoom: {
-			name: "E38N23",
+			name: "E39N24",
 			entryX: 1,
 			entryY: 25,
-			protectX: 22,
-			protectY: 24
+			protectX: 6,
+			protectY: 42
 		},
 		breachpoints: [],
 		allies: [],
 		wantedCreeps: {
 			attacker: {
-				amount: 2,
+				amount: 1,
 				body: {MOVE: 10, ATTACK: 5, RANGED_ATTACK: 5}
 			},
 			healer: {
-				amount: 2,
-				body: {MOVE: 10, HEAL: 10}
+				amount: 1,
+				body: {MOVE: 5, HEAL: 5}
 			}
 		}
 	}

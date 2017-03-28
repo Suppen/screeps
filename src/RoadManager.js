@@ -183,7 +183,7 @@ class RoadManager extends Manager {
 
 			// Figure out when to iterate next time. Current game time + RoadManager.mapIterationInterval ± 10 ticks
 			// The random element is to stop "Script execution timeout" by spreading the iteration out for the rooms
-			let nextIteration = Game.time + RoadManager.mapIterationInterval + Math.floor(Math.random()*21)-10;
+			let nextIteration = Game.time + RoadManager.mapIterationInterval + Math.floor(Math.random()*41)-20;
 			this.nextUsageMapIteration = nextIteration;
 		}
 	}
@@ -192,7 +192,7 @@ class RoadManager extends Manager {
 	 * Percentage to reduce road use
 	 */
 	static get mapDecayPercentage() {
-		return 0.9;
+		return 0.8;
 	}
 
 	/**
@@ -213,7 +213,7 @@ class RoadManager extends Manager {
 	 * Time between each iteration of the usage map
 	 */
 	static get mapIterationInterval() {
-		return 100;	// Not prime
+		return 200;	// Not prime
 	}
 
 	/**

@@ -575,7 +575,7 @@ class EnergyManager extends WorkforceManager {
 				role: "energyHarvester",
 				workforce: this.workforceName
 			},
-			name: makeUID()
+			name: "emergencyHarvester" + makeUID()
 		}, 0);
 		// Emergency energy collector
 		this.spawnManager.addToSpawnQueue({
@@ -584,7 +584,7 @@ class EnergyManager extends WorkforceManager {
 				role: "energyCollector",
 				workforce: this.workforceName
 			},
-			name: makeUID()
+			name: "emergencyCollector" + makeUID()
 		}, 0);
 	}
 

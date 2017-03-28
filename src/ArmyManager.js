@@ -53,7 +53,7 @@ class ArmyManager extends WorkforceManager {
 	 * Boolean telling wether or not the room is at war
 	 */
 	get isWar() {
-		return this.config.isWar;
+		return true;
 	}
 
 	/**
@@ -138,6 +138,18 @@ class ArmyManager extends WorkforceManager {
 			wantedCreeps = this.config.wantedCreeps;
 		}
 		return wantedCreeps;
+	}
+
+	run() {
+		super.run();
+
+		// Find the room's nuke
+		let nuke = this.roomManager.room.find(FIND_MY_STRUCTURES).find(s => s instanceof StructureNuker);
+
+		// Launch it if it exists
+		if (nuke) {
+			nuke.launchNuke(new RoomPosition(this.config.targetRoom.protectX, this.config.targetRoom.protectY , this.config.targetRoom.name));
+		}
 	}
 }
 

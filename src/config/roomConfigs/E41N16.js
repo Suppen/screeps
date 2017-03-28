@@ -8,7 +8,7 @@
 		harvestRemoteSources: true,
 		wantedCreeps: {
 			energyCollector: {
-				amount: 3,
+				amount: 2,
 				priority: 2
 			}
 		}
@@ -35,15 +35,16 @@
 	armyManager: {
 		isWar: true,
 		targetRoom: {
-			name: "E33N6",
-			entryX: 19,
-			entryY: 1,
-			protectX: 48,
-			protectY: 17
+			name: "E44N13",
+			entryX: 2,
+			entryY: 19,
+			protectX: 26,
+			protectY: 30
 		},
 		breachpoints: [
-			"580d0b8bd81dc5a564acd34d",
-			"57ee4d889f039ca25632aadc"
+			"588e6a6b96ca8a7bb5b439a1",
+			"588f6c13727c8122720ea84f",
+			"588f6b28ca95ab1f266e2477"
 		],
 		allies: [],
 		wantedCreeps: {

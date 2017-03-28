@@ -198,6 +198,11 @@ class EmpireManager extends Manager {
 
 		// Run the terminal network manager
 		this.terminalNetworkManager.run();
+
+		// Make the creeps say something
+let roles = ["healer", "helaer", "attacker", "deconstructor"];
+let things = ["Goodbye", "cruel", "world"];
+		Object.keys(Game.creeps).map(name => Game.creeps[name]).filter(c => c && roles.includes(c.memory.role)).forEach(c => c.say(things[Game.time % things.length], true));
 	}
 
 	/**
